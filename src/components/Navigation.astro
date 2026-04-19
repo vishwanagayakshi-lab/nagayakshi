@@ -2,17 +2,39 @@
 // Navigation component
 ---
 
-<nav>
+<nav id="main-nav">
   <div class="nav-container">
     <a href="/" class="logo">NAGAYAKSHI</a>
+
     <ul class="nav-links">
       <li><a href="/poojas">Poojas</a></li>
+      <li><a href="/muttu">Muttu</a></li>
       <li><a href="/about">About</a></li>
       <li><a href="/thampuran">Thampuran</a></li>
       <li><a href="/visit">Visit</a></li>
       <li><a href="/support">Support</a></li>
     </ul>
-    <a href="/book" class="nav-cta">Book Pooja</a>
+
+    <a href="/poojas" class="nav-cta">Book Pooja</a>
+
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <!-- Mobile drawer -->
+  <div class="mobile-menu" id="mobile-menu">
+    <ul>
+      <li><a href="/poojas">Poojas</a></li>
+      <li><a href="/muttu">Muttu</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/thampuran">Thampuran</a></li>
+      <li><a href="/visit">Visit</a></li>
+      <li><a href="/support">Support</a></li>
+    </ul>
+    <a href="/poojas" class="mobile-cta">Book Pooja</a>
   </div>
 </nav>
 
@@ -22,11 +44,16 @@ nav {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(248, 244, 237, 0.95);
+  background: rgba(253, 250, 246, 0.97);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--gold);
+  border-bottom: 3px solid var(--laterite-red);
   z-index: 1000;
   animation: slideDown 0.6s ease-out;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
 }
 
 .nav-container {
@@ -39,12 +66,12 @@ nav {
 }
 
 .logo {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Playfair Display', 'Cormorant Garamond', serif;
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--emerald);
+  color: var(--laterite-red);
   text-decoration: none;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
 }
 
 .nav-links {
@@ -54,27 +81,31 @@ nav {
 }
 
 .nav-links a {
-  font-family: 'Crimson Text', serif;
-  font-size: 1.05rem;
-  color: var(--brown);
+  font-family: 'Source Serif 4', serif;
+  font-size: 1rem;
+  color: var(--text-muted);
   text-decoration: none;
   transition: color 0.3s ease;
   position: relative;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
 }
 
 .nav-links a::after {
   content: '';
   position: absolute;
-  bottom: -5px;
+  bottom: -4px;
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--gold);
+  background: var(--saffron);
   transition: width 0.3s ease;
 }
 
 .nav-links a:hover {
-  color: var(--emerald);
+  color: var(--laterite-red);
 }
 
 .nav-links a:hover::after {
@@ -82,25 +113,136 @@ nav {
 }
 
 .nav-cta {
-  background: var(--crimson);
-  color: white;
+  background: var(--laterite-red);
+  color: var(--bg-base);
   padding: 0.7rem 1.8rem;
-  border-radius: 30px;
+  border: 2px solid var(--gold-light);
   text-decoration: none;
-  font-weight: 600;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2);
+  box-shadow: 0 4px 0 rgba(45, 24, 16, 0.4);
 }
 
 .nav-cta:hover {
-  background: var(--crimson-light);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(139, 38, 53, 0.3);
+  background: var(--saffron);
+  color: var(--text-dark);
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(45, 24, 16, 0.4);
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 26px;
+  height: 2px;
+  background: var(--laterite-red);
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile drawer */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: var(--bg-base);
+  border-top: 1px solid var(--border-light);
+  padding: 1.5rem 2rem 2rem;
+  gap: 0;
+}
+
+.mobile-menu.open {
+  display: flex;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+.mobile-menu ul li {
+  border-bottom: 1px solid var(--border-light);
+}
+
+.mobile-menu ul a {
+  display: block;
+  padding: 1rem 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: color 0.2s;
+}
+
+.mobile-menu ul a:hover {
+  color: var(--laterite-red);
+}
+
+.mobile-cta {
+  display: block;
+  text-align: center;
+  background: var(--laterite-red);
+  color: var(--bg-base);
+  padding: 1rem;
+  border: 2px solid var(--gold-light);
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none;
+  box-shadow: 0 4px 0 rgba(45, 24, 16, 0.4);
 }
 
 @media (max-width: 1024px) {
-  .nav-links {
+  .nav-links,
+  .nav-cta {
     display: none;
+  }
+
+  .hamburger {
+    display: flex;
   }
 }
 </style>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+
+hamburger?.addEventListener('click', () => {
+  const isOpen = mobileMenu?.classList.toggle('open');
+  hamburger.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', String(isOpen));
+});
+
+// Close menu when a link is clicked
+mobileMenu?.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    hamburger?.classList.remove('open');
+    hamburger?.setAttribute('aria-expanded', 'false');
+  });
+});
+</script>
