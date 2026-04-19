@@ -1,0 +1,595 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Create Account | Nagayakshi Temple">
+  
+  <section class="register-hero">
+    <div class="register-container">
+      <div class="register-header">
+        <h1>Create Your Account</h1>
+        <p>Register to book poojas, track your bookings, and receive personalized updates</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="register-form-section">
+    <div class="register-container">
+      <div class="form-wrapper">
+        <form id="registrationForm" class="registration-form">
+          
+          <!-- Personal Information -->
+          <div class="form-section">
+            <h3 class="section-title">Personal Information</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fullName">Full Name <span class="required">*</span></label>
+                <input type="text" id="fullName" name="fullName" required placeholder="As per official documents">
+              </div>
+            </div>
+            
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="email">Email Address <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required placeholder="you@example.com">
+              </div>
+              
+              <div class="form-group">
+                <label for="phone">Phone Number <span class="required">*</span></label>
+                <input type="tel" id="phone" name="phone" required placeholder="+91 9876543210" pattern="[+]?[0-9]{10,13}">
+              </div>
+            </div>
+            
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="dateOfBirth">Date of Birth <span class="required">*</span></label>
+                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                <span class="field-note">Required for astrological calculations</span>
+              </div>
+              
+              <div class="form-group">
+                <label for="gender">Gender <span class="required">*</span></label>
+                <select id="gender" name="gender" required>
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Birth Details (For Sankalpa) -->
+          <div class="form-section">
+            <h3 class="section-title">Birth Details (For Sankalpa)</h3>
+            <p class="section-note">These details are used during pooja rituals for personal sankalpa</p>
+            
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="timeOfBirth">Time of Birth</label>
+                <input type="time" id="timeOfBirth" name="timeOfBirth" placeholder="HH:MM">
+                <span class="field-note">If known (helps with accurate horoscope)</span>
+              </div>
+              
+              <div class="form-group">
+                <label for="placeOfBirth">Place of Birth</label>
+                <input type="text" id="placeOfBirth" name="placeOfBirth" placeholder="City, State">
+              </div>
+            </div>
+            
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="nakshatra">Nakshatra (Birth Star)</label>
+                <select id="nakshatra" name="nakshatra">
+                  <option value="">Select if known</option>
+                  <option value="ashwini">Ashwini</option>
+                  <option value="bharani">Bharani</option>
+                  <option value="krittika">Krittika</option>
+                  <option value="rohini">Rohini</option>
+                  <option value="mrigashira">Mrigashira</option>
+                  <option value="ardra">Ardra</option>
+                  <option value="punarvasu">Punarvasu</option>
+                  <option value="pushya">Pushya (Pooyam)</option>
+                  <option value="ashlesha">Ashlesha (Ayilyam)</option>
+                  <option value="magha">Magha (Makam)</option>
+                  <option value="purva_phalguni">Purva Phalguni</option>
+                  <option value="uttara_phalguni">Uttara Phalguni</option>
+                  <option value="hasta">Hasta</option>
+                  <option value="chitra">Chitra</option>
+                  <option value="swati">Swati</option>
+                  <option value="vishakha">Vishakha</option>
+                  <option value="anuradha">Anuradha</option>
+                  <option value="jyeshtha">Jyeshtha</option>
+                  <option value="mula">Mula</option>
+                  <option value="purva_ashadha">Purva Ashadha</option>
+                  <option value="uttara_ashadha">Uttara Ashadha</option>
+                  <option value="shravana">Shravana</option>
+                  <option value="dhanishta">Dhanishta</option>
+                  <option value="shatabhisha">Shatabhisha</option>
+                  <option value="purva_bhadrapada">Purva Bhadrapada</option>
+                  <option value="uttara_bhadrapada">Uttara Bhadrapada</option>
+                  <option value="revati">Revati</option>
+                </select>
+                <span class="field-note">We can calculate this if you don't know</span>
+              </div>
+              
+              <div class="form-group">
+                <label for="gotra">Gotra (Family Lineage)</label>
+                <input type="text" id="gotra" name="gotra" placeholder="If known">
+                <span class="field-note">Can use father's name if unknown</span>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="rashi">Rashi (Moon Sign)</label>
+                <select id="rashi" name="rashi">
+                  <option value="">Select if known</option>
+                  <option value="mesha">Mesha (Aries)</option>
+                  <option value="vrishabha">Vrishabha (Taurus)</option>
+                  <option value="mithuna">Mithuna (Gemini)</option>
+                  <option value="karka">Karka (Cancer)</option>
+                  <option value="simha">Simha (Leo)</option>
+                  <option value="kanya">Kanya (Virgo)</option>
+                  <option value="tula">Tula (Libra)</option>
+                  <option value="vrishchika">Vrishchika (Scorpio)</option>
+                  <option value="dhanu">Dhanu (Sagittarius)</option>
+                  <option value="makara">Makara (Capricorn)</option>
+                  <option value="kumbha">Kumbha (Aquarius)</option>
+                  <option value="meena">Meena (Pisces)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div class="form-section">
+            <h3 class="section-title">Address</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="addressLine1">Address Line 1 <span class="required">*</span></label>
+                <input type="text" id="addressLine1" name="addressLine1" required placeholder="House/Building name, Street">
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="addressLine2">Address Line 2</label>
+                <input type="text" id="addressLine2" name="addressLine2" placeholder="Area, Landmark">
+              </div>
+            </div>
+            
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="city">City <span class="required">*</span></label>
+                <input type="text" id="city" name="city" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="state">State <span class="required">*</span></label>
+                <input type="text" id="state" name="state" required>
+              </div>
+            </div>
+            
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="pincode">Pincode <span class="required">*</span></label>
+                <input type="text" id="pincode" name="pincode" required pattern="[0-9]{6}" placeholder="678012">
+              </div>
+              
+              <div class="form-group">
+                <label for="country">Country <span class="required">*</span></label>
+                <select id="country" name="country" required>
+                  <option value="India">India</option>
+                  <option value="USA">USA</option>
+                  <option value="UK">UK</option>
+                  <option value="UAE">UAE</option>
+                  <option value="Singapore">Singapore</option>
+                  <option value="Malaysia">Malaysia</option>
+                  <option value="Australia">Australia</option>
+                  <option value="Canada">Canada</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Account Security -->
+          <div class="form-section">
+            <h3 class="section-title">Account Security</h3>
+            
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="password">Password <span class="required">*</span></label>
+                <input type="password" id="password" name="password" required minlength="8" placeholder="Minimum 8 characters">
+                <span class="field-note">Must contain letters and numbers</span>
+              </div>
+              
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required minlength="8">
+              </div>
+            </div>
+          </div>
+
+          <!-- Preferences -->
+          <div class="form-section">
+            <h3 class="section-title">Communication Preferences</h3>
+            
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="emailUpdates" value="yes" checked>
+                <span>Send me email updates about poojas and temple events</span>
+              </label>
+              
+              <label class="checkbox-label">
+                <input type="checkbox" name="whatsappUpdates" value="yes" checked>
+                <span>Send me WhatsApp updates for my bookings</span>
+              </label>
+              
+              <label class="checkbox-label">
+                <input type="checkbox" name="smsReminders" value="yes">
+                <span>Send SMS reminders for upcoming poojas</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Terms & Conditions -->
+          <div class="form-section">
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="termsAccepted" required>
+                <span>I agree to the <a href="/terms" target="_blank">Terms & Conditions</a> and <a href="/privacy" target="_blank">Privacy Policy</a> <span class="required">*</span></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="form-actions">
+            <button type="submit" class="btn-submit">Create Account</button>
+            <p class="login-link">
+              Already have an account? <a href="/login">Sign In</a>
+            </p>
+          </div>
+        </form>
+        
+        <!-- Success/Error Messages -->
+        <div id="formMessage" class="form-message" style="display: none;"></div>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+/* Registration Page Styles */
+.register-hero {
+  background: linear-gradient(135deg, var(--emerald-dark) 0%, var(--emerald) 100%);
+  padding: 6rem 2rem 3rem;
+  text-align: center;
+}
+
+.register-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.register-header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.register-header p {
+  font-size: 1.2rem;
+  color: var(--cream);
+  line-height: 1.6;
+}
+
+.register-form-section {
+  padding: 4rem 2rem;
+  background: var(--cream);
+}
+
+.form-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.registration-form {
+  background: white;
+  padding: 3rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+.form-section {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--cream);
+}
+
+.form-section:last-of-type {
+  border-bottom: none;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--emerald);
+  margin-bottom: 0.5rem;
+}
+
+.section-note {
+  color: var(--brown);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.form-row {
+  margin-bottom: 1.5rem;
+}
+
+.form-row.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--brown);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.required {
+  color: var(--crimson);
+  margin-left: 3px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.9rem 1rem;
+  border: 2px solid var(--cream-dark);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'Crimson Text', serif;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--emerald);
+  box-shadow: 0 0 0 3px rgba(13, 92, 61, 0.1);
+}
+
+.form-group input::placeholder {
+  color: #999;
+  font-size: 0.95rem;
+}
+
+.field-note {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.3rem;
+  font-style: italic;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--brown);
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--emerald);
+}
+
+.checkbox-label a {
+  color: var(--emerald);
+  text-decoration: underline;
+}
+
+.form-actions {
+  text-align: center;
+  margin-top: 2.5rem;
+}
+
+.btn-submit {
+  background: var(--crimson);
+  color: white;
+  padding: 1.2rem 4rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(139, 38, 53, 0.3);
+  font-family: 'Crimson Text', serif;
+}
+
+.btn-submit:hover {
+  background: var(--crimson-light);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(139, 38, 53, 0.4);
+}
+
+.btn-submit:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.login-link {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: var(--brown);
+}
+
+.login-link a {
+  color: var(--emerald);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+.form-message {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1.05rem;
+}
+
+.form-message.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.form-message.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .register-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .registration-form {
+    padding: 2rem 1.5rem;
+  }
+  
+  .form-row.two-col {
+    grid-template-columns: 1fr;
+  }
+  
+  .btn-submit {
+    width: 100%;
+    padding: 1.2rem 2rem;
+  }
+}
+</style>
+
+<script>
+// Form Validation & Submission (Ready for Odoo API integration)
+document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData);
+  
+  // Validate password match
+  if (data.password !== data.confirmPassword) {
+    showMessage('Passwords do not match', 'error');
+    return;
+  }
+  
+  // Validate password strength
+  if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(data.password)) {
+    showMessage('Password must contain at least 8 characters including letters and numbers', 'error');
+    return;
+  }
+  
+  // Show loading state
+  const submitBtn = this.querySelector('.btn-submit');
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Creating Account...';
+  submitBtn.disabled = true;
+  
+  try {
+    // TODO: Replace with actual Odoo API endpoint
+    // const response = await fetch('/api/register', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(data)
+    // });
+    
+    // Simulated success for demo (remove this when integrating with Odoo)
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Store user data in localStorage for demo (replace with actual session/token from Odoo)
+    localStorage.setItem('userData', JSON.stringify({
+      name: data.fullName,
+      email: data.email,
+      phone: data.phone,
+      nakshatra: data.nakshatra,
+      gotra: data.gotra
+    }));
+    
+    showMessage('Account created successfully! Redirecting to dashboard...', 'success');
+    
+    setTimeout(() => {
+      window.location.href = '/dashboard';
+    }, 2000);
+    
+  } catch (error) {
+    showMessage('An error occurred. Please try again.', 'error');
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+  }
+});
+
+function showMessage(message, type) {
+  const messageDiv = document.getElementById('formMessage');
+  messageDiv.textContent = message;
+  messageDiv.className = `form-message ${type}`;
+  messageDiv.style.display = 'block';
+  
+  // Scroll to message
+  messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Real-time validation helpers
+document.getElementById('email').addEventListener('blur', function() {
+  if (this.value && !this.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    this.style.borderColor = '#dc3545';
+  } else {
+    this.style.borderColor = '';
+  }
+});
+
+document.getElementById('confirmPassword').addEventListener('input', function() {
+  const password = document.getElementById('password').value;
+  if (this.value && this.value !== password) {
+    this.style.borderColor = '#dc3545';
+  } else {
+    this.style.borderColor = '';
+  }
+});
+</script>
