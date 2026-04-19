@@ -1,0 +1,148 @@
+---
+// Footer component
+const currentYear = new Date().getFullYear();
+---
+
+<footer>
+  <div class="footer-container">
+    <div class="footer-about">
+      <h3>Nagayakshi Temple</h3>
+      <p>
+        Sacred naga worship temple dedicated to Vishwanagayakshi, 
+        Nagaraja, and Sarpayakshi. Offering authentic Vedic remedies 
+        for Naga Dosha under the guidance of Ambotti Thampuran.
+      </p>
+      <p><strong>Trust Reg: 222/IV/2023</strong></p>
+    </div>
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul class="footer-links">
+        <li><a href="/about">About Vishwanagayakshi</a></li>
+        <li><a href="/poojas">Poojas & Homams</a></li>
+        <li><a href="/dosha-guide">Naga Dosha Guide</a></li>
+        <li><a href="/protocols">Temple Protocols</a></li>
+        <li><a href="/blog">Blog & Resources</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>Services</h4>
+      <ul class="footer-links">
+        <li><a href="/poojas/ayilyam">Ayilyam Pooja</a></li>
+        <li><a href="/poojas/kala-sarpa-bali">Kala Sarpa Bali</a></li>
+        <li><a href="/poojas/navagraha">Navagraha Homam</a></li>
+        <li><a href="/support">Go Dhanam</a></li>
+        <li><a href="/poojas/onsite">On-Site Rituals</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>
+        Pulikkal Shankarodath Kovilakam<br>
+        Thekkumpuram, Kavilpad<br>
+        Palakkad - 678012, Kerala
+      </p>
+      <p>
+        📞 +91 9946373522<br>
+        ✉️ info@nagayakshi.org
+      </p>
+      <p>
+        <strong>Darshan Timings:</strong><br>
+        Morning: 5:30 AM - 10:30 AM<br>
+        Evening: 5:30 PM - 7:30 PM
+      </p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; {currentYear} Nagayakshi Temple. All rights reserved. | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of Use</a></p>
+  </div>
+</footer>
+
+<style>
+footer {
+  background: var(--brown);
+  color: var(--cream);
+  padding: 4rem 2rem 2rem;
+}
+
+.footer-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-about h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.footer-about p {
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.footer-section h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+
+.footer-links {
+  list-style: none;
+}
+
+.footer-links li {
+  margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+  color: var(--cream);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: var(--gold);
+}
+
+.footer-contact p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(212, 165, 116, 0.2);
+  padding-top: 2rem;
+  text-align: center;
+  color: var(--cream-dark);
+}
+
+.footer-bottom a {
+  color: var(--cream-dark);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom a:hover {
+  color: var(--gold);
+}
+
+@media (max-width: 1024px) {
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

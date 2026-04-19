@@ -1,0 +1,106 @@
+---
+// Navigation component
+---
+
+<nav>
+  <div class="nav-container">
+    <a href="/" class="logo">NAGAYAKSHI</a>
+    <ul class="nav-links">
+      <li><a href="/poojas">Poojas</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/thampuran">Thampuran</a></li>
+      <li><a href="/visit">Visit</a></li>
+      <li><a href="/support">Support</a></li>
+    </ul>
+    <a href="/book" class="nav-cta">Book Pooja</a>
+  </div>
+</nav>
+
+<style>
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(248, 244, 237, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--gold);
+  z-index: 1000;
+  animation: slideDown 0.6s ease-out;
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.2rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--emerald);
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Crimson Text', serif;
+  font-size: 1.05rem;
+  color: var(--brown);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--emerald);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-cta {
+  background: var(--crimson);
+  color: white;
+  padding: 0.7rem 1.8rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2);
+}
+
+.nav-cta:hover {
+  background: var(--crimson-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 38, 53, 0.3);
+}
+
+@media (max-width: 1024px) {
+  .nav-links {
+    display: none;
+  }
+}
+</style>

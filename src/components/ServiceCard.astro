@@ -1,0 +1,161 @@
+---
+export interface Props {
+  image: string;
+  badge: string;
+  badgeType?: 'monthly' | 'annual' | 'quarterly';
+  title: string;
+  description: string;
+  benefits: string[];
+  price: string;
+  link: string;
+}
+
+const { image, badge, badgeType = 'quarterly', title, description, benefits, price, link } = Astro.props;
+---
+
+<div class="service-card">
+  <img src={image} alt={title} class="service-image">
+  <div class="service-content">
+    <span class={`service-badge ${badgeType}`}>{badge}</span>
+    <h3 class="service-title">{title}</h3>
+    <p class="service-description">{description}</p>
+    <ul class="service-benefits">
+      {benefits.map(benefit => (
+        <li>{benefit}</li>
+      ))}
+    </ul>
+    <div class="service-footer">
+      <span class="service-price">{price}</span>
+      <a href={link} class="btn-service">Book Now</a>
+    </div>
+  </div>
+</div>
+
+<style>
+.service-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--emerald), var(--gold));
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.service-card:hover::before {
+  transform: scaleX(1);
+}
+
+.service-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  filter: brightness(0.92) saturate(0.85);
+}
+
+.service-content {
+  padding: 2rem;
+}
+
+.service-badge {
+  display: inline-block;
+  background: var(--emerald);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.service-badge.monthly {
+  background: var(--crimson);
+}
+
+.service-badge.annual {
+  background: var(--gold-dark);
+}
+
+.service-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--emerald);
+  margin-bottom: 1rem;
+}
+
+.service-description {
+  font-size: 1.05rem;
+  color: var(--brown);
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+}
+
+.service-benefits {
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+
+.service-benefits li {
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--brown);
+}
+
+.service-benefits li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--emerald);
+  font-weight: bold;
+}
+
+.service-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--cream-dark);
+}
+
+.service-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--emerald);
+}
+
+.btn-service {
+  background: var(--crimson);
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-service:hover {
+  background: var(--crimson-light);
+  transform: scale(1.05);
+}
+</style>
