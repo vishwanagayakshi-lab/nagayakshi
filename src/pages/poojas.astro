@@ -16,6 +16,7 @@ import Layout from '../layouts/Layout.astro';
   <!-- Filter Tabs -->
   <section class="filter-section">
     <div class="poojas-container">
+      <!-- Desktop tabs -->
       <div class="filter-tabs">
         <button class="filter-tab active" data-filter="all">All Poojas</button>
         <button class="filter-tab" data-filter="monthly">Monthly</button>
@@ -24,6 +25,15 @@ import Layout from '../layouts/Layout.astro';
         <button class="filter-tab" data-filter="special">Special Events</button>
         <button class="filter-tab" data-filter="onsite">On-Site Services</button>
       </div>
+      <!-- Mobile dropdown -->
+      <select class="filter-select" id="filter-select">
+        <option value="all">All Poojas</option>
+        <option value="monthly">Monthly</option>
+        <option value="quarterly">Quarterly</option>
+        <option value="annual">Annual</option>
+        <option value="special">Special Events</option>
+        <option value="onsite">On-Site Services</option>
+      </select>
     </div>
   </section>
 
@@ -384,6 +394,27 @@ import Layout from '../layouts/Layout.astro';
   flex-wrap: wrap;
 }
 
+.filter-select {
+  display: none;
+  width: 100%;
+  padding: 1rem 1.2rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dark);
+  background: var(--bg-base);
+  border: 2px solid var(--laterite-red);
+  border-radius: 2px;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237a1912' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+}
+
 .filter-tab {
   padding: 0.8rem 2rem;
   border: 2px solid var(--bg-alt);
@@ -741,6 +772,9 @@ import Layout from '../layouts/Layout.astro';
 
 /* Responsive */
 @media (max-width: 768px) {
+  .filter-tabs { display: none; }
+  .filter-select { display: block; }
+
   .poojas-hero h1 {
     font-size: 3rem;
   }
@@ -764,25 +798,23 @@ import Layout from '../layouts/Layout.astro';
 document.addEventListener('DOMContentLoaded', function() {
   const filterTabs = document.querySelectorAll('.filter-tab');
   const poojaCards = document.querySelectorAll('.pooja-card');
-  
+
+  function applyFilter(filter) {
+    poojaCards.forEach(card => {
+      card.style.display = (filter === 'all' || card.getAttribute('data-category') === filter) ? 'block' : 'none';
+    });
+  }
+
   filterTabs.forEach(tab => {
     tab.addEventListener('click', function() {
-      const filter = this.getAttribute('data-filter');
-      
-      // Update active tab
       filterTabs.forEach(t => t.classList.remove('active'));
       this.classList.add('active');
-      
-      // Filter cards
-      poojaCards.forEach(card => {
-        if (filter === 'all') {
-          card.style.display = 'block';
-        } else {
-          const category = card.getAttribute('data-category');
-          card.style.display = category === filter ? 'block' : 'none';
-        }
-      });
+      applyFilter(this.getAttribute('data-filter'));
     });
+  });
+
+  document.getElementById('filter-select')?.addEventListener('change', function() {
+    applyFilter(this.value);
   });
 });
 </script>
