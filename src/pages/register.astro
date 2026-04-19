@@ -260,7 +260,7 @@ import Layout from '../layouts/Layout.astro';
 <style>
 /* Registration Page Styles */
 .register-hero {
-  background: linear-gradient(135deg, var(--emerald-dark) 0%, var(--emerald) 100%);
+  background: linear-gradient(135deg, var(--laterite-dark) 0%, var(--laterite-red) 100%);
   padding: 6rem 2rem 3rem;
   text-align: center;
 }
@@ -280,13 +280,13 @@ import Layout from '../layouts/Layout.astro';
 
 .register-header p {
   font-size: 1.2rem;
-  color: var(--cream);
+  color: var(--bg-alt);
   line-height: 1.6;
 }
 
 .register-form-section {
   padding: 4rem 2rem;
-  background: var(--cream);
+  background: var(--bg-alt);
 }
 
 .form-wrapper {
@@ -295,7 +295,7 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .registration-form {
-  background: white;
+  background: var(--bg-base);
   padding: 3rem;
   border-radius: 15px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
@@ -304,7 +304,7 @@ import Layout from '../layouts/Layout.astro';
 .form-section {
   margin-bottom: 3rem;
   padding-bottom: 2rem;
-  border-bottom: 2px solid var(--cream);
+  border-bottom: 2px solid var(--bg-alt);
 }
 
 .form-section:last-of-type {
@@ -315,12 +315,12 @@ import Layout from '../layouts/Layout.astro';
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--emerald);
+  color: var(--laterite-red);
   margin-bottom: 0.5rem;
 }
 
 .section-note {
-  color: var(--brown);
+  color: var(--text-muted);
   font-size: 0.95rem;
   margin-bottom: 1.5rem;
   font-style: italic;
@@ -343,32 +343,32 @@ import Layout from '../layouts/Layout.astro';
 
 .form-group label {
   font-weight: 600;
-  color: var(--brown);
+  color: var(--text-muted);
   margin-bottom: 0.5rem;
   font-size: 0.95rem;
 }
 
 .required {
-  color: var(--crimson);
+  color: var(--laterite-red);
   margin-left: 3px;
 }
 
 .form-group input,
 .form-group select {
   padding: 0.9rem 1rem;
-  border: 2px solid var(--cream-dark);
+  border: 2px solid var(--bg-alt);
   border-radius: 8px;
   font-size: 1rem;
   font-family: 'Crimson Text', serif;
   transition: all 0.3s ease;
-  background: white;
+  background: var(--bg-base);
 }
 
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: var(--emerald);
-  box-shadow: 0 0 0 3px rgba(13, 92, 61, 0.1);
+  border-color: var(--laterite-red);
+  box-shadow: 0 0 0 3px rgba(82, 14, 9, 0.1);
 }
 
 .form-group input::placeholder {
@@ -395,18 +395,18 @@ import Layout from '../layouts/Layout.astro';
   gap: 0.8rem;
   cursor: pointer;
   font-size: 1rem;
-  color: var(--brown);
+  color: var(--text-muted);
 }
 
 .checkbox-label input[type="checkbox"] {
   width: 20px;
   height: 20px;
   cursor: pointer;
-  accent-color: var(--emerald);
+  accent-color: var(--laterite-red);
 }
 
 .checkbox-label a {
-  color: var(--emerald);
+  color: var(--laterite-red);
   text-decoration: underline;
 }
 
@@ -416,23 +416,23 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .btn-submit {
-  background: var(--crimson);
+  background: var(--laterite-red);
   color: white;
   padding: 1.2rem 4rem;
   font-size: 1.1rem;
   font-weight: 600;
   border: none;
-  border-radius: 50px;
+  border-radius: 2px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(139, 38, 53, 0.3);
+  box-shadow: 0 8px 25px rgba(122, 25, 18, 0.3);
   font-family: 'Crimson Text', serif;
 }
 
 .btn-submit:hover {
-  background: var(--crimson-light);
+  background: var(--saffron);
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(139, 38, 53, 0.4);
+  box-shadow: 0 12px 35px rgba(122, 25, 18, 0.4);
 }
 
 .btn-submit:disabled {
@@ -444,11 +444,11 @@ import Layout from '../layouts/Layout.astro';
 .login-link {
   margin-top: 1.5rem;
   font-size: 1rem;
-  color: var(--brown);
+  color: var(--text-muted);
 }
 
 .login-link a {
-  color: var(--emerald);
+  color: var(--laterite-red);
   font-weight: 600;
   text-decoration: none;
 }

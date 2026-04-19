@@ -324,8 +324,8 @@ import Layout from '../layouts/Layout.astro';
   align-items: center;
   justify-content: center;
   background: 
-    linear-gradient(rgba(8, 61, 41, 0.85), rgba(8, 61, 41, 0.85)),
-    url('https://images.unsplash.com/photo-1604514628550-d9d57f965ff0?w=1600&h=600&fit=crop&q=80') center/cover;
+    linear-gradient(rgba(82, 14, 9, 0.85), rgba(82, 14, 9, 0.85)),
+    url('/images/temple%20main%20entrance.jpg') center/cover;
   padding: 8rem 2rem 4rem;
   text-align: center;
 }
@@ -355,7 +355,7 @@ import Layout from '../layouts/Layout.astro';
 
 .poojas-hero p {
   font-size: 1.3rem;
-  color: var(--cream);
+  color: var(--bg-alt);
   line-height: 1.6;
 }
 
@@ -367,7 +367,7 @@ import Layout from '../layouts/Layout.astro';
 
 /* Filter Tabs */
 .filter-section {
-  background: white;
+  background: var(--bg-base);
   padding: 2rem 2rem 0;
   position: sticky;
   top: 80px;
@@ -386,10 +386,10 @@ import Layout from '../layouts/Layout.astro';
 
 .filter-tab {
   padding: 0.8rem 2rem;
-  border: 2px solid var(--cream-dark);
-  background: white;
-  color: var(--brown);
-  border-radius: 50px;
+  border: 2px solid var(--bg-alt);
+  background: var(--bg-base);
+  color: var(--text-muted);
+  border-radius: 2px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -397,20 +397,20 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .filter-tab:hover {
-  border-color: var(--emerald);
-  color: var(--emerald);
+  border-color: var(--laterite-red);
+  color: var(--laterite-red);
 }
 
 .filter-tab.active {
-  background: var(--emerald);
-  border-color: var(--emerald);
+  background: var(--laterite-red);
+  border-color: var(--laterite-red);
   color: white;
 }
 
 /* Poojas Grid */
 .poojas-grid-section {
   padding: 4rem 2rem;
-  background: var(--cream);
+  background: var(--bg-alt);
 }
 
 .poojas-container {
@@ -420,13 +420,13 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .pooja-card {
-  background: white;
+  background: var(--bg-base);
   border-radius: 15px;
   padding: 2.5rem;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
   position: relative;
-  border-top: 4px solid var(--emerald);
+  border-top: 4px solid var(--laterite-red);
 }
 
 .pooja-card:hover {
@@ -435,7 +435,7 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .pooja-card.featured {
-  border-top-color: var(--crimson);
+  border-top-color: var(--laterite-red);
   background: linear-gradient(135deg, #fff9f0 0%, white 100%);
 }
 
@@ -454,27 +454,27 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .monthly-badge {
-  background: var(--emerald);
+  background: var(--laterite-red);
   color: white;
 }
 
 .quarterly-badge {
   background: var(--gold);
-  color: var(--brown);
+  color: var(--text-muted);
 }
 
 .annual-badge {
-  background: var(--crimson);
+  background: var(--laterite-red);
   color: white;
 }
 
 .special-badge {
   background: var(--gold-light);
-  color: var(--brown);
+  color: var(--text-muted);
 }
 
 .onsite-badge {
-  background: var(--brown);
+  background: var(--text-muted);
   color: white;
 }
 
@@ -482,20 +482,20 @@ import Layout from '../layouts/Layout.astro';
   position: absolute;
   top: -12px;
   right: 20px;
-  background: var(--crimson);
+  background: var(--laterite-red);
   color: white;
   padding: 0.4rem 1.2rem;
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 700;
-  box-shadow: 0 4px 15px rgba(139, 38, 53, 0.3);
+  box-shadow: 0 4px 15px rgba(122, 25, 18, 0.3);
 }
 
 .pooja-card h3 {
   font-family: 'Cormorant Garamond', serif;
   font-size: 2rem;
   font-weight: 700;
-  color: var(--emerald);
+  color: var(--laterite-red);
   margin-bottom: 0.5rem;
 }
 
@@ -510,30 +510,30 @@ import Layout from '../layouts/Layout.astro';
 .pooja-description {
   font-size: 1.05rem;
   line-height: 1.7;
-  color: var(--brown);
+  color: var(--text-muted);
   margin-bottom: 1.5rem;
 }
 
 .pooja-benefits {
-  background: var(--cream);
+  background: var(--bg-alt);
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 1.5rem;
   font-size: 0.95rem;
   line-height: 1.6;
-  color: var(--brown);
+  color: var(--text-muted);
 }
 
 .pooja-benefits strong {
-  color: var(--emerald);
+  color: var(--laterite-red);
 }
 
 .pooja-pricing {
   text-align: center;
   padding: 1.5rem 0;
   margin-bottom: 1.5rem;
-  border-top: 2px solid var(--cream);
-  border-bottom: 2px solid var(--cream);
+  border-top: 2px solid var(--bg-alt);
+  border-bottom: 2px solid var(--bg-alt);
 }
 
 .price-label {
@@ -547,7 +547,7 @@ import Layout from '../layouts/Layout.astro';
   font-family: 'Cormorant Garamond', serif;
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--emerald);
+  color: var(--laterite-red);
   display: block;
 }
 
@@ -569,7 +569,7 @@ import Layout from '../layouts/Layout.astro';
 .btn-book {
   flex: 1;
   padding: 1rem;
-  border-radius: 50px;
+  border-radius: 2px;
   text-align: center;
   text-decoration: none;
   font-weight: 600;
@@ -577,24 +577,24 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .btn-details {
-  background: white;
-  color: var(--emerald);
-  border: 2px solid var(--emerald);
+  background: var(--bg-base);
+  color: var(--laterite-red);
+  border: 2px solid var(--laterite-red);
 }
 
 .btn-details:hover {
-  background: var(--emerald);
+  background: var(--laterite-red);
   color: white;
 }
 
 .btn-book {
-  background: var(--crimson);
+  background: var(--laterite-red);
   color: white;
-  border: 2px solid var(--crimson);
+  border: 2px solid var(--laterite-red);
 }
 
 .btn-book:hover {
-  background: var(--crimson-light);
+  background: var(--saffron);
   transform: translateY(-2px);
 }
 
@@ -602,7 +602,7 @@ import Layout from '../layouts/Layout.astro';
   margin-top: 1rem;
   padding: 0.8rem;
   background: #fff3cd;
-  border-left: 4px solid var(--crimson);
+  border-left: 4px solid var(--laterite-red);
   border-radius: 8px;
   text-align: center;
 }
@@ -610,7 +610,7 @@ import Layout from '../layouts/Layout.astro';
 .spots-text {
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--crimson);
+  color: var(--laterite-red);
 }
 
 .onsite-note {
@@ -619,14 +619,14 @@ import Layout from '../layouts/Layout.astro';
   color: #666;
   font-style: italic;
   padding: 0.8rem;
-  background: var(--cream);
+  background: var(--bg-alt);
   border-radius: 8px;
 }
 
 /* Guidance Section */
 .guidance-section {
   padding: 5rem 2rem;
-  background: var(--emerald-dark);
+  background: var(--laterite-dark);
   text-align: center;
 }
 
@@ -645,7 +645,7 @@ import Layout from '../layouts/Layout.astro';
 
 .guidance-intro {
   font-size: 1.2rem;
-  color: var(--cream);
+  color: var(--bg-alt);
   margin-bottom: 3rem;
 }
 
@@ -671,7 +671,7 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .guidance-option p {
-  color: var(--cream);
+  color: var(--bg-alt);
   margin-bottom: 1.5rem;
   line-height: 1.7;
 }
@@ -680,9 +680,9 @@ import Layout from '../layouts/Layout.astro';
   display: inline-block;
   padding: 1rem 2rem;
   background: var(--gold);
-  color: var(--brown);
+  color: var(--text-muted);
   text-decoration: none;
-  border-radius: 50px;
+  border-radius: 2px;
   font-weight: 600;
   transition: all 0.3s ease;
 }
@@ -695,7 +695,7 @@ import Layout from '../layouts/Layout.astro';
 /* Info Section */
 .info-section {
   padding: 5rem 2rem;
-  background: white;
+  background: var(--bg-base);
 }
 
 .info-grid {
@@ -705,17 +705,17 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .info-card {
-  background: var(--cream);
+  background: var(--bg-alt);
   padding: 2.5rem;
   border-radius: 15px;
-  border-left: 5px solid var(--emerald);
+  border-left: 5px solid var(--laterite-red);
 }
 
 .info-card h3 {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--emerald);
+  color: var(--laterite-red);
   margin-bottom: 1.5rem;
 }
 
@@ -727,7 +727,7 @@ import Layout from '../layouts/Layout.astro';
 .info-card li {
   margin-bottom: 0.8rem;
   line-height: 1.7;
-  color: var(--brown);
+  color: var(--text-muted);
 }
 
 /* Filter Functionality */

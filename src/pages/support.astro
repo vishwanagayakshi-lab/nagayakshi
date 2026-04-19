@@ -316,7 +316,7 @@ import Layout from '../layouts/Layout.astro';
       <div class="impact-grid">
         <div class="impact-card">
           <div class="impact-image">
-            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop&q=80" alt="Restored Kavu" style="filter: sepia(0.2);">
+            <img src="/images/temple1.jpg" alt="Restored Kavu" style="filter: sepia(0.2);">
           </div>
           <div class="impact-content">
             <h3>Shankarodath Kavu Restoration</h3>
@@ -336,7 +336,7 @@ import Layout from '../layouts/Layout.astro';
         
         <div class="impact-card">
           <div class="impact-image">
-            <img src="https://images.unsplash.com/photo-1571225008320-f1c13df6ec7c?w=600&h=400&fit=crop&q=80" alt="Temple cow" style="filter: sepia(0.2);">
+            <img src="/images/temple.jpg" alt="Temple cow" style="filter: sepia(0.2);">
           </div>
           <div class="impact-content">
             <h3>Go Shala (Cow Shelter)</h3>
@@ -356,7 +356,7 @@ import Layout from '../layouts/Layout.astro';
         
         <div class="impact-card">
           <div class="impact-image">
-            <img src="https://images.unsplash.com/photo-1604514628550-d9d57f965ff0?w=600&h=400&fit=crop&q=80" alt="Free prasadam" style="filter: sepia(0.2);">
+            <img src="/images/Divine%20connection.jpg" alt="Free prasadam" style="filter: sepia(0.2);">
           </div>
           <div class="impact-content">
             <h3>Free Services Fund</h3>
@@ -408,8 +408,8 @@ import Layout from '../layouts/Layout.astro';
   align-items: center;
   justify-content: center;
   background: 
-    linear-gradient(rgba(13, 92, 61, 0.88), rgba(13, 92, 61, 0.88)),
-    url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1600&h=900&fit=crop&q=80') center/cover;
+    linear-gradient(rgba(82, 14, 9, 0.88), rgba(82, 14, 9, 0.88)),
+    url('/images/temple1.jpg') center/cover;
   padding: 8rem 2rem 4rem;
   text-align: center;
 }
@@ -470,14 +470,14 @@ import Layout from '../layouts/Layout.astro';
   font-family: 'Cormorant Garamond', serif;
   font-size: 3rem;
   font-weight: 700;
-  color: var(--emerald);
+  color: var(--laterite-red);
   margin-bottom: 1rem;
 }
 
 /* Mission Section */
 .mission-section {
   padding: 6rem 2rem;
-  background: white;
+  background: var(--bg-base);
 }
 
 .mission-content {
@@ -490,7 +490,7 @@ import Layout from '../layouts/Layout.astro';
 .mission-lead {
   font-size: 1.3rem;
   line-height: 1.9;
-  color: var(--emerald-dark);
+  color: var(--laterite-dark);
   font-weight: 500;
   margin-bottom: 1.5rem;
 }
@@ -498,12 +498,12 @@ import Layout from '../layouts/Layout.astro';
 .mission-text p {
   font-size: 1.1rem;
   line-height: 1.9;
-  color: var(--brown);
+  color: var(--text-muted);
   margin-bottom: 1.5rem;
 }
 
 .mission-text strong {
-  color: var(--emerald);
+  color: var(--laterite-red);
 }
 
 .mission-stats {
@@ -515,38 +515,38 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .stat-card {
-  background: var(--cream);
+  background: var(--bg-alt);
   padding: 2rem;
   border-radius: 15px;
   text-align: center;
-  border-left: 5px solid var(--emerald);
+  border-left: 5px solid var(--laterite-red);
 }
 
 .stat-number {
   font-family: 'Cormorant Garamond', serif;
   font-size: 4rem;
   font-weight: 700;
-  color: var(--emerald);
+  color: var(--laterite-red);
   line-height: 1;
 }
 
 .stat-label {
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--emerald-dark);
+  color: var(--laterite-dark);
   margin-top: 0.5rem;
 }
 
 .stat-detail {
   font-size: 0.95rem;
-  color: var(--brown);
+  color: var(--text-muted);
   margin-top: 0.5rem;
 }
 
 /* Challenge Section */
 .challenge-section {
   padding: 6rem 2rem;
-  background: var(--cream);
+  background: var(--bg-alt);
 }
 
 .challenge-grid {
@@ -556,7 +556,7 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .challenge-card {
-  background: white;
+  background: var(--bg-base);
   padding: 2.5rem;
   border-radius: 15px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
@@ -572,20 +572,20 @@ import Layout from '../layouts/Layout.astro';
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--emerald);
+  color: var(--laterite-red);
   margin-bottom: 1rem;
 }
 
 .challenge-card p {
   font-size: 1.05rem;
   line-height: 1.8;
-  color: var(--brown);
+  color: var(--text-muted);
 }
 
 /* Support Options */
 .support-options-section {
   padding: 6rem 2rem;
-  background: white;
+  background: var(--bg-base);
 }
 
 .support-grid {
@@ -595,7 +595,7 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .support-option {
-  background: var(--cream);
+  background: var(--bg-alt);
   padding: 3rem;
   border-radius: 20px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
@@ -611,14 +611,14 @@ import Layout from '../layouts/Layout.astro';
   position: absolute;
   top: -15px;
   right: 20px;
-  background: var(--crimson);
+  background: var(--laterite-red);
   color: white;
   padding: 0.5rem 1.5rem;
   border-radius: 25px;
   font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
-  box-shadow: 0 5px 20px rgba(139, 38, 53, 0.3);
+  box-shadow: 0 5px 20px rgba(122, 25, 18, 0.3);
 }
 
 .option-icon {
@@ -631,7 +631,7 @@ import Layout from '../layouts/Layout.astro';
   font-family: 'Cormorant Garamond', serif;
   font-size: 2rem;
   font-weight: 700;
-  color: var(--emerald);
+  color: var(--laterite-red);
   margin-bottom: 1rem;
   text-align: center;
 }
@@ -639,7 +639,7 @@ import Layout from '../layouts/Layout.astro';
 .option-description {
   font-size: 1.05rem;
   line-height: 1.8;
-  color: var(--brown);
+  color: var(--text-muted);
   margin-bottom: 2rem;
 }
 
@@ -651,7 +651,7 @@ import Layout from '../layouts/Layout.astro';
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.3rem;
   font-weight: 700;
-  color: var(--emerald-dark);
+  color: var(--laterite-dark);
   margin-bottom: 1rem;
 }
 
@@ -675,13 +675,13 @@ import Layout from '../layouts/Layout.astro';
   content: '✓';
   position: absolute;
   left: 0;
-  color: var(--emerald);
+  color: var(--laterite-red);
   font-weight: 700;
   font-size: 1.2rem;
 }
 
 .option-pricing {
-  background: white;
+  background: var(--bg-base);
   padding: 2rem;
   border-radius: 12px;
   margin-bottom: 2rem;
@@ -698,20 +698,20 @@ import Layout from '../layouts/Layout.astro';
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background: var(--cream);
+  background: var(--bg-alt);
   border-radius: 8px;
 }
 
 .tier-name {
   font-weight: 600;
-  color: var(--brown);
+  color: var(--text-muted);
 }
 
 .tier-price {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--emerald);
+  color: var(--laterite-red);
 }
 
 .donation-amounts {
@@ -722,9 +722,9 @@ import Layout from '../layouts/Layout.astro';
 
 .amount-btn {
   padding: 1rem;
-  border: 2px solid var(--emerald);
-  background: white;
-  color: var(--emerald);
+  border: 2px solid var(--laterite-red);
+  background: var(--bg-base);
+  color: var(--laterite-red);
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
@@ -732,7 +732,7 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .amount-btn:hover {
-  background: var(--emerald);
+  background: var(--laterite-red);
   color: white;
 }
 
@@ -740,31 +740,31 @@ import Layout from '../layouts/Layout.astro';
   grid-column: 1 / -1;
   background: var(--gold);
   border-color: var(--gold);
-  color: var(--brown);
+  color: var(--text-muted);
 }
 
 .btn-support {
   display: block;
   padding: 1.2rem;
-  background: var(--crimson);
+  background: var(--laterite-red);
   color: white;
   text-align: center;
   text-decoration: none;
-  border-radius: 50px;
+  border-radius: 2px;
   font-weight: 600;
   font-size: 1.1rem;
   transition: all 0.3s ease;
 }
 
 .btn-support:hover {
-  background: var(--crimson-light);
+  background: var(--saffron);
   transform: translateY(-3px);
 }
 
 /* Tax Section */
 .tax-section {
   padding: 4rem 2rem;
-  background: var(--emerald-dark);
+  background: var(--laterite-dark);
 }
 
 .tax-content {
@@ -781,7 +781,7 @@ import Layout from '../layouts/Layout.astro';
 
 .tax-intro {
   font-size: 1.1rem;
-  color: var(--cream);
+  color: var(--bg-alt);
   max-width: 800px;
   margin: 0 auto 3rem;
   line-height: 1.8;
@@ -809,14 +809,14 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .tax-item p {
-  color: var(--cream);
+  color: var(--bg-alt);
   line-height: 1.7;
 }
 
 /* Impact Section */
 .impact-section {
   padding: 6rem 2rem;
-  background: var(--cream);
+  background: var(--bg-alt);
 }
 
 .impact-grid {
@@ -825,7 +825,7 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .impact-card {
-  background: white;
+  background: var(--bg-base);
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
@@ -848,7 +848,7 @@ import Layout from '../layouts/Layout.astro';
   font-family: 'Cormorant Garamond', serif;
   font-size: 2rem;
   font-weight: 700;
-  color: var(--emerald);
+  color: var(--laterite-red);
   margin-bottom: 0.5rem;
 }
 
@@ -862,7 +862,7 @@ import Layout from '../layouts/Layout.astro';
 .impact-content p {
   font-size: 1.05rem;
   line-height: 1.8;
-  color: var(--brown);
+  color: var(--text-muted);
   margin-bottom: 1.5rem;
 }
 
@@ -874,17 +874,17 @@ import Layout from '../layouts/Layout.astro';
 
 .impact-stats-mini span {
   padding: 0.6rem 1.2rem;
-  background: var(--cream);
+  background: var(--bg-alt);
   border-radius: 25px;
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--emerald-dark);
+  color: var(--laterite-dark);
 }
 
 /* CTA Section */
 .cta-section {
   padding: 6rem 2rem;
-  background: var(--emerald);
+  background: var(--laterite-red);
   text-align: center;
 }
 
@@ -903,7 +903,7 @@ import Layout from '../layouts/Layout.astro';
 
 .cta-text {
   font-size: 1.3rem;
-  color: var(--cream);
+  color: var(--bg-alt);
   line-height: 1.9;
   margin-bottom: 3rem;
 }
@@ -919,7 +919,7 @@ import Layout from '../layouts/Layout.astro';
 .btn-cta-primary,
 .btn-cta-secondary {
   padding: 1.5rem 3.5rem;
-  border-radius: 50px;
+  border-radius: 2px;
   text-decoration: none;
   font-weight: 600;
   font-size: 1.2rem;
@@ -928,7 +928,7 @@ import Layout from '../layouts/Layout.astro';
 
 .btn-cta-primary {
   background: var(--gold);
-  color: var(--brown);
+  color: var(--text-muted);
 }
 
 .btn-cta-primary:hover {
@@ -943,14 +943,14 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .btn-cta-secondary:hover {
-  background: white;
-  color: var(--emerald);
+  background: var(--bg-base);
+  color: var(--laterite-red);
   transform: translateY(-3px);
 }
 
 .cta-note {
   font-size: 1rem;
-  color: var(--cream);
+  color: var(--bg-alt);
   font-style: italic;
 }
 

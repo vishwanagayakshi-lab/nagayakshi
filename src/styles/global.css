@@ -25,6 +25,7 @@
   --cream: #f8f4ed;
   --cream-dark: #e8dfd0;
   --brown: #3d2817;
+  --sage: #8b9d83;
 }
 
 * {
@@ -159,10 +160,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-header h2 {
-  font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Cormorant Garamond', serif;
   font-size: 3rem;
   font-weight: 700;
-  color: var(--emerald);
+  color: var(--laterite-red);
   margin-bottom: 1rem;
 }
 
@@ -183,6 +184,15 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 3px;
   margin-bottom: 1rem;
   font-weight: 600;
+}
+
+/* Inner-page action buttons — match homepage angular style */
+[class^="btn-"]:not(.filter-tab):not(.amount-btn) {
+  border-radius: 2px !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
 }
 
 @media (max-width: 768px) {
