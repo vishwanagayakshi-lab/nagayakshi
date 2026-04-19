@@ -1,0 +1,788 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Temple Poojas & Rituals | Sree Vishwanagayakshi Temple">
+  
+  <!-- Hero -->
+  <section class="poojas-hero">
+    <div class="poojas-hero-overlay"></div>
+    <div class="poojas-hero-content">
+      <h1>Sacred Rituals & Poojas</h1>
+      <p>Traditional remedies performed with Vedic authenticity for spiritual wellbeing</p>
+    </div>
+  </section>
+
+  <!-- Filter Tabs -->
+  <section class="filter-section">
+    <div class="poojas-container">
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All Poojas</button>
+        <button class="filter-tab" data-filter="monthly">Monthly</button>
+        <button class="filter-tab" data-filter="quarterly">Quarterly</button>
+        <button class="filter-tab" data-filter="annual">Annual</button>
+        <button class="filter-tab" data-filter="special">Special Events</button>
+        <button class="filter-tab" data-filter="onsite">On-Site Services</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Poojas Grid -->
+  <section class="poojas-grid-section">
+    <div class="poojas-container">
+      
+      <!-- Monthly Poojas -->
+      <div class="pooja-card" data-category="monthly">
+        <div class="pooja-badge monthly-badge">Monthly</div>
+        <h3>Ayilyam Pooja</h3>
+        <p class="pooja-deity">For Nagaraja, Nagayakshi & Sarpayakshiamma</p>
+        <p class="pooja-description">
+          The most powerful monthly remedy for Sarpa Dosha, performed on Ayilyam Nakshathra. 
+          Includes Noorum Paalum (milk & turmeric abhishekam), Payasabali, and Saparivara variants.
+        </p>
+        <div class="pooja-benefits">
+          <strong>Benefits:</strong> Sarpa Dosha relief, marriage prospects, progeny blessings, 
+          financial stability, skin ailments cure, mental peace
+        </div>
+        <div class="pooja-pricing">
+          <span class="price-label">From</span>
+          <span class="price-amount">₹1,000</span>
+          <span class="price-range">₹1,000 - ₹3,500</span>
+        </div>
+        <div class="pooja-actions">
+          <a href="/poojas/ayilyam" class="btn-details">View Details</a>
+          <a href="/register" class="btn-book">Book Now</a>
+        </div>
+      </div>
+
+      <!-- Quarterly Poojas -->
+      <div class="pooja-card" data-category="quarterly">
+        <div class="pooja-badge quarterly-badge">Quarterly</div>
+        <h3>Navagraha Homam</h3>
+        <p class="pooja-deity">For the Nine Planetary Deities</p>
+        <p class="pooja-description">
+          Powerful fire ritual to pacify malefic planetary positions and strengthen beneficial planets. 
+          Performed quarterly during auspicious times to balance planetary energies in your horoscope.
+        </p>
+        <div class="pooja-benefits">
+          <strong>Benefits:</strong> Planetary doshas relief, career obstacles removal, health 
+          improvements, relationship harmony, overall life balance
+        </div>
+        <div class="pooja-pricing">
+          <span class="price-amount">₹7,000</span>
+        </div>
+        <div class="pooja-actions">
+          <a href="/poojas/navagraha-homam" class="btn-details">View Details</a>
+          <a href="/register" class="btn-book">Book Now</a>
+        </div>
+      </div>
+
+      <div class="pooja-card" data-category="quarterly">
+        <div class="pooja-badge quarterly-badge">Quarterly</div>
+        <h3>Pratyangira Homam</h3>
+        <p class="pooja-deity">For Goddess Pratyangira</p>
+        <p class="pooja-description">
+          Intense protective ritual for removing black magic, evil eye, and negative energies. 
+          Goddess Pratyangira is invoked for her fierce protective powers against all forms of harm.
+        </p>
+        <div class="pooja-benefits">
+          <strong>Benefits:</strong> Protection from enemies, black magic removal, evil eye removal, 
+          court case victories, business protection, family safety
+        </div>
+        <div class="pooja-pricing">
+          <span class="price-amount">₹10,000</span>
+        </div>
+        <div class="pooja-actions">
+          <a href="/poojas/pratyangira-homam" class="btn-details">View Details</a>
+          <a href="/register" class="btn-book">Book Now</a>
+        </div>
+      </div>
+
+      <div class="pooja-card" data-category="quarterly">
+        <div class="pooja-badge quarterly-badge">Quarterly</div>
+        <h3>Ganapathi Homam</h3>
+        <p class="pooja-deity">For Lord Ganapati</p>
+        <p class="pooja-description">
+          Traditional fire ritual to Lord Ganesha for removing all obstacles in life, business, 
+          education, and personal endeavors. Brings auspicious beginnings and smooth progress.
+        </p>
+        <div class="pooja-benefits">
+          <strong>Benefits:</strong> Obstacle removal, business success, education excellence, 
+          new venture blessings, financial prosperity, wisdom enhancement
+        </div>
+        <div class="pooja-pricing">
+          <span class="price-amount">₹8,000</span>
+        </div>
+        <div class="pooja-actions">
+          <a href="/poojas/ganapathi-homam" class="btn-details">View Details</a>
+          <a href="/register" class="btn-book">Book Now</a>
+        </div>
+      </div>
+
+      <!-- Annual Events -->
+      <div class="pooja-card featured" data-category="annual">
+        <div class="pooja-badge annual-badge">Annual Event</div>
+        <div class="featured-tag">Most Powerful</div>
+        <h3>Kala Sarpa Bali</h3>
+        <p class="pooja-deity">For Rahu, Ketu & Kala Sarpa Deities</p>
+        <p class="pooja-description">
+          The most intensive annual remedy for severe Kala Sarpa Dosha. Multi-day ceremony performed 
+          once yearly during Ayilyam Nakshathra. Limited to 25 participants for maximum spiritual power.
+        </p>
+        <div class="pooja-benefits">
+          <strong>Benefits:</strong> Complete Kala Sarpa Dosha neutralization, marriage success, 
+          childbirth blessings, financial recovery, generational curse breaking
+        </div>
+        <div class="pooja-pricing">
+          <span class="price-amount">₹10,000</span>
+          <span class="duration">2-3 Days</span>
+        </div>
+        <div class="pooja-actions">
+          <a href="/poojas/kala-sarpa-bali" class="btn-details">View Details</a>
+          <a href="/register" class="btn-book">Register Now</a>
+        </div>
+        <div class="limited-spots">
+          <span class="spots-text">⚠️ Limited to 25 participants - Book early!</span>
+        </div>
+      </div>
+
+      <!-- Special Poojas -->
+      <div class="pooja-card" data-category="special">
+        <div class="pooja-badge special-badge">Special Pooja</div>
+        <h3>Guruthi Pooja</h3>
+        <p class="pooja-deity">For Goddess Badrakali</p>
+        <p class="pooja-description">
+          Powerful offering ceremony to Goddess Badrakali for protection, enemy destruction, and 
+          fulfillment of specific wishes. Traditional ritual involving special offerings and mantras.
+        </p>
+        <div class="pooja-benefits">
+          <strong>Benefits:</strong> Enemy defeat, litigation victories, protection from harm, 
+          wish fulfillment, business rivals removal, family protection
+        </div>
+        <div class="pooja-pricing">
+          <span class="price-amount">₹5,000</span>
+        </div>
+        <div class="pooja-actions">
+          <a href="/poojas/guruthi-pooja" class="btn-details">View Details</a>
+          <a href="/register" class="btn-book">Book Now</a>
+        </div>
+      </div>
+
+      <div class="pooja-card" data-category="monthly">
+        <div class="pooja-badge monthly-badge">As Needed</div>
+        <h3>Kala Sarpa Shanti Homam</h3>
+        <p class="pooja-deity">For Rahu & Ketu</p>
+        <p class="pooja-description">
+          Monthly fire ritual for mild to moderate Kala Sarpa Dosha. Less intensive than the 
+          annual Bali but highly effective for ongoing relief and protection.
+        </p>
+        <div class="pooja-benefits">
+          <strong>Benefits:</strong> Kala Sarpa effects mitigation, relationship harmony, 
+          career progress, health improvements, mental clarity
+        </div>
+        <div class="pooja-pricing">
+          <span class="price-amount">₹5,000</span>
+        </div>
+        <div class="pooja-actions">
+          <a href="/poojas/kala-sarpa-shanti" class="btn-details">View Details</a>
+          <a href="/register" class="btn-book">Book Now</a>
+        </div>
+      </div>
+
+      <!-- On-Site Services -->
+      <div class="pooja-card onsite-card" data-category="onsite">
+        <div class="pooja-badge onsite-badge">On-Site Service</div>
+        <h3>Griha Pravesham & Naga Avahanam</h3>
+        <p class="pooja-deity">House Blessing & Sarpa Protection Installation</p>
+        <p class="pooja-description">
+          Complete house warming ceremony combined with installation of Sarpa protection energies 
+          in your new home. Priests travel to your location with all ritual materials.
+        </p>
+        <div class="pooja-benefits">
+          <strong>Benefits:</strong> Home purification, Vastu doshas removal, Sarpa protection, 
+          family harmony, prosperity blessings, negative energy clearance
+        </div>
+        <div class="pooja-pricing">
+          <span class="price-amount">₹85,000</span>
+          <span class="breakdown">(₹60,000 ritual + ₹25,000 materials)</span>
+        </div>
+        <div class="pooja-actions">
+          <a href="/poojas/griha-pravesham" class="btn-details">View Details</a>
+          <a href="/register" class="btn-book">Request Quote</a>
+        </div>
+        <div class="onsite-note">
+          Host arranges: Travel for 6 people, accommodation, local transport
+        </div>
+      </div>
+
+      <div class="pooja-card onsite-card" data-category="onsite">
+        <div class="pooja-badge onsite-badge">On-Site Service</div>
+        <h3>On-Site Sarpa Pooja</h3>
+        <p class="pooja-deity">At Your Location</p>
+        <p class="pooja-description">
+          Any of our temple poojas can be performed at your home, office, or property. Ideal 
+          for those who cannot travel to Kerala or need ritual performed at specific location.
+        </p>
+        <div class="pooja-benefits">
+          <strong>Benefits:</strong> Location-specific blessings, convenience for elderly/sick, 
+          property purification, personalized attention
+        </div>
+        <div class="pooja-pricing">
+          <span class="price-label">From</span>
+          <span class="price-amount">₹15,000</span>
+          <span class="price-range">Varies by ritual & location</span>
+        </div>
+        <div class="pooja-actions">
+          <a href="/contact" class="btn-details">Contact for Quote</a>
+          <a href="/register" class="btn-book">Inquire</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Not Sure Section -->
+  <section class="guidance-section">
+    <div class="guidance-container">
+      <h2>Not Sure Which Pooja to Choose?</h2>
+      <p class="guidance-intro">
+        Different life situations require different spiritual remedies. Let us help you choose the right pooja.
+      </p>
+      
+      <div class="guidance-grid">
+        <div class="guidance-option">
+          <h3>📞 Call for Guidance</h3>
+          <p>Speak with our temple staff or Ambotti Thampuran for personalized recommendation</p>
+          <a href="tel:+919946373522" class="btn-guidance">Call: +91 9946373522</a>
+        </div>
+        
+        <div class="guidance-option">
+          <h3>📋 Use Our Guide</h3>
+          <p>Check our detailed protocols page to understand which ritual is appropriate for your situation</p>
+          <a href="/protocols" class="btn-guidance">View Protocols Guide</a>
+        </div>
+        
+        <div class="guidance-option">
+          <h3>💬 WhatsApp Us</h3>
+          <p>Send your birth details and situation description for personalized guidance</p>
+          <a href="https://wa.me/919946373522" class="btn-guidance" target="_blank">WhatsApp Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- General Information -->
+  <section class="info-section">
+    <div class="poojas-container">
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>How to Book</h3>
+          <ol>
+            <li>Click "Book Now" on any pooja</li>
+            <li>Create account or login</li>
+            <li>Select date and variant (if applicable)</li>
+            <li>Make payment online</li>
+            <li>Receive confirmation via email/SMS</li>
+          </ol>
+        </div>
+        
+        <div class="info-card">
+          <h3>What You'll Receive</h3>
+          <ul>
+            <li>Confirmation with exact date & time</li>
+            <li>Pre-pooja preparation guidelines</li>
+            <li>WhatsApp updates during ceremony</li>
+            <li>Photos/videos of your ritual</li>
+            <li>Prasadam couriered to your address</li>
+            <li>Post-pooja instructions & follow-up</li>
+          </ul>
+        </div>
+        
+        <div class="info-card">
+          <h3>Important Notes</h3>
+          <ul>
+            <li>All poojas performed by trained Vedic priests</li>
+            <li>Sankalpa (intention) uses your birth details</li>
+            <li>In-person participation always welcome</li>
+            <li>Advance booking required for annual events</li>
+            <li>Custom timings available on request</li>
+            <li>Group bookings get special coordination</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+/* Poojas Listing Page Styles */
+.poojas-hero {
+  position: relative;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: 
+    linear-gradient(rgba(8, 61, 41, 0.85), rgba(8, 61, 41, 0.85)),
+    url('https://images.unsplash.com/photo-1604514628550-d9d57f965ff0?w=1600&h=600&fit=crop&q=80') center/cover;
+  padding: 8rem 2rem 4rem;
+  text-align: center;
+}
+
+.poojas-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(212, 165, 116, 0.15) 0%, transparent 70%);
+}
+
+.poojas-hero-content {
+  max-width: 800px;
+  position: relative;
+  z-index: 10;
+}
+
+.poojas-hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.poojas-hero p {
+  font-size: 1.3rem;
+  color: var(--cream);
+  line-height: 1.6;
+}
+
+.poojas-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Filter Tabs */
+.filter-section {
+  background: white;
+  padding: 2rem 2rem 0;
+  position: sticky;
+  top: 80px;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  padding: 0.8rem 2rem;
+  border: 2px solid var(--cream-dark);
+  background: white;
+  color: var(--brown);
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.filter-tab:hover {
+  border-color: var(--emerald);
+  color: var(--emerald);
+}
+
+.filter-tab.active {
+  background: var(--emerald);
+  border-color: var(--emerald);
+  color: white;
+}
+
+/* Poojas Grid */
+.poojas-grid-section {
+  padding: 4rem 2rem;
+  background: var(--cream);
+}
+
+.poojas-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 2.5rem;
+}
+
+.pooja-card {
+  background: white;
+  border-radius: 15px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  border-top: 4px solid var(--emerald);
+}
+
+.pooja-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+}
+
+.pooja-card.featured {
+  border-top-color: var(--crimson);
+  background: linear-gradient(135deg, #fff9f0 0%, white 100%);
+}
+
+.pooja-card.onsite-card {
+  border-top-color: var(--gold);
+}
+
+.pooja-badge {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.monthly-badge {
+  background: var(--emerald);
+  color: white;
+}
+
+.quarterly-badge {
+  background: var(--gold);
+  color: var(--brown);
+}
+
+.annual-badge {
+  background: var(--crimson);
+  color: white;
+}
+
+.special-badge {
+  background: var(--gold-light);
+  color: var(--brown);
+}
+
+.onsite-badge {
+  background: var(--brown);
+  color: white;
+}
+
+.featured-tag {
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  background: var(--crimson);
+  color: white;
+  padding: 0.4rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(139, 38, 53, 0.3);
+}
+
+.pooja-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--emerald);
+  margin-bottom: 0.5rem;
+}
+
+.pooja-deity {
+  font-size: 1rem;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.pooja-description {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--brown);
+  margin-bottom: 1.5rem;
+}
+
+.pooja-benefits {
+  background: var(--cream);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--brown);
+}
+
+.pooja-benefits strong {
+  color: var(--emerald);
+}
+
+.pooja-pricing {
+  text-align: center;
+  padding: 1.5rem 0;
+  margin-bottom: 1.5rem;
+  border-top: 2px solid var(--cream);
+  border-bottom: 2px solid var(--cream);
+}
+
+.price-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.3rem;
+}
+
+.price-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--emerald);
+  display: block;
+}
+
+.price-range,
+.duration,
+.breakdown {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.pooja-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-details,
+.btn-book {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 50px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-details {
+  background: white;
+  color: var(--emerald);
+  border: 2px solid var(--emerald);
+}
+
+.btn-details:hover {
+  background: var(--emerald);
+  color: white;
+}
+
+.btn-book {
+  background: var(--crimson);
+  color: white;
+  border: 2px solid var(--crimson);
+}
+
+.btn-book:hover {
+  background: var(--crimson-light);
+  transform: translateY(-2px);
+}
+
+.limited-spots {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  background: #fff3cd;
+  border-left: 4px solid var(--crimson);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.spots-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--crimson);
+}
+
+.onsite-note {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+  padding: 0.8rem;
+  background: var(--cream);
+  border-radius: 8px;
+}
+
+/* Guidance Section */
+.guidance-section {
+  padding: 5rem 2rem;
+  background: var(--emerald-dark);
+  text-align: center;
+}
+
+.guidance-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.guidance-section h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin-bottom: 1rem;
+}
+
+.guidance-intro {
+  font-size: 1.2rem;
+  color: var(--cream);
+  margin-bottom: 3rem;
+}
+
+.guidance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+}
+
+.guidance-option {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2.5rem;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.guidance-option h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  color: var(--gold-light);
+  margin-bottom: 1rem;
+}
+
+.guidance-option p {
+  color: var(--cream);
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+}
+
+.btn-guidance {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: var(--gold);
+  color: var(--brown);
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-guidance:hover {
+  background: var(--gold-light);
+  transform: translateY(-3px);
+}
+
+/* Info Section */
+.info-section {
+  padding: 5rem 2rem;
+  background: white;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+}
+
+.info-card {
+  background: var(--cream);
+  padding: 2.5rem;
+  border-radius: 15px;
+  border-left: 5px solid var(--emerald);
+}
+
+.info-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--emerald);
+  margin-bottom: 1.5rem;
+}
+
+.info-card ol,
+.info-card ul {
+  margin: 0 0 0 1.5rem;
+}
+
+.info-card li {
+  margin-bottom: 0.8rem;
+  line-height: 1.7;
+  color: var(--brown);
+}
+
+/* Filter Functionality */
+.pooja-card[data-category] {
+  display: block;
+}
+
+.pooja-card[data-category].hidden {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .poojas-hero h1 {
+    font-size: 3rem;
+  }
+  
+  .filter-tabs {
+    justify-content: flex-start;
+  }
+  
+  .poojas-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .pooja-actions {
+    flex-direction: column;
+  }
+}
+</style>
+
+<script>
+// Filter functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const filterTabs = document.querySelectorAll('.filter-tab');
+  const poojaCards = document.querySelectorAll('.pooja-card');
+  
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      const filter = this.getAttribute('data-filter');
+      
+      // Update active tab
+      filterTabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Filter cards
+      poojaCards.forEach(card => {
+        if (filter === 'all') {
+          card.style.display = 'block';
+        } else {
+          const category = card.getAttribute('data-category');
+          card.style.display = category === filter ? 'block' : 'none';
+        }
+      });
+    });
+  });
+});
+</script>
