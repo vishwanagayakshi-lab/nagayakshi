@@ -20,7 +20,6 @@ import Layout from '../layouts/Layout.astro';
       <div class="filter-tabs">
         <button class="filter-tab active" data-filter="all">All Poojas</button>
         <button class="filter-tab" data-filter="monthly">Monthly</button>
-        <button class="filter-tab" data-filter="quarterly">Quarterly</button>
         <button class="filter-tab" data-filter="annual">Annual</button>
         <button class="filter-tab" data-filter="special">Special Events</button>
         <button class="filter-tab" data-filter="onsite">On-Site Services</button>
@@ -29,7 +28,6 @@ import Layout from '../layouts/Layout.astro';
       <select class="filter-select" id="filter-select">
         <option value="all">All Poojas</option>
         <option value="monthly">Monthly</option>
-        <option value="quarterly">Quarterly</option>
         <option value="annual">Annual</option>
         <option value="special">Special Events</option>
         <option value="onsite">On-Site Services</option>
@@ -55,80 +53,27 @@ import Layout from '../layouts/Layout.astro';
             The most powerful monthly remedy for Sarpa Dosha, performed on Ayilyam Nakshathra.
             Includes Noorum Paalum, Payasabali, and Saparivara variants.
           </p>
-          <div class="pooja-pricing">
-            <span class="price-label">From</span>
-            <span class="price-amount">&#8377;1,000</span>
-            <span class="price-range">&#8377;1,000 &#8211; &#8377;3,500</span>
-          </div>
           <div class="pooja-actions">
-            <a href="/register" class="btn-book">Book Now</a>
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
           </div>
         </div>
       </div>
 
-      <!-- Quarterly Poojas -->
-      <div class="pooja-card" data-category="quarterly">
-        <a href="/poojas/navagraha-homam" class="card-link" aria-label="Navagraha Homam details"></a>
+      <div class="pooja-card" data-category="monthly">
+        <a href="/poojas/noorum-paalum" class="card-link" aria-label="Noorum Paalum details"></a>
         <div class="card-image">
-          <img src="/images/Navagraha%20Homam.jpg" alt="Navagraha Homam">
+          <img src="/images/Noorum%20Paalum.jpeg" alt="Noorum Paalum">
         </div>
         <div class="card-body">
-          <div class="pooja-badge quarterly-badge">Quarterly</div>
-          <h3>Navagraha Homam</h3>
-          <p class="pooja-deity">For the Nine Planetary Deities</p>
+          <div class="pooja-badge monthly-badge">Monthly</div>
+          <h3>Noorum Paalum</h3>
+          <p class="pooja-deity">For Naga Deities</p>
           <p class="pooja-description">
-            Powerful fire ritual to pacify malefic planetary positions and strengthen beneficial planets.
-            Balances planetary energies in your horoscope.
+            Kerala&#8217;s most sacred Naga offering — rice flour and milk presented to the
+            divine serpents for Sarpa Dosha relief, progeny blessings, and household protection.
           </p>
-          <div class="pooja-pricing">
-            <span class="price-amount">&#8377;7,000</span>
-          </div>
           <div class="pooja-actions">
-            <a href="/register" class="btn-book">Book Now</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pooja-card" data-category="quarterly">
-        <a href="/poojas/pratyangira-homam" class="card-link" aria-label="Pratyangira Homam details"></a>
-        <div class="card-image">
-          <img src="/images/pratyangira.png" alt="Pratyangira Homam">
-        </div>
-        <div class="card-body">
-          <div class="pooja-badge quarterly-badge">Quarterly</div>
-          <h3>Pratyangira Homam</h3>
-          <p class="pooja-deity">For Goddess Pratyangira</p>
-          <p class="pooja-description">
-            Intense protective ritual for removing black magic, evil eye, and negative energies.
-            Invokes fierce protective powers against all forms of harm.
-          </p>
-          <div class="pooja-pricing">
-            <span class="price-amount">&#8377;10,000</span>
-          </div>
-          <div class="pooja-actions">
-            <a href="/register" class="btn-book">Book Now</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pooja-card" data-category="quarterly">
-        <a href="/register" class="card-link" aria-label="Ganapathi Homam booking"></a>
-        <div class="card-image">
-          <img src="/images/Tantra.jpg" alt="Ganapathi Homam">
-        </div>
-        <div class="card-body">
-          <div class="pooja-badge quarterly-badge">Quarterly</div>
-          <h3>Ganapathi Homam</h3>
-          <p class="pooja-deity">For Lord Ganapati</p>
-          <p class="pooja-description">
-            Traditional fire ritual to Lord Ganesha for removing obstacles in life, business,
-            and education. Brings auspicious beginnings and smooth progress.
-          </p>
-          <div class="pooja-pricing">
-            <span class="price-amount">&#8377;8,000</span>
-          </div>
-          <div class="pooja-actions">
-            <a href="/register" class="btn-book">Book Now</a>
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
           </div>
         </div>
       </div>
@@ -138,77 +83,159 @@ import Layout from '../layouts/Layout.astro';
         <a href="/poojas/kala-sarpa-bali" class="card-link" aria-label="Kala Sarpa Bali details"></a>
         <div class="featured-tag">Most Powerful</div>
         <div class="card-image">
-          <img src="/images/Noorum%20Paalum.jpeg" alt="Kala Sarpa Bali">
+          <img src="/images/Kala%20sarppabali%20pooja.jpeg" alt="Kala Sarpa Bali">
         </div>
         <div class="card-body">
           <div class="pooja-badge annual-badge">Annual Event</div>
           <h3>Kala Sarpa Bali</h3>
           <p class="pooja-deity">For Rahu, Ketu &amp; Kala Sarpa Deities</p>
           <p class="pooja-description">
-            The most intensive annual remedy for severe Kala Sarpa Dosha. Full-day ceremony
-            limited to 25 participants for maximum spiritual power.
+            The most intensive annual remedy for severe Kala Sarpa Dosha.
+            Full-day ceremony for comprehensive karmic healing.
           </p>
-          <div class="pooja-pricing">
-            <span class="price-amount">&#8377;10,000</span>
-            <span class="duration">Full Day</span>
-          </div>
-          <div class="limited-spots">
-            <span class="spots-text">&#9888;&#65039; Limited to 25 participants</span>
-          </div>
           <div class="pooja-actions">
-            <a href="/register" class="btn-book">Register Now</a>
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
           </div>
         </div>
       </div>
 
-      <!-- Special Poojas -->
-      <div class="pooja-card" data-category="special">
-        <a href="/poojas/guruthi-pooja" class="card-link" aria-label="Guruthi Pooja details"></a>
+      <div class="pooja-card" data-category="annual">
+        <a href="/poojas/guruthi-pooja" class="card-link" aria-label="Maha Guruthi Pooja details"></a>
         <div class="card-image">
-          <img src="/images/Divine%20connection.jpg" alt="Guruthi Pooja">
+          <img src="/images/Maha%20Guruthi%20Pooja.jpeg" alt="Maha Guruthi Pooja">
         </div>
         <div class="card-body">
-          <div class="pooja-badge special-badge">Special Pooja</div>
-          <h3>Guruthi Pooja</h3>
+          <div class="pooja-badge annual-badge">Annual Event</div>
+          <h3>Maha Guruthi Pooja</h3>
           <p class="pooja-deity">For Goddess Bhadrakali</p>
           <p class="pooja-description">
             Powerful offering ceremony to Goddess Bhadrakali for protection, enemy destruction,
             and fulfillment of specific wishes.
           </p>
-          <div class="pooja-pricing">
-            <span class="price-amount">&#8377;5,000</span>
-          </div>
           <div class="pooja-actions">
-            <a href="/register" class="btn-book">Book Now</a>
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
           </div>
         </div>
       </div>
 
-      <div class="pooja-card" data-category="monthly">
-        <a href="/register" class="card-link" aria-label="Kala Sarpa Shanti Homam booking"></a>
+      <!-- Special Events -->
+      <div class="pooja-card" data-category="special">
+        <a href="/poojas/navagraha-homam" class="card-link" aria-label="Navagraha Homam details"></a>
         <div class="card-image">
-          <img src="/images/Payasa%20Bali.jpg" alt="Kala Sarpa Shanti Homam">
+          <img src="/images/Navagraha%20Homam.jpg" alt="Navagraha Homam">
         </div>
         <div class="card-body">
-          <div class="pooja-badge monthly-badge">As Needed</div>
+          <div class="pooja-badge special-badge">Special Event</div>
+          <h3>Navagraha Homam</h3>
+          <p class="pooja-deity">For the Nine Planetary Deities</p>
+          <p class="pooja-description">
+            Powerful fire ritual to pacify malefic planetary positions and strengthen beneficial planets.
+            Balances planetary energies in your horoscope.
+          </p>
+          <div class="pooja-actions">
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pooja-card" data-category="special">
+        <a href="/poojas/pratyangira-homam" class="card-link" aria-label="Maha Pratyangira Homam details"></a>
+        <div class="card-image">
+          <img src="/images/Mahaprathyangari%20homam1.jpeg" alt="Maha Pratyangira Homam">
+        </div>
+        <div class="card-body">
+          <div class="pooja-badge special-badge">Special Event</div>
+          <h3>Maha Pratyangira Homam</h3>
+          <p class="pooja-deity">For Goddess Maha Pratyangira</p>
+          <p class="pooja-description">
+            Intense protective ritual for removing black magic, evil eye, and negative energies.
+            Invokes fierce protective powers against all forms of harm.
+          </p>
+          <div class="pooja-actions">
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pooja-card" data-category="special">
+        <a href="https://forms.gle/C3eQViaTHURBS48v7" class="card-link" aria-label="Ganapathi Homam enquiry" target="_blank" rel="noopener"></a>
+        <div class="card-image">
+          <img src="/images/Tantra.jpg" alt="Ganapathi Homam">
+        </div>
+        <div class="card-body">
+          <div class="pooja-badge special-badge">Special Event</div>
+          <h3>Ganapathi Homam</h3>
+          <p class="pooja-deity">For Lord Ganapati</p>
+          <p class="pooja-description">
+            Traditional fire ritual to Lord Ganesha for removing obstacles in life, business,
+            and education. Brings auspicious beginnings and smooth progress.
+          </p>
+          <div class="pooja-actions">
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pooja-card" data-category="special">
+        <a href="/poojas/kala-sarpa-shanti-homam" class="card-link" aria-label="Kala Sarpa Shanti Homam details"></a>
+        <div class="card-image">
+          <img src="/images/Kala%20sarppabali%20pooja.jpeg" alt="Kala Sarpa Shanti Homam">
+        </div>
+        <div class="card-body">
+          <div class="pooja-badge special-badge">Special Event</div>
           <h3>Kala Sarpa Shanti Homam</h3>
           <p class="pooja-deity">For Rahu &amp; Ketu</p>
           <p class="pooja-description">
             Fire ritual for mild to moderate Kala Sarpa Dosha. Less intensive than the annual
             Bali but highly effective for ongoing relief and protection.
           </p>
-          <div class="pooja-pricing">
-            <span class="price-amount">&#8377;5,000</span>
-          </div>
           <div class="pooja-actions">
-            <a href="/register" class="btn-book">Book Now</a>
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pooja-card" data-category="special">
+        <a href="/poojas/sarpa-bali" class="card-link" aria-label="Sarpa Bali Pooja details"></a>
+        <div class="card-image">
+          <img src="/images/Sarppabali%20pooja.jpeg" alt="Sarpa Bali Pooja">
+        </div>
+        <div class="card-body">
+          <div class="pooja-badge special-badge">Special Event</div>
+          <h3>Sarpa Bali Pooja</h3>
+          <p class="pooja-deity">For Naga Deities</p>
+          <p class="pooja-description">
+            Sacred offerings to propitiate the Naga deities and dissolve Sarpa Dosha afflictions
+            affecting health, progeny, and family welfare.
+          </p>
+          <div class="pooja-actions">
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pooja-card" data-category="special">
+        <a href="/poojas/ashta-naga-pooja" class="card-link" aria-label="Ashta Naga Pooja details"></a>
+        <div class="card-image">
+          <img src="/images/Ayiliyam.png" alt="Ashta Naga Pooja">
+        </div>
+        <div class="card-body">
+          <div class="pooja-badge special-badge">Special Event</div>
+          <h3>Ashta Naga Pooja</h3>
+          <p class="pooja-deity">For the Eight Divine Serpents</p>
+          <p class="pooja-description">
+            Complete worship of all eight Naga deities for total protection, prosperity, and
+            liberation from all forms of Sarpa Dosha and ancestral serpent karma.
+          </p>
+          <div class="pooja-actions">
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
           </div>
         </div>
       </div>
 
       <!-- On-Site Services -->
       <div class="pooja-card onsite-card" data-category="onsite">
-        <a href="/register" class="card-link" aria-label="Griha Pravesham booking"></a>
+        <a href="https://forms.gle/C3eQViaTHURBS48v7" class="card-link" aria-label="Griha Pravesham enquiry" target="_blank" rel="noopener"></a>
         <div class="card-image">
           <img src="/images/temple%20main%20entrance.jpg" alt="Griha Pravesham">
         </div>
@@ -220,21 +247,17 @@ import Layout from '../layouts/Layout.astro';
             Complete house warming combined with Sarpa protection installation.
             Priests travel to your location with all ritual materials.
           </p>
-          <div class="pooja-pricing">
-            <span class="price-amount">&#8377;85,000</span>
-            <span class="breakdown">(&#8377;60,000 ritual + &#8377;25,000 materials)</span>
-          </div>
           <div class="onsite-note">
             Host arranges: Travel for 6 people, accommodation, local transport
           </div>
           <div class="pooja-actions">
-            <a href="/register" class="btn-book">Request Quote</a>
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
           </div>
         </div>
       </div>
 
       <div class="pooja-card onsite-card" data-category="onsite">
-        <a href="/register" class="card-link" aria-label="On-Site Sarpa Pooja enquiry"></a>
+        <a href="https://forms.gle/C3eQViaTHURBS48v7" class="card-link" aria-label="On-Site Sarpa Pooja enquiry" target="_blank" rel="noopener"></a>
         <div class="card-image">
           <img src="/images/temple1.jpg" alt="On-Site Sarpa Pooja">
         </div>
@@ -246,13 +269,8 @@ import Layout from '../layouts/Layout.astro';
             Any of our temple poojas performed at your home, office, or property. Ideal
             for those who cannot travel to Kerala.
           </p>
-          <div class="pooja-pricing">
-            <span class="price-label">From</span>
-            <span class="price-amount">&#8377;15,000</span>
-            <span class="price-range">Varies by ritual &amp; location</span>
-          </div>
           <div class="pooja-actions">
-            <a href="/register" class="btn-book">Enquire</a>
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
           </div>
         </div>
       </div>
@@ -295,13 +313,13 @@ import Layout from '../layouts/Layout.astro';
     <div class="poojas-container">
       <div class="info-grid">
         <div class="info-card">
-          <h3>How to Book</h3>
+          <h3>How to Enquire</h3>
           <ol>
-            <li>Click "Book Now" on any pooja</li>
-            <li>Create account or login</li>
-            <li>Select date and variant (if applicable)</li>
-            <li>Make payment online</li>
-            <li>Receive confirmation via email/SMS</li>
+            <li>Click "Enquire" on any pooja</li>
+            <li>Fill out the enquiry form with your details</li>
+            <li>We will contact you to confirm the date &amp; details</li>
+            <li>Receive preparation guidelines before the ritual</li>
+            <li>Prasadam couriered to your address after the pooja</li>
           </ol>
         </div>
         
