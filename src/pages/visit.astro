@@ -328,6 +328,50 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
+  <!-- Temple Entry Restrictions -->
+  <section class="restrictions-section">
+    <div class="visit-container">
+      <div class="section-header">
+        <span class="section-label">Before You Enter</span>
+        <h2>Temple Entry Restrictions</h2>
+        <p class="section-note">Please observe these rules to maintain the sanctity of the temple</p>
+      </div>
+
+      <div class="restrictions-grid">
+        <div class="restriction-card">
+          <div class="restriction-icon">🙏</div>
+          <h3>Death in Family</h3>
+          <p>Those who have experienced a death in the immediate family must observe a 14-day period of mourning before entering the temple premises.</p>
+        </div>
+        <div class="restriction-card">
+          <div class="restriction-icon">🌸</div>
+          <h3>Menstruating Women</h3>
+          <p>Women observing their menstrual cycle are requested to refrain from entering the temple for 7 days. Entry is permitted from the 8th day onward.</p>
+        </div>
+        <div class="restriction-card">
+          <div class="restriction-icon">🍖</div>
+          <h3>After Non-Vegetarian Food</h3>
+          <p>Devotees who have consumed non-vegetarian food should not visit the temple on the same day. Please plan your visit accordingly.</p>
+        </div>
+        <div class="restriction-card">
+          <div class="restriction-icon">🚫</div>
+          <h3>After Consuming Alcohol</h3>
+          <p>Entry to the temple is strictly prohibited for anyone who has consumed alcohol. This applies on the same day of consumption.</p>
+        </div>
+        <div class="restriction-card">
+          <div class="restriction-icon">👡</div>
+          <h3>No Footwear on Premises</h3>
+          <p>Footwear (chappals, shoes, sandals) must not be brought inside the temple — this includes footwear kept inside bags. Please leave all footwear at the designated area outside.</p>
+        </div>
+        <div class="restriction-card">
+          <div class="restriction-icon">🤫</div>
+          <h3>No Other Spiritual Practices</h3>
+          <p>Other spiritual practices are not permitted inside the temple. This includes loud chanting, recitation, or any practice that produces sound and may disturb the sanctity of worship.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Facilities -->
   <section class="facilities-section">
     <div class="visit-container">
@@ -898,6 +942,46 @@ import Layout from '../layouts/Layout.astro';
   left: 0;
   color: var(--gold);
   font-size: 1.5rem;
+}
+
+/* Restrictions */
+.restrictions-section {
+  background: #fff8f8;
+  padding: 5rem 0;
+}
+
+.restrictions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.restriction-card {
+  background: #fff;
+  border: 1.5px solid var(--laterite-red, #8b2e0f);
+  border-left: 5px solid var(--laterite-red, #8b2e0f);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.restriction-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.restriction-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--laterite-red, #8b2e0f);
+  margin-bottom: 0.5rem;
+}
+
+.restriction-card p {
+  font-size: 0.92rem;
+  color: #444;
+  line-height: 1.6;
+  margin: 0;
 }
 
 /* Facilities */
