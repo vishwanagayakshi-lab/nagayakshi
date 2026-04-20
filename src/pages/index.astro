@@ -56,6 +56,7 @@ import Layout from '../layouts/Layout.astro';
     </div>
     <div class="offerings-grid">
       <div class="offering-card">
+        <a href="/poojas/ayilyam" class="card-overlay" aria-label="Ayilyam Pooja"></a>
         <div class="offering-image">
           <img src="/images/Ayiliyam.png" alt="Ayilyam Pooja">
         </div>
@@ -71,6 +72,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
 
       <div class="offering-card">
+        <a href="/poojas/navagraha-homam" class="card-overlay" aria-label="Navagraha Homam"></a>
         <div class="offering-image">
           <img src="/images/Navagraha%20Homam.jpg" alt="Navagraha Homam">
         </div>
@@ -86,6 +88,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
 
       <div class="offering-card">
+        <a href="/poojas/kala-sarpa-bali" class="card-overlay" aria-label="Kala Sarpa Bali"></a>
         <div class="offering-image">
           <img src="/images/Noorum%20Paalum.jpeg" alt="Kala Sarpa Bali">
         </div>
@@ -101,6 +104,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
 
       <div class="offering-card">
+        <a href="/muttu" class="card-overlay" aria-label="Muttu"></a>
         <div class="offering-image">
           <img src="/images/Payasa%20Bali.jpg" alt="Muttu Offering">
         </div>
@@ -116,6 +120,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
 
       <div class="offering-card">
+        <a href="/poojas/pratyangira-homam" class="card-overlay" aria-label="Pratyangira Homam"></a>
         <div class="offering-image">
           <img src="/images/pratyangira.png" alt="Pratyangira Pooja">
         </div>
@@ -131,6 +136,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
 
       <div class="offering-card">
+        <a href="/poojas/guruthi-pooja" class="card-overlay" aria-label="Guruthi Pooja"></a>
         <div class="offering-image">
           <img src="/images/Divine%20connection.jpg" alt="Guruthi Pooja">
         </div>
@@ -320,12 +326,19 @@ import Layout from '../layouts/Layout.astro';
     padding: 0.8rem;
     box-shadow: 0px 10px 30px rgba(122, 25, 18, 0.08);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
   }
 
   .offering-card:hover {
     transform: translateY(-8px);
     box-shadow: 0px 15px 40px rgba(122, 25, 18, 0.15);
     border-color: var(--saffron);
+  }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
   }
 
   .offering-image {
@@ -407,6 +420,8 @@ import Layout from '../layouts/Layout.astro';
     letter-spacing: 1px;
     text-decoration: none;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
   }
 
   .offering-cta:hover {
