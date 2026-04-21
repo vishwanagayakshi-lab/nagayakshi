@@ -233,6 +233,65 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
 
+      <!-- Supreme & Special Rituals -->
+      <div class="pooja-card featured" data-category="annual">
+        <a href="/poojas/shiva-vaishnava-shaktheya-homam" class="card-link" aria-label="Shaiva Vaishnava Shaktheya Homam details"></a>
+        <div class="featured-tag">Supreme Ritual</div>
+        <div class="card-image">
+          <img src="/images/Tantra.jpg" alt="Shaiva Vaishnava Shaktheya Homam">
+        </div>
+        <div class="card-body">
+          <div class="pooja-badge annual-badge">Annual Event</div>
+          <h3>Shaiva Vaishnava Shaktheya Homam</h3>
+          <p class="pooja-deity">For Lord Shiva, Vishnu &amp; Goddess Shakti</p>
+          <p class="pooja-description">
+            The most powerful tri-unity fire ritual invoking the combined cosmic energies of Shiva,
+            Vishnu, and Shakti for complete divine protection and blessings.
+          </p>
+          <div class="pooja-actions">
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pooja-card" data-category="special">
+        <a href="/poojas/sarva-karya-siddhi-puja" class="card-link" aria-label="Sarvaishwarya Karyasiddhi Puja details"></a>
+        <div class="card-image">
+          <img src="/images/Navagraha%20Homam.jpg" alt="Sarvaishwarya Karyasiddhi Puja">
+        </div>
+        <div class="card-body">
+          <div class="pooja-badge special-badge">Special Event</div>
+          <h3>Sarvaishwarya Karyasiddhi Puja</h3>
+          <p class="pooja-deity">For Ganesha, Lakshmi, Vishnu, Durga &amp; Navagrahas</p>
+          <p class="pooja-description">
+            Comprehensive Vedic ceremony invoking seven divine powers for accomplishing all tasks,
+            removing obstacles, and achieving complete success in every sphere of life.
+          </p>
+          <div class="pooja-actions">
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pooja-card" data-category="special">
+        <a href="/poojas/panjastra-homam" class="card-link" aria-label="Panjastra Homam details"></a>
+        <div class="card-image">
+          <img src="/images/Mahaprathyangari%20homam1.jpeg" alt="Panjastra Homam">
+        </div>
+        <div class="card-body">
+          <div class="pooja-badge special-badge">Special Event</div>
+          <h3>Panjastra Homam</h3>
+          <p class="pooja-deity">For Lord Vishnu's Five Divine Weapons</p>
+          <p class="pooja-description">
+            Sacred fire ceremony invoking Lord Vishnu's five divine weapons — Sudarshana Chakra,
+            Panchajanya, Kaumodaki, Nandaka, and Saranga — for complete protection from all dangers.
+          </p>
+          <div class="pooja-actions">
+            <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-book" target="_blank" rel="noopener">Enquire</a>
+          </div>
+        </div>
+      </div>
+
       <!-- On-Site Services -->
       <div class="pooja-card onsite-card" data-category="onsite">
         <a href="https://forms.gle/C3eQViaTHURBS48v7" class="card-link" aria-label="Griha Pravesham enquiry" target="_blank" rel="noopener"></a>
@@ -657,25 +716,24 @@ import Layout from '../layouts/Layout.astro';
 .btn-book {
   display: block;
   width: 100%;
-  padding: 1rem;
+  padding: 0.8rem;
   border-radius: 2px;
   text-align: center;
   text-decoration: none;
   font-weight: 700;
   font-family: 'Playfair Display', serif;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   font-size: 0.9rem;
   transition: all 0.3s ease;
-  background: var(--laterite-red);
-  color: white;
-  border: 2px solid var(--laterite-red);
-  box-shadow: 0 4px 0 rgba(45, 24, 16, 0.35);
+  background: transparent;
+  color: var(--laterite-red);
+  border: 1px solid var(--laterite-red);
 }
 
 .btn-book:hover {
-  background: var(--saffron);
-  transform: translateY(-2px);
+  background: var(--laterite-red);
+  color: var(--bg-base);
 }
 
 .limited-spots {
