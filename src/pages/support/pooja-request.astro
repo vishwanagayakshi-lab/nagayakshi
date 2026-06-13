@@ -40,15 +40,19 @@ import Layout from '../../layouts/Layout.astro';
         </p>
       </div>
 
-      <div class="form-wrapper">
-        <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLSeHyjiAF_zq17jLDcIuZtvjOmZSG1rFUNfaLFfisVpUJ23pug/viewform?embedded=true"
-          class="google-form"
-          title="Pooja Request Form"
-          loading="lazy"
+      <div class="form-card">
+        <div class="form-card-icon">🙏</div>
+        <h3>Ritual Enquiry Form</h3>
+        <p>Click below to open the pooja request form. The temple will review your request and get back to you with all the details.</p>
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSeHyjiAF_zq17jLDcIuZtvjOmZSG1rFUNfaLFfisVpUJ23pug/viewform"
+          target="_blank"
+          rel="noopener"
+          class="btn-open-form"
         >
-          Loading form...
-        </iframe>
+          Open Request Form
+        </a>
+        <p class="form-note">Opens in a new tab</p>
       </div>
 
     </div>
@@ -195,19 +199,67 @@ import Layout from '../../layouts/Layout.astro';
   margin: 0 auto;
 }
 
-.form-wrapper {
+.form-card {
   background: var(--bg-alt);
   border-radius: 20px;
   box-shadow: 0 10px 50px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
   border: 1px solid var(--border-light);
+  border-top: 4px solid var(--laterite-red);
+  padding: 4rem 3rem;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.google-form {
-  display: block;
-  width: 100%;
-  min-height: 900px;
-  border: none;
+.form-card-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--laterite-red);
+  margin-bottom: 1rem;
+}
+
+.form-card p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.btn-open-form {
+  display: inline-block;
+  padding: 1.2rem 3rem;
+  background: var(--laterite-red);
+  color: white;
+  text-decoration: none;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border: 2px solid var(--gold-light);
+  box-shadow: 0 4px 0 rgba(45, 24, 16, 0.4);
+  transition: all 0.3s ease;
+}
+
+.btn-open-form:hover {
+  background: var(--saffron);
+  color: var(--text-dark);
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(45, 24, 16, 0.4);
+}
+
+.form-note {
+  font-size: 0.85rem !important;
+  color: var(--text-muted);
+  margin-top: 1rem !important;
+  margin-bottom: 0 !important;
+  opacity: 0.7;
 }
 
 /* Contact Fallback */
