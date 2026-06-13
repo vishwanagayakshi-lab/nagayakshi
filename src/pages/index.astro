@@ -43,7 +43,7 @@ import Layout from '../layouts/Layout.astro';
         <svg class="authority-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M3 21h18"/><path d="M9 8h10"/><path d="M9 12h10"/><path d="M9 16h10"/><path d="M5 4v16"/><path d="M5 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16"/>
         </svg>
-        <div class="authority-text">Kashyapa Maharshi<br><span>Samadhi site &amp; sacred land</span></div>
+        <div class="authority-text">Kashyapa Maharshi<br><span>Sacred ashram &amp; eternal presence</span></div>
       </div>
     </div>
   </section>
@@ -154,6 +154,34 @@ import Layout from '../layouts/Layout.astro';
       <p>
         Often, recurring obstacles in our lives&#8212;whether delays in marriage, difficulties in starting a family, persistent health issues, or sudden financial blocks&#8212;have deeper spiritual roots. For centuries, our tradition has recognized these patterns as imbalances requiring divine intervention rather than merely worldly solutions.
       </p>
+    </div>
+  </section>
+
+  <!-- Kashyapa Maharishi Card -->
+  <section class="kashyapa-section">
+    <div class="kashyapa-card">
+      <div class="kashyapa-card-text">
+        <span class="kashyapa-label">The Sacred Root</span>
+        <h2>Kashyapa Maharishi</h2>
+        <p>
+          The land beneath this temple is the ancient ashram of Sage Kashyapa — one of the
+          seven great Saptarishis, and the father of the entire Naga race. His eternal
+          presence consecrates every ritual performed here, and his divine consciousness
+          resides within the sacred Nilavara at the heart of the temple.
+        </p>
+        <p>
+          To worship the Nagas on this land is to offer prayer in the very home of their father.
+        </p>
+        <a href="/kashyapa-maharishi" class="btn-kashyapa">Discover the Sacred Legacy</a>
+      </div>
+      <div class="kashyapa-card-emblem">
+        <div class="emblem-ring">
+          <div class="emblem-inner">
+            <span class="emblem-symbol">ॐ</span>
+            <span class="emblem-text">Kashyapa<br>Maharishi</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -449,6 +477,120 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1.9;
   }
 
+  /* Kashyapa Card */
+  .kashyapa-section {
+    padding: 5rem 2rem;
+    background: var(--laterite-dark);
+    border-top: 4px solid var(--saffron);
+    border-bottom: 4px solid var(--saffron);
+  }
+
+  .kashyapa-card {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .kashyapa-label {
+    display: inline-block;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.85rem;
+    color: var(--saffron);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .kashyapa-card-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+  }
+
+  .kashyapa-card-text p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.9;
+    margin-bottom: 1.2rem;
+  }
+
+  .btn-kashyapa {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 1rem 2.5rem;
+    background: var(--gold);
+    color: var(--text-dark);
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border: 2px solid var(--gold);
+    box-shadow: 0 4px 0 rgba(45, 24, 16, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .btn-kashyapa:hover {
+    background: var(--gold-light);
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(45, 24, 16, 0.4);
+  }
+
+  .kashyapa-card-emblem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .emblem-ring {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(212, 165, 116, 0.2), inset 0 0 40px rgba(212, 165, 116, 0.05);
+  }
+
+  .emblem-inner {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 165, 116, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: rgba(212, 165, 116, 0.06);
+  }
+
+  .emblem-symbol {
+    font-size: 4rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .emblem-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--gold-light);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.4;
+  }
+
   /* Guardian */
   .guardian-section {
     padding: 7rem 2rem;
@@ -575,6 +717,15 @@ import Layout from '../layouts/Layout.astro';
 
     .hero-title {
       font-size: 3rem;
+    }
+
+    .kashyapa-card {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .kashyapa-card-emblem {
+      display: none;
     }
   }
 
