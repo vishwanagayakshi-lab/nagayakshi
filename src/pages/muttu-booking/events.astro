@@ -1,0 +1,111 @@
+---
+export const prerender = false;
+import { createAdminClient } from '@/lib/supabase/server';
+import { fmtDate, paise, EVENT_STATUS_COLOR, EVENT_STATUS_LABEL } from '@/lib/utils';
+import type { MuttuEvent } from '@/lib/types';
+
+const admin = createAdminClient();
+const { data: events } = await admin
+  .from('muttu_events')
+  .select('*')
+  .in('status', ['open', 'scheduled', 'closed'])
+  .order('event_date', { ascending: true }) as { data: MuttuEvent[] | null };
+
+const supabase = import.meta.env.PUBLIC_SUPABASE_URL ? true : false;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muttu Events | Nagayakshi Temple</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f5f4f0; min-height: 100vh; }
+    .header { background: linear-gradient(to right, #450a0a, #991b1b); color: white; padding: 2rem 1rem; }
+    .header-inner { max-width: 640px; margin: 0 auto; }
+    .back-link { color: #fcd34d; font-size: 0.875rem; text-decoration: none; display: block; margin-bottom: 1rem; }
+    .back-link:hover { text-decoration: underline; }
+    h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.25rem; font-weight: 700; color: #fef3c7; }
+    .subtitle { color: #fcd34da8; font-size: 0.875rem; margin-top: 0.25rem; }
+    .main { max-width: 640px; margin: 0 auto; padding: 2rem 1rem; }
+    .event-card { background: white; border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border: 1px solid #e7e5e4; }
+    .event-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .event-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: #1c1917; }
+    .event-date { font-size: 0.875rem; color: #78716c; margin-top: 0.25rem; }
+    .badge { font-size: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 9999px; font-weight: 500; }
+    .availability-bar { background: #f5f5f4; border-radius: 9999px; height: 6px; margin-bottom: 0.5rem; overflow: hidden; }
+    .availability-fill { height: 100%; background: #15803d; border-radius: 9999px; transition: width 0.3s; }
+    .availability-fill.low { background: #b45309; }
+    .availability-fill.full { background: #dc2626; }
+    .avail-text { font-size: 0.75rem; color: #78716c; margin-bottom: 1rem; }
+    .price { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: #991b1b; margin-bottom: 1rem; }
+    .notes { font-size: 0.875rem; color: #78716c; background: #fafaf9; border-radius: 0.5rem; padding: 0.75rem; margin-bottom: 1rem; }
+    .btn-book { display: block; background: #991b1b; color: white; text-align: center; padding: 0.875rem; border-radius: 0.75rem; text-decoration: none; font-weight: 600; transition: background 0.2s; }
+    .btn-book:hover { background: #7f1d1d; }
+    .btn-closed { display: block; background: #e7e5e4; color: #78716c; text-align: center; padding: 0.875rem; border-radius: 0.75rem; font-weight: 600; cursor: not-allowed; }
+    .empty { text-align: center; padding: 5rem 1rem; color: #a8a29e; }
+    .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="/muttu" class="back-link">← Muttu Offerings</a>
+      <h1>Muttu Events</h1>
+      <p class="subtitle">Select an event to book your Muttu</p>
+    </div>
+  </header>
+
+  <main class="main">
+    {!events?.length ? (
+      <div class="empty">
+        <div class="empty-icon">🙏</div>
+        <p style="font-size:1.125rem; font-weight:600; margin-bottom:0.5rem;">No events available right now</p>
+        <p style="font-size:0.875rem;">Check back soon or contact the temple.</p>
+      </div>
+    ) : events.map((event: MuttuEvent) => {
+      const total     = event.online_tokens;
+      const confirmed = event.confirmed_online;
+      const pct       = total > 0 ? Math.round((confirmed / total) * 100) : 0;
+      const remaining = total - confirmed;
+      const isOpen    = event.status === 'open';
+      return (
+        <div class="event-card">
+          <div class="event-header">
+            <div>
+              <div class="event-name">{event.name}</div>
+              <div class="event-date">{fmtDate(event.event_date)}{event.event_time ? ` · ${event.event_time}` : ''}</div>
+            </div>
+            <span class={`badge ${EVENT_STATUS_COLOR[event.status]}`}>{EVENT_STATUS_LABEL[event.status]}</span>
+          </div>
+
+          {isOpen && (
+            <>
+              <div class="availability-bar">
+                <div class={`availability-fill ${pct > 80 ? 'low' : ''} ${pct >= 100 ? 'full' : ''}`} style={`width:${pct}%`}></div>
+              </div>
+              <p class="avail-text">{remaining} spots remaining of {total}</p>
+            </>
+          )}
+
+          <div class="price">{paise(event.price_per_muttu)} per Muttu</div>
+
+          {event.display_notes && (
+            <div class="notes">{event.display_notes}</div>
+          )}
+
+          {isOpen && remaining > 0 ? (
+            <a href={`/muttu-booking/book/${event.id}`} class="btn-book">Book Now</a>
+          ) : (
+            <div class="btn-closed">{isOpen ? 'Fully Booked' : 'Booking Closed'}</div>
+          )}
+        </div>
+      );
+    })}
+  </main>
+</body>
+</html>

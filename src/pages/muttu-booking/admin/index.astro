@@ -1,0 +1,158 @@
+---
+export const prerender = false;
+import { createClient, createAdminClient } from '@/lib/supabase/server';
+import { paise } from '@/lib/utils';
+
+const supabase = createClient(Astro);
+const { data: { user } } = await supabase.auth.getUser();
+if (!user) return Astro.redirect('/muttu-booking/login?redirect=/muttu-booking/admin');
+
+const admin = createAdminClient();
+
+const { data: profile } = await admin.from('profiles').select('is_admin').eq('id', user.id).single();
+if (!profile?.is_admin) return Astro.redirect('/');
+
+// Dashboard stats
+const [
+  { count: totalEvents },
+  { count: openEvents },
+  { count: totalBookings },
+  { count: confirmedBookings },
+  { count: pendingPhone },
+] = await Promise.all([
+  admin.from('muttu_events').select('*', { count: 'exact', head: true }),
+  admin.from('muttu_events').select('*', { count: 'exact', head: true }).eq('status', 'open'),
+  admin.from('bookings').select('*', { count: 'exact', head: true }),
+  admin.from('bookings').select('*', { count: 'exact', head: true }).eq('status', 'confirmed'),
+  admin.from('bookings').select('*', { count: 'exact', head: true }).eq('booking_type', 'phone').in('status', ['pending', 'payment_init']),
+]);
+
+const { data: recentBookings } = await admin
+  .from('bookings')
+  .select('*, event:muttu_events(name)')
+  .order('created_at', { ascending: false })
+  .limit(5);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Nagayakshi Temple</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f5f4f0; min-height: 100vh; }
+    nav { background: #450a0a; color: white; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 1.5rem; }
+    nav a { color: #fcd34d; text-decoration: none; font-size: 0.875rem; }
+    nav a:hover { text-decoration: underline; }
+    .brand { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: #fcd34d; }
+    main { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+    h1 { font-size: 1.75rem; font-weight: 700; color: #1c1917; margin-bottom: 1.5rem; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: white; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border: 1px solid #e7e5e4; }
+    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 700; color: #991b1b; }
+    .stat-label { font-size: 0.875rem; color: #78716c; margin-top: 0.25rem; }
+    .stat-card.alert .stat-num { color: #b45309; }
+    .section-title { font-size: 1.25rem; font-weight: 600; color: #1c1917; margin-bottom: 1rem; }
+    .nav-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .nav-card { background: white; border-radius: 1rem; padding: 1.5rem; border: 1px solid #e7e5e4; text-decoration: none; display: flex; align-items: center; gap: 1rem; transition: border-color 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .nav-card:hover { border-color: #991b1b; }
+    .nav-icon { font-size: 2rem; }
+    .nav-card-title { font-weight: 600; color: #1c1917; }
+    .nav-card-sub { font-size: 0.875rem; color: #78716c; }
+    .recent-table { background: white; border-radius: 1rem; padding: 0; overflow: hidden; border: 1px solid #e7e5e4; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    table { width: 100%; font-size: 0.875rem; }
+    thead { background: #fafaf9; border-bottom: 1px solid #e7e5e4; }
+    th { text-align: left; padding: 0.75rem 1rem; color: #78716c; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 0.75rem 1rem; color: #1c1917; border-bottom: 1px solid #f5f4f0; }
+    .badge { font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 9999px; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <nav>
+    <span class="brand">🐍 Admin</span>
+    <a href="/muttu-booking/admin/events">Events</a>
+    <a href="/muttu-booking/admin/bookings">Bookings</a>
+    <a href="/muttu-booking/events">Public Site</a>
+  </nav>
+
+  <main>
+    <h1>Dashboard</h1>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-num">{totalEvents ?? 0}</div>
+        <div class="stat-label">Total Events</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">{openEvents ?? 0}</div>
+        <div class="stat-label">Open Events</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">{totalBookings ?? 0}</div>
+        <div class="stat-label">Total Bookings</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">{confirmedBookings ?? 0}</div>
+        <div class="stat-label">Confirmed</div>
+      </div>
+      <div class={`stat-card ${(pendingPhone ?? 0) > 0 ? 'alert' : ''}`}>
+        <div class="stat-num">{pendingPhone ?? 0}</div>
+        <div class="stat-label">Phone Bookings Awaiting</div>
+      </div>
+    </div>
+
+    <div class="nav-links">
+      <a href="/muttu-booking/admin/events" class="nav-card">
+        <span class="nav-icon">📅</span>
+        <div>
+          <div class="nav-card-title">Manage Events</div>
+          <div class="nav-card-sub">Create, edit, open/close events</div>
+        </div>
+      </a>
+      <a href="/muttu-booking/admin/bookings" class="nav-card">
+        <span class="nav-icon">📋</span>
+        <div>
+          <div class="nav-card-title">Manage Bookings</div>
+          <div class="nav-card-sub">Confirm phone bookings, cancel</div>
+        </div>
+      </a>
+    </div>
+
+    {recentBookings?.length ? (
+      <>
+        <div class="section-title">Recent Bookings</div>
+        <div class="recent-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Ref</th>
+                <th>Phone</th>
+                <th>Event</th>
+                <th>Type</th>
+                <th>Qty</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recentBookings.map((b: any) => (
+                <tr>
+                  <td style="font-family:monospace;font-size:0.75rem">{b.booking_ref}</td>
+                  <td>{b.phone}</td>
+                  <td style="font-size:0.75rem;max-width:150px;overflow:hidden;text-overflow:ellipsis">{(b.event as any)?.name}</td>
+                  <td><span class={`badge ${b.booking_type === 'online' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'}`}>{b.booking_type}</span></td>
+                  <td style="text-align:center">{b.quantity}</td>
+                  <td><span class="badge" style="background:#f0fdf4;color:#15803d">{b.status}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </>
+    ) : null}
+  </main>
+</body>
+</html>

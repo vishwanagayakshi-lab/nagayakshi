@@ -1,0 +1,118 @@
+---
+export const prerender = false;
+import { createClient, createAdminClient } from '@/lib/supabase/server';
+import { fmtDate, paise } from '@/lib/utils';
+import { getNakshatraByKey } from '@/lib/nakshatra';
+import type { Booking, MuttuItem, MuttuEvent } from '@/lib/types';
+
+const { bookingId } = Astro.params;
+const supabase = createClient(Astro);
+const { data: { user } } = await supabase.auth.getUser();
+if (!user) return Astro.redirect(`/muttu-booking/login`);
+
+const admin = createAdminClient();
+const { data: booking } = await admin
+  .from('bookings')
+  .select('*, muttu_items(*), event:muttu_events(*)')
+  .eq('id', bookingId!)
+  .eq('user_id', user.id)
+  .single() as { data: (Booking & { event: MuttuEvent; muttu_items: MuttuItem[] }) | null };
+
+if (!booking || booking.status !== 'confirmed') return Astro.redirect('/muttu-booking/events');
+
+const items   = booking.muttu_items ?? [];
+const event   = booking.event as unknown as MuttuEvent;
+const perPage = 12;
+const pages   = Math.ceil(items.length / perPage);
+
+function Receipt({ item, slotIndex }: { item: MuttuItem | null; slotIndex: number }) {
+  const nk = item ? getNakshatraByKey(item.nakshatra) : null;
+  return item ? `
+    <div class="receipt">
+      <div class="receipt-header">
+        <span class="receipt-label">MUTTU</span>
+        <span class="receipt-token">#${String(item.token_number ?? slotIndex + 1).padStart(3, '0')}</span>
+      </div>
+      <div class="receipt-name">${item.name}</div>
+      <div class="receipt-nakshatra">★ ${nk ? `${nk.sanskrit} / ${nk.tamil} / ${nk.malayalam}` : item.nakshatra}</div>
+      <div class="receipt-obstacles">${item.obstacles}</div>
+      <div class="receipt-footer">
+        <span>${booking.booking_ref}/${(slotIndex % 12) + 1}</span>
+        <span>${paise(booking.total_amount / booking.quantity)}</span>
+      </div>
+    </div>
+  ` : `<div class="receipt receipt-empty"><span>—</span></div>`;
+}
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Print Receipts · {booking.booking_ref}</title>
+  <style>
+    @page { size: A4 portrait; margin: 8mm; }
+    @media print {
+      .no-print { display: none !important; }
+      .page-break { page-break-before: always; }
+      body { margin: 0; padding: 0; }
+    }
+    * { box-sizing: border-box; }
+    body { font-family: Georgia, serif; background: #fff; }
+
+    /* Controls */
+    .controls { background: #f5f4f0; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+    .controls-info p { font-size: 0.875rem; color: #78716c; }
+    .controls-info strong { color: #1c1917; font-size: 1rem; }
+    .btn-print { background: #991b1b; color: white; border: none; padding: 0.625rem 1.5rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 600; cursor: pointer; }
+    .btn-print:hover { background: #7f1d1d; }
+    .btn-close { background: white; border: 1px solid #d6d3d1; color: #57534e; padding: 0.625rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer; margin-left: 0.5rem; }
+
+    /* A4 page */
+    .a4-page { width: 210mm; min-height: 297mm; padding: 4mm; background: #fff; margin: 0 auto; }
+    .page-header { text-align: center; margin-bottom: 4mm; padding-bottom: 3mm; border-bottom: 2px solid #7f1d1d; }
+    .temple-name { font-size: 11pt; font-weight: bold; color: #7f1d1d; letter-spacing: 2px; }
+    .page-subtitle { font-size: 9pt; color: #555; margin-top: 1mm; }
+    .receipt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; }
+    .page-footer { text-align: center; margin-top: 3mm; font-size: 7pt; color: #999; border-top: 1px solid #eee; padding-top: 2mm; }
+
+    /* Receipt */
+    .receipt { border: 1.5px solid #7f1d1d; border-radius: 4px; padding: 3mm; min-height: 63mm; font-size: 7.5pt; line-height: 1.5; position: relative; background: #fff; }
+    .receipt-empty { background: #fafafa; opacity: 0.3; display: flex; align-items: center; justify-content: center; color: #bbb; }
+    .receipt-header { background: #7f1d1d; color: #f5e6c8; margin: -3mm -3mm 2mm; padding: 1.5mm 3mm; display: flex; justify-content: space-between; align-items: center; }
+    .receipt-label { font-size: 7pt; letter-spacing: 1px; font-weight: bold; }
+    .receipt-token { font-size: 9pt; font-weight: bold; font-family: monospace; }
+    .receipt-name { font-weight: bold; font-size: 8.5pt; color: #1a1a1a; margin-bottom: 1mm; }
+    .receipt-nakshatra { color: #7f1d1d; margin-bottom: 1mm; font-size: 7pt; }
+    .receipt-obstacles { color: #444; font-size: 7pt; line-height: 1.4; margin-bottom: 6mm; }
+    .receipt-footer { position: absolute; bottom: 2mm; left: 3mm; right: 3mm; border-top: 0.5px solid #e0c9a0; padding-top: 1.5mm; display: flex; justify-content: space-between; font-size: 6.5pt; color: #888; font-family: monospace; }
+  </style>
+</head>
+<body>
+  <div class="controls no-print">
+    <div class="controls-info">
+      <strong>{booking.booking_ref}</strong>
+      <p>{items.length} receipt{items.length > 1 ? 's' : ''} · {pages} A4 page{pages > 1 ? 's' : ''}</p>
+    </div>
+    <div>
+      <button class="btn-print" onclick="window.print()">🖨️ Print</button>
+      <button class="btn-close" onclick="window.close()">Close</button>
+    </div>
+  </div>
+
+  {Array.from({ length: pages }, (_, pageIdx) => {
+    const pageItems = items.slice(pageIdx * perPage, (pageIdx + 1) * perPage);
+    const padded: (MuttuItem | null)[] = [...pageItems, ...Array(perPage - pageItems.length).fill(null)];
+    return (
+      <div class={`a4-page ${pageIdx > 0 ? 'page-break' : ''}`}>
+        <div class="page-header">
+          <div class="temple-name">SREE PULIKKAL VISHWANAGAYAKSHI TEMPLE</div>
+          <div class="page-subtitle">Muttu Receipt · {event.name} · {fmtDate(event.event_date)}{event.event_time ? ` · ${event.event_time}` : ''}</div>
+        </div>
+        <div class="receipt-grid" set:html={padded.map((item, cellIdx) => Receipt({ item, slotIndex: pageIdx * perPage + cellIdx })).join('')} />
+        <div class="page-footer">Thekkumpuram, Kavilpad, Palakkad 678012 · +91 9946373522 · nagayakshi.org</div>
+      </div>
+    );
+  })}
+</body>
+</html>

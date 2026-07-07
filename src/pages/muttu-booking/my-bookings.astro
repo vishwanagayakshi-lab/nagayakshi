@@ -1,0 +1,106 @@
+---
+export const prerender = false;
+import { createClient, createAdminClient } from '@/lib/supabase/server';
+import { fmtDate, fmtDateTime, paise, BOOKING_STATUS_COLOR, BOOKING_STATUS_LABEL } from '@/lib/utils';
+import type { Booking, MuttuEvent } from '@/lib/types';
+
+const supabase = createClient(Astro);
+const { data: { user } } = await supabase.auth.getUser();
+if (!user) return Astro.redirect('/muttu-booking/login?redirect=/muttu-booking/my-bookings');
+
+const admin = createAdminClient();
+const { data: bookings } = await admin
+  .from('bookings')
+  .select('*, muttu_items(*), event:muttu_events(name, event_date)')
+  .eq('user_id', user.id)
+  .order('created_at', { ascending: false }) as { data: (Booking & { event: MuttuEvent })[] | null };
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Bookings | Nagayakshi Temple</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f5f4f0; min-height: 100vh; padding-bottom: 4rem; }
+    .header { background: linear-gradient(to right, #450a0a, #991b1b); color: white; padding: 2rem 1rem; }
+    .header-inner { max-width: 640px; margin: 0 auto; }
+    .back-link { color: #fcd34d; font-size: 0.875rem; text-decoration: none; display: block; margin-bottom: 0.75rem; }
+    .back-link:hover { text-decoration: underline; }
+    h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.25rem; font-weight: 700; color: #fef3c7; }
+    .main { max-width: 640px; margin: 0 auto; padding: 2rem 1rem; }
+    .card { background: white; border-radius: 1rem; padding: 1.25rem; margin-bottom: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border: 1px solid #e7e5e4; }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+    .booking-ref { font-family: monospace; font-size: 0.75rem; color: #a8a29e; margin-bottom: 0.125rem; }
+    .event-name { font-family: 'Cormorant Garamond', serif; font-size: 1.375rem; font-weight: 700; color: #1c1917; }
+    .event-date { font-size: 0.875rem; color: #78716c; }
+    .badge { font-size: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 9999px; font-weight: 500; white-space: nowrap; }
+    .amount { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: #991b1b; }
+    .meta { display: flex; gap: 1rem; font-size: 0.75rem; color: #78716c; margin-bottom: 0.75rem; }
+    .token-chips { display: flex; gap: 0.25rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+    .token-chip { font-family: monospace; font-size: 0.75rem; background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; padding: 0.125rem 0.5rem; border-radius: 4px; }
+    .actions { display: flex; gap: 0.5rem; }
+    .btn-sm { font-size: 0.75rem; padding: 0.375rem 0.75rem; border-radius: 0.5rem; text-decoration: none; font-weight: 500; transition: all 0.2s; }
+    .btn-outline { border: 1px solid #e7e5e4; color: #57534e; }
+    .btn-outline:hover { border-color: #f87171; }
+    .btn-red { background: #991b1b; color: white; }
+    .btn-red:hover { background: #7f1d1d; }
+    .empty { text-align: center; padding: 5rem 1rem; color: #a8a29e; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="/muttu-booking/events" class="back-link">← Events</a>
+      <h1>My Bookings</h1>
+    </div>
+  </header>
+
+  <main class="main">
+    {!bookings?.length ? (
+      <div class="empty">
+        <div style="font-size:3rem;margin-bottom:1rem">🙏</div>
+        <p style="font-size:1.125rem;font-weight:600;margin-bottom:0.5rem">No bookings yet</p>
+        <a href="/muttu-booking/events" style="color:#991b1b;font-weight:600;text-decoration:none">Browse Events</a>
+      </div>
+    ) : bookings.map((b: Booking & { event: MuttuEvent }) => {
+      const event = b.event as unknown as MuttuEvent | null;
+      return (
+        <div class="card">
+          <div class="card-top">
+            <div>
+              <div class="booking-ref">{b.booking_ref}</div>
+              <div class="event-name">{event?.name}</div>
+              <div class="event-date">{event ? fmtDate(event.event_date) : ''}</div>
+            </div>
+            <div style="text-align:right">
+              <span class={`badge ${BOOKING_STATUS_COLOR[b.status]}`}>{BOOKING_STATUS_LABEL[b.status]}</span>
+              <div class="amount" style="margin-top:0.5rem">{paise(b.total_amount)}</div>
+            </div>
+          </div>
+          <div class="meta">
+            <span>{b.quantity} Muttu</span>
+            <span>{b.booking_type === 'online' ? '💳 Online' : '📞 Phone'}</span>
+            <span>{fmtDateTime(b.created_at)}</span>
+          </div>
+          {b.token_numbers?.length ? (
+            <div class="token-chips">
+              {b.token_numbers.map(n => <span class="token-chip">#{n}</span>)}
+            </div>
+          ) : null}
+          <div class="actions">
+            <a href={`/muttu-booking/confirmation/${b.id}`} class="btn-sm btn-outline">View Details</a>
+            {b.status === 'confirmed' && (
+              <a href={`/muttu-booking/print/${b.id}`} target="_blank" class="btn-sm btn-red">🖨️ Print</a>
+            )}
+          </div>
+        </div>
+      );
+    })}
+  </main>
+</body>
+</html>

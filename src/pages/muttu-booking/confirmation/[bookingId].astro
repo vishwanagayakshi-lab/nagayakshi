@@ -1,0 +1,128 @@
+---
+export const prerender = false;
+import { createClient, createAdminClient } from '@/lib/supabase/server';
+import { fmtDate, fmtDateTime, paise } from '@/lib/utils';
+import { getNakshatraByKey } from '@/lib/nakshatra';
+import type { Booking, MuttuEvent, MuttuItem } from '@/lib/types';
+
+const { bookingId } = Astro.params;
+
+const supabase = createClient(Astro);
+const { data: { user } } = await supabase.auth.getUser();
+if (!user) return Astro.redirect(`/muttu-booking/login?redirect=/muttu-booking/confirmation/${bookingId}`);
+
+const admin = createAdminClient();
+const { data: booking } = await admin
+  .from('bookings')
+  .select('*, muttu_items(*), event:muttu_events(*)')
+  .eq('id', bookingId!)
+  .eq('user_id', user.id)
+  .single() as { data: (Booking & { event: MuttuEvent; muttu_items: MuttuItem[] }) | null };
+
+if (!booking) return Astro.redirect('/muttu-booking/events');
+
+const isConfirmed = booking.status === 'confirmed';
+const isPending   = ['pending', 'payment_init'].includes(booking.status);
+const event       = booking.event as unknown as MuttuEvent;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking {isConfirmed ? 'Confirmed' : 'Status'} | {booking.booking_ref}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f5f4f0; min-height: 100vh; padding-bottom: 4rem; }
+    .header { background: linear-gradient(to right, #450a0a, #991b1b); color: white; padding: 2.5rem 1rem; text-align: center; }
+    .header-icon { font-size: 3rem; margin-bottom: 0.75rem; }
+    h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.25rem; font-weight: 700; color: #fef3c7; }
+    .booking-ref { font-family: monospace; font-size: 0.875rem; color: #fcd34da8; margin-top: 0.25rem; }
+    .main { max-width: 640px; margin: 0 auto; padding: 2rem 1rem; }
+    .card { background: white; border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border: 1px solid #e7e5e4; }
+    .card-title { font-weight: 600; color: #44403c; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid #f5f4f0; }
+    .row { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.875rem; margin-bottom: 0.5rem; }
+    .row dt { color: #78716c; }
+    .row dd { color: #1c1917; text-align: right; }
+    .token-badge { font-family: monospace; font-size: 0.75rem; background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; border-radius: 4px; padding: 0.125rem 0.5rem; }
+    .nakshatra-info { font-size: 0.75rem; color: #78716c; margin-top: 0.25rem; }
+    .item-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+    .item-num { width: 2rem; height: 2rem; border-radius: 9999px; background: #991b1b; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 700; flex-shrink: 0; }
+    .item-name { font-weight: 600; color: #1c1917; }
+    .pending-notice { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 1rem; padding: 1.25rem; margin-bottom: 1rem; }
+    .pending-notice h3 { color: #92400e; font-weight: 600; margin-bottom: 0.25rem; }
+    .pending-notice p { color: #b45309; font-size: 0.875rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .btn-primary { flex: 1; text-align: center; background: #991b1b; color: white; padding: 0.875rem; border-radius: 0.75rem; text-decoration: none; font-weight: 600; transition: background 0.2s; }
+    .btn-primary:hover { background: #7f1d1d; }
+    .btn-secondary { flex: 1; text-align: center; border: 2px solid #e7e5e4; color: #44403c; padding: 0.875rem; border-radius: 0.75rem; text-decoration: none; font-weight: 600; transition: border-color 0.2s; }
+    .btn-secondary:hover { border-color: #991b1b; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-icon">{isConfirmed ? '✅' : isPending ? '⏳' : '❌'}</div>
+    <h1>{isConfirmed ? 'Booking Confirmed!' : isPending ? 'Awaiting Confirmation' : 'Booking Failed'}</h1>
+    <p class="booking-ref">{booking.booking_ref}</p>
+  </header>
+
+  <main class="main">
+    {isPending && booking.booking_type === 'phone' && (
+      <div class="pending-notice">
+        <h3>📋 Phone Booking Pending</h3>
+        <p>Your screenshot has been submitted. The temple admin will verify and confirm your booking. Check back here for updates.</p>
+      </div>
+    )}
+
+    <div class="card">
+      <div class="card-title">Booking Summary</div>
+      <dl>
+        <div class="row"><dt>Event</dt><dd>{event?.name}</dd></div>
+        <div class="row"><dt>Date</dt><dd>{event ? fmtDate(event.event_date) : '—'}</dd></div>
+        <div class="row"><dt>Booking Ref</dt><dd><span style="font-family:monospace;font-weight:700">{booking.booking_ref}</span></dd></div>
+        <div class="row"><dt>Type</dt><dd>{booking.booking_type === 'online' ? '💳 Online' : '📞 Phone'}</dd></div>
+        <div class="row"><dt>Quantity</dt><dd>{booking.quantity} Muttu</dd></div>
+        <div class="row"><dt>Amount</dt><dd style="font-weight:700;color:#991b1b">{paise(booking.total_amount)}</dd></div>
+        {booking.confirmed_at && <div class="row"><dt>Confirmed</dt><dd>{fmtDateTime(booking.confirmed_at)}</dd></div>}
+        {booking.razorpay_payment_id && <div class="row"><dt>Payment ID</dt><dd style="font-family:monospace;font-size:0.75rem">{booking.razorpay_payment_id}</dd></div>}
+      </dl>
+    </div>
+
+    {(booking.muttu_items as MuttuItem[])?.map((item, idx) => {
+      const nk = getNakshatraByKey(item.nakshatra);
+      return (
+        <div class="card">
+          <div class="item-header">
+            <div class="item-num">{idx + 1}</div>
+            <div>
+              <div class="item-name">{item.name}</div>
+              {item.token_number && <span class="token-badge">Token #{item.token_number}</span>}
+            </div>
+          </div>
+          <dl>
+            <div class="row">
+              <dt>Nakshatra</dt>
+              <dd>
+                <div>{nk?.sanskrit ?? item.nakshatra}</div>
+                {nk && <div class="nakshatra-info">{nk.tamil} · {nk.malayalam}</div>}
+              </dd>
+            </div>
+            <div class="row"><dt>Purpose</dt><dd style="text-align:right;max-width:70%">{item.obstacles}</dd></div>
+          </dl>
+        </div>
+      );
+    })}
+
+    <div class="actions">
+      {isConfirmed && (
+        <a href={`/muttu-booking/print/${bookingId}`} target="_blank" class="btn-primary">🖨️ Print Receipt</a>
+      )}
+      <a href="/muttu-booking/my-bookings" class="btn-secondary">My Bookings</a>
+      <a href="/muttu-booking/events" class="btn-secondary">Back to Events</a>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,61 @@
+---
+export const prerender = false;
+import { createClient, createAdminClient } from '@/lib/supabase/server';
+import BookingForm from '@/components/booking/BookingForm';
+import { fmtDate } from '@/lib/utils';
+import type { MuttuEvent } from '@/lib/types';
+
+const { eventId } = Astro.params;
+
+const supabase = createClient(Astro);
+const { data: { user } } = await supabase.auth.getUser();
+if (!user) return Astro.redirect(`/muttu-booking/login?redirect=/muttu-booking/book/${eventId}`);
+
+const admin = createAdminClient();
+const { data: event } = await admin
+  .from('muttu_events')
+  .select('*')
+  .eq('id', eventId!)
+  .single() as { data: MuttuEvent | null };
+
+if (!event || event.status !== 'open') {
+  return Astro.redirect('/muttu-booking/events');
+}
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Muttu | {event.name}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- Razorpay SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js" is:inline></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f5f4f0; }
+    .header { background: linear-gradient(to right, #450a0a, #991b1b); color: white; padding: 1.5rem 1rem; }
+    .header-inner { max-width: 640px; margin: 0 auto; }
+    .back-link { color: #fcd34d; font-size: 0.875rem; text-decoration: none; display: block; margin-bottom: 0.75rem; }
+    .back-link:hover { text-decoration: underline; }
+    h1 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: #fef3c7; }
+    .event-meta { color: #fcd34da8; font-size: 0.875rem; margin-top: 0.25rem; }
+    .form-wrap { max-width: 640px; margin: 0 auto; padding: 1.5rem 1rem; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="/muttu-booking/events" class="back-link">← All Events</a>
+      <h1>{event.name}</h1>
+      <p class="event-meta">{fmtDate(event.event_date)}{event.location ? ` · ${event.location}` : ''}</p>
+    </div>
+  </header>
+
+  <div class="form-wrap">
+    <BookingForm event={event} client:load />
+  </div>
+</body>
+</html>
