@@ -1,19 +1,34 @@
-import { createServerClient, parseCookieHeader } from '@supabase/ssr';
+import { createServerClient } from '@supabase/ssr';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
-import type { AstroGlobal } from 'astro';
 
-export function createClient(context: Pick<AstroGlobal, 'cookies' | 'request'>) {
+type CookieContext = {
+  request: Request;
+  cookies: {
+    get(name: string): { value: string } | undefined;
+    set(name: string, value: string, opts?: Record<string, unknown>): void;
+    delete(name: string, opts?: Record<string, unknown>): void;
+  };
+};
+
+export function createClient(context: CookieContext) {
   return createServerClient(
     import.meta.env.PUBLIC_SUPABASE_URL,
     import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
     {
       cookies: {
         getAll() {
-          return parseCookieHeader(context.request.headers.get('Cookie') ?? '');
+          const cookieHeader = context.request.headers.get('Cookie') ?? '';
+          if (!cookieHeader) return [];
+          return cookieHeader.split(';').map(c => {
+            const idx   = c.indexOf('=');
+            const name  = c.slice(0, idx).trim();
+            const value = c.slice(idx + 1).trim();
+            return { name, value };
+          });
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) => {
-            context.cookies.set(name, value, options as Parameters<typeof context.cookies.set>[2]);
+            context.cookies.set(name, value, options as Record<string, unknown>);
           });
         },
       },
