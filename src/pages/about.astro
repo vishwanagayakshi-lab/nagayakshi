@@ -181,22 +181,29 @@ import Layout from '../layouts/Layout.astro';
         <div class="kavu-card">
           <div class="kavu-direction">South</div>
           <h3>Shivakavu</h3>
-          <p>Sacred grove dedicated to Lord Shiva in his forest dwelling aspect.</p>
+          <p>The kavu in the south, dedicated to the Shudra sarpas.</p>
         </div>
         <div class="kavu-card">
           <div class="kavu-direction">South</div>
           <h3>Gandharvankavu, Yakshikavu &amp; Rakshaskota</h3>
           <p>
             Combined sacred space housing celestial beings&#8212;Gandharvas, Yakshis, and protective
-            Rakshasas who guard the temple grounds.
+            Rekshus who guards the temple grounds.
           </p>
         </div>
       </div>
       <div class="kavus-power">
         <h3>The Power of the Five Kavus</h3>
+        <p>A devotee who offers prayers at the five main kavus can &#8212;</p>
+        <ul>
+          <li>Get rid of the Panchapatakas (five great sins)</li>
+          <li>Receive relief from skin diseases</li>
+          <li>Find peace from mental illness</li>
+        </ul>
         <p>
-          A devotee who offers prayers at the five main kavus can get rid of the Panchapatakas
-          (five great sins), receive relief from skin diseases, and find peace from mental illness.
+          They give precedence to the four caste systems, namely Brahmana&#8212;the quality of knowledge,
+          Kshatriya&#8212;the quality of success in any activity, auspiciousness in every work,
+          Vaisya&#8212;the quality of wealth and prosperity, and Shudra&#8212;the quality of families, health, etc.
         </p>
       </div>
     </div>
@@ -240,18 +247,6 @@ import Layout from '../layouts/Layout.astro';
         </div>
         <div class="mahatmya-card">
           <div class="mahatmya-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
-          </div>
-          <h3>The Five Kavus</h3>
-          <p>Devotees who offer prayers at the five kavus receive:</p>
-          <ul>
-            <li>Freedom from Panchapatakas (five great sins)</li>
-            <li>Relief from skin diseases</li>
-            <li>Peace from mental illness</li>
-          </ul>
-        </div>
-        <div class="mahatmya-card">
-          <div class="mahatmya-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
           <h3>Veeraporkkali Devi</h3>
@@ -270,7 +265,7 @@ import Layout from '../layouts/Layout.astro';
           <div class="mahatmya-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
-          <h3>Vettakarappan (Shiva as Hunter)</h3>
+          <h3>Vettakarappan (The Hunter form of Shiva &#8211; Kiratha murthy)</h3>
           <p>
             Shankarodathappan (Vettakarappan), who fulfills all wishes of his devotees,
             is seen by devotees as <strong>Kshipra Prasadhi</strong>&#8212;quickly pleasable
@@ -621,6 +616,29 @@ import Layout from '../layouts/Layout.astro';
   font-size: 1.1rem;
   color: var(--bg-alt);
   line-height: 1.8;
+}
+
+.kavus-power ul {
+  list-style: none;
+  padding: 0;
+  display: inline-block;
+  text-align: left;
+}
+
+.kavus-power li {
+  font-size: 1.1rem;
+  color: var(--bg-alt);
+  line-height: 1.8;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.kavus-power li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-weight: 700;
 }
 
 /* Mahatmya */
