@@ -1,5 +1,11 @@
 /* Global Styles */
 
+@import "tailwindcss";
+
+@theme {
+  --font-cormorant: "Cormorant Garamond", serif;
+}
+
 :root {
   /* Primary: Saffron / Laterite / Sandalwood theme (homepage) */
   --bg-base: #fdfaf6;
