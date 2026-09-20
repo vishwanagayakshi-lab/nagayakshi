@@ -9,20 +9,17 @@
     <ul class="nav-links">
       <li><a href="/poojas">Poojas</a></li>
       <li><a href="/muttu">Muttu</a></li>
-      <li><a href="/about">About</a></li>
       <li><a href="/ambotti-thampuran">Thampuran</a></li>
-      <li><a href="/visit">Visit</a></li>
-      <li><a href="/protocols">Protocols</a></li>
       <li class="nav-dropdown">
-        <a href="/support" class="dropdown-toggle">Support <span class="dropdown-arrow">▾</span></a>
+        <a href="/about" class="dropdown-toggle">More <span class="dropdown-arrow">▾</span></a>
         <ul class="dropdown-menu">
-          <li><a href="/support">Donate & Support</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/visit">Visit</a></li>
+          <li><a href="/protocols">Protocols</a></li>
           <li><a href="/support/pooja-request">Pooja Request</a></li>
         </ul>
       </li>
     </ul>
-
-    <a href="/support/pooja-request" class="nav-cta">Request Pooja</a>
 
     <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
       <span></span>
@@ -36,14 +33,12 @@
     <ul>
       <li><a href="/poojas">Poojas</a></li>
       <li><a href="/muttu">Muttu</a></li>
-      <li><a href="/about">About</a></li>
       <li><a href="/ambotti-thampuran">Thampuran</a></li>
+      <li><a href="/about">About</a></li>
       <li><a href="/visit">Visit</a></li>
       <li><a href="/protocols">Protocols</a></li>
-      <li><a href="/support">Donate & Support</a></li>
       <li><a href="/support/pooja-request">Pooja Request</a></li>
     </ul>
-    <a href="/support/pooja-request" class="mobile-cta">Request Pooja</a>
   </div>
 </nav>
 
@@ -202,28 +197,6 @@ nav {
   color: var(--laterite-red);
 }
 
-.nav-cta {
-  background: var(--laterite-red);
-  color: var(--bg-base);
-  padding: 0.7rem 1.8rem;
-  border: 2px solid var(--gold-light);
-  text-decoration: none;
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 0 rgba(45, 24, 16, 0.4);
-}
-
-.nav-cta:hover {
-  background: var(--saffron);
-  color: var(--text-dark);
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 rgba(45, 24, 16, 0.4);
-}
-
 /* Hamburger */
 .hamburger {
   display: none;
@@ -289,25 +262,8 @@ nav {
   color: var(--laterite-red);
 }
 
-.mobile-cta {
-  display: block;
-  text-align: center;
-  background: var(--laterite-red);
-  color: var(--bg-base);
-  padding: 1rem;
-  border: 2px solid var(--gold-light);
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-decoration: none;
-  box-shadow: 0 4px 0 rgba(45, 24, 16, 0.4);
-}
-
 @media (max-width: 1024px) {
-  .nav-links,
-  .nav-cta {
+  .nav-links {
     display: none;
   }
 
