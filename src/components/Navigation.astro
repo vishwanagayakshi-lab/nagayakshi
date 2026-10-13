@@ -7,6 +7,7 @@
     <a href="/" class="logo">NAGAYAKSHI</a>
 
     <ul class="nav-links">
+      <li><a href="/utsav" class="nav-utsav">Utsav 2026</a></li>
       <li><a href="/poojas">Poojas</a></li>
       <li><a href="/muttu">Muttu</a></li>
       <li><a href="/ambotti-thampuran">Thampuran</a></li>
@@ -21,6 +22,8 @@
       </li>
     </ul>
 
+    <a href="/support" class="nav-cta">Donate</a>
+
     <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
       <span></span>
       <span></span>
@@ -31,6 +34,7 @@
   <!-- Mobile drawer -->
   <div class="mobile-menu" id="mobile-menu">
     <ul>
+      <li><a href="/utsav" class="nav-utsav">Utsav 2026</a></li>
       <li><a href="/poojas">Poojas</a></li>
       <li><a href="/muttu">Muttu</a></li>
       <li><a href="/ambotti-thampuran">Thampuran</a></li>
@@ -39,6 +43,7 @@
       <li><a href="/protocols">Protocols</a></li>
       <li><a href="/support/pooja-request">Pooja Request</a></li>
     </ul>
+    <a href="/support" class="mobile-cta">Donate</a>
   </div>
 </nav>
 
@@ -114,6 +119,10 @@ nav {
 
 .nav-links a:hover::after {
   width: 100%;
+}
+
+.nav-utsav {
+  color: var(--laterite-red) !important;
 }
 
 /* Dropdown */
@@ -197,6 +206,28 @@ nav {
   color: var(--laterite-red);
 }
 
+.nav-cta {
+  background: var(--laterite-red);
+  color: var(--bg-base);
+  padding: 0.7rem 1.8rem;
+  border: 2px solid var(--gold-light);
+  text-decoration: none;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 0 rgba(45, 24, 16, 0.4);
+}
+
+.nav-cta:hover {
+  background: var(--saffron);
+  color: var(--text-dark);
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(45, 24, 16, 0.4);
+}
+
 /* Hamburger */
 .hamburger {
   display: none;
@@ -262,8 +293,25 @@ nav {
   color: var(--laterite-red);
 }
 
+.mobile-cta {
+  display: block;
+  text-align: center;
+  background: var(--laterite-red);
+  color: var(--bg-base);
+  padding: 1rem;
+  border: 2px solid var(--gold-light);
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none;
+  box-shadow: 0 4px 0 rgba(45, 24, 16, 0.4);
+}
+
 @media (max-width: 1024px) {
-  .nav-links {
+  .nav-links,
+  .nav-cta {
     display: none;
   }
 

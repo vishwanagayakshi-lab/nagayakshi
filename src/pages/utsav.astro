@@ -1,0 +1,764 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const schedule = [
+  {
+    date: 'October 26, Monday (Thulam 9th)',
+    label: 'Kodiyettam',
+    items: [
+      '5:30 AM — Nadathurappu, Ganapathi Homam followed by Visheshalpooja',
+      '8:00 AM — Devi Mahatmya Parayanam & Shashti Parayanam',
+      '12:02–12:28 PM (Abhijith Muhurtham) — Dhwajasthaapanam, followed by Paraveppu, Vilichu Chollal',
+      'Evening 5:30 PM — Nadathurappu',
+      '6:00 PM — Niramaala Chuttuvilakku',
+      '6:15 PM — Deeparadhana (for Shankarodath Amma)',
+      '6:35 PM — "Kodiyettam" (Melam by Kallekulangara Babu & Party)',
+    ],
+  },
+  {
+    date: 'October 27, Tuesday (Thulam 10th)',
+    label: 'Northern Kavu',
+    items: [
+      '5:30 AM — Nadathurappu, Abhishekam, Ushapooja, Navaka Panchagavyam cleansing of the Northern Kavu Abhishekams (Brahmana Sarppakkavu)',
+      'Followed by — Sheeveli and pooja at Brahmana Sarppakkavu, Cheriya Aarattu, Deeparadhana, distribution of prasadam',
+    ],
+  },
+  {
+    date: 'October 28, Wednesday (Thulam 11th)',
+    label: 'Western Kavu',
+    items: [
+      '5:30 AM — Nadathurappu, Abhishekam, Ushapooja, Navaka Panchagavyam cleansing of the Western Kavu Abhishekams (Agama Sarppakkavu)',
+      'Followed by — Sheeveli and pooja at Agama Sarppakkavu, Cheriya Aarattu, Deeparadhana, distribution of prasadam',
+    ],
+  },
+  {
+    date: 'October 29, Thursday (Thulam 12th)',
+    label: 'Eastern Kavu',
+    items: [
+      '5:30 AM — Nadathurappu, Abhishekam, Ushapooja, Navaka Panchagavyam cleansing of the Eastern Kavu Abhishekams',
+      'Followed by — Sheeveli and poojas, Nagarootu, Thekithali at Krishna Sarppakkavu, Kaala Sarppakkavu and Mukalathu Kavu, Cheriya Aarattu, Deeparadhana, distribution of prasadam',
+    ],
+  },
+  {
+    date: 'October 30, Friday (Thulam 13th)',
+    label: 'Southern Kavu',
+    items: [
+      '5:30 AM — Nadathurappu, Abhishekam, Ushapooja, Navaka Panchagavyam cleansing of the Southern Kavu Abhishekams (at Ayilyamkavu)',
+      'Followed by — Sheeveli & poojas in Ayilyamkavu, Gandharvankavu, Shivakkavu, Yakshikkavu and for Brahma Rakshassu, Cheriya Aarattu, Deeparadhana, distribution of prasadam',
+    ],
+  },
+  {
+    date: 'October 31, Saturday (Thulam 14th)',
+    label: 'Moolasthanam',
+    items: [
+      '5:30 AM — Nadathurappu, Abhishekam, Ushapooja, distribution of prasadam',
+      '7:30 AM — Navaka Panchagavyapooja (at the Moolasthanam in Thekkethalam)',
+      'Followed by — Sheeveli, pooja for Nagarajavu, Thevaaramoorthis and Vettekkarappan at the Moolasthanam and the middle courtyard, Cheriya Aarattu, Deeparadhana, distribution of prasadam',
+    ],
+  },
+  {
+    date: 'November 1, Sunday (Thulam 15th)',
+    label: 'Opening of the Machakam',
+    items: [
+      '5:30 AM — Nadathurappu, Abhishekam, Ushapooja, Deeparadhana, Pandheeradi Pooja, Sheeveli, pooja for the Upadevadas, Uchapooja',
+      '2:00 PM — Pooyam Thozhal',
+      'Evening 5:00 PM — Nadathurappu',
+      '6:00 PM — Opening of the Machakam, Abhishekam & Deeparadhana into the Nilavara, between Thailattam, Elaneeratam, Thrippuka and Nadayadappu',
+    ],
+  },
+  {
+    date: 'November 2, Monday (Thulam 16th)',
+    label: 'Valiya Aarattu — Main Day',
+    items: [
+      '5:00 AM — Nadathurappu, Ganapathy Homam',
+      '5:30 AM — Abhishekam, Ethirthupooja',
+      '6:30 AM — Alangarapooja, Ushapooja (Sopana Sangeetham)',
+      '7:30 AM — Deeparadhana, followed by pooja in the Nilavara',
+      '10:00 AM — Machil Pooja, Noorum Paalum Pooja, distribution of prasadam',
+      '10:30 AM — "Valiya Arattu Ezhunnellathu"',
+      '11:15 AM — "Valiya Arattu" (Kelikottu)',
+      '12:00 Noon — Arattu Thirichezhunnellathu (return)',
+      '12:30 PM — Arattu Ezhunnellathu Kavu Kayaral, Uchapooja, Deeparadhana, Pongala in Bandara Aduppu, then "Unni Ezhunnellathu" and Deeparadhana at Shankarodath Kavu',
+      '6:00 PM — Theru Ezhunnellathu from NK PK Nair Memorial Ground',
+      '6:15 PM — Niramala Chuttuvilakku, followed by Sopana Sangeetham (Kalamandalam Achutha Pothuval, Thiruvilwamala Hari, Ayilur Akhil Marar)',
+      '6:30 PM — Sandhya Deeparadhana at Keezhkavu (Shankarodath Amma)',
+      '7:00 PM — Sandhya Deeparadhana with Muzhukappu (once every year, for Vishwanagayakshiamma), Chendamelam',
+      '7:30 PM — Athaazha Pooja (for Vishwanagayakshi Amma)',
+      '9:30 PM — Mahasaparivarapooja Sarppavahanam (Maha Kaalasarpabali) with Panchavadyam, in the presence of Nagarajavu, Nagayakshi Amma, Sarpayakshi Amma, Nagakanyaka, Nagachamundi and others; Thekithali for the Anthareeksha Nagas with Pulluvan Pattu; Guruthi Tharpanam cleansing the Nilavara and Machakam; Neerattu for Vishwanagayakshi Amma and Madhuranedyam; the temple closes with Kodiyirakkal (9:30 PM Sopana Sangeetham, 10:45 PM Panchavadyam)',
+    ],
+  },
+];
+
+const culturalProgrammes = [
+  {
+    date: 'October 27',
+    items: [
+      '4:00 PM — Shankarodath Nagasandhya inauguration and Shankarodath Award Ceremony (Shankarodath Kalaarathna Award 2026 to musician Prakash Ulliyeri; Shankarodath Veda Choodamani Award 2026 to Vedapanditan Vadakkedath Neelakandan Namboothiri, Vadakkanthara)',
+      '6:30 PM — Bhakthi Ganaarchana',
+      '7:30 PM — Thiruvathirakali',
+    ],
+  },
+  { date: 'October 28', items: ['6:30 PM — Naama Sangeerthanam (Bajans) by Radhe Krishna Bhajanamandali, Kalpathy, Palakkad'] },
+  {
+    date: 'October 29',
+    items: [
+      '6:30 PM — Chakyarkoothu by Painkulam Narayana Chakyar',
+      '8:00 PM — Bhakthi Ganaarchana by Sreeyuktha Prajeesh & Team, and Anilkumar & Team, CN Puram',
+    ],
+  },
+  { date: 'October 30', items: ['6:00 PM — Dance & Music (Nrutha Sangeetha Sadassu)'] },
+  { date: 'October 31', items: ['5:30 PM — Rhythm of Dances (Classical & Semi-Classical Dance)'] },
+];
+
+const specialPoojas = [
+  ['Ashtadhravya Mahaganapathy Homam', '100'],
+  ['Usha (Morning) Pooja', '500'],
+  ['Ethirthu Pooja', '500'],
+  ['Ucha (Afternoon) Pooja', '300'],
+  ['Aarattu Pooja', '500'],
+  ['Atthazha (Evening) Pooja', '300'],
+  ['Special Daily Pooja', '1,500'],
+  ['Noorum Paalum', '350'],
+  ['Saparivaara Noorum Paalum', '3,000'],
+  ['Maha Saparivaara Pooja Sarppavahanam (Maha Sarppabali, Kaala Sarppabali)', '10,000'],
+  ['Ayilyam Pooja', '1,000'],
+  ['Sarppasanthi Pooja', '200'],
+  ['Kaavu (Serpent Groves) Pooja', '5,000'],
+  ['Special Pushpaanjali (Nilavara, Machakam, Srilakam)', '100'],
+  ['Niramala, Chuttuvilakku', '7,000'],
+  ['Alankara Pooja', '5,000'],
+];
+---
+
+<Layout title="Shankarodath Ayilyam Valiya Arattu Mahotsavam 2026 | Nagayakshi Temple">
+
+  <!-- Hero -->
+  <section class="utsav-hero">
+    <div class="utsav-hero-overlay"></div>
+    <div class="utsav-hero-content">
+      <span class="utsav-badge">Annual Grand Festival</span>
+      <h1>Shankarodath Ayilyam<br>Valiya Arattu Mahotsavam 2026</h1>
+      <p class="utsav-tagline">October 26 &#8211; November 2, 2026 &#8212; Sree Pulikkal Vishwanagayakshi Temple</p>
+      <div class="hero-ctas">
+        <a href="#schedule" class="btn-primary-gold">View Full Schedule</a>
+        <a href="#offerings" class="btn-secondary-outline">Special Poojas &amp; Offerings</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Announcement -->
+  <section class="announce-section">
+    <div class="utsav-container">
+      <div class="announce-box">
+        <p>Namaskaram,</p>
+        <p>
+          We are happy to inform devotees that the <strong>Shankarodath Ayilyam Valiya Arattu
+          Mahotsavam</strong>, conducted every year at Sree Pulikkal Vishwanagayakshi Temple,
+          Thekkumpuram, Kavilpad, will be held on Monday, 2nd November 2026 (1202 Thulam 16).
+        </p>
+        <p>
+          The celebration begins with Kodiyettam on October 26th (Thulam 9th) and concludes on
+          November 2nd (Thulam 16th). The Kodiyettam, poojas at the different Kavus, and special
+          poojas at the Nilavara and Machakam are conducted elaborately under the auspicious
+          supervision of the Kshetra Tantri, Brahmasree Shankarodath Ambotti Thampuran.
+        </p>
+        <p>
+          It is our humble request that devotees take part in all the special poojas and receive
+          the blessings of the Nagadevis and Nagadevas.
+        </p>
+        <p class="announce-sign">&#8212; Kovilakam Trust</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Annadhanam -->
+  <section class="annadhanam-section">
+    <div class="utsav-container">
+      <div class="annadhanam-box">
+        <h3>Annadhanam &#8212; Sacred Offering of Food</h3>
+        <p>11:30 AM on 2nd November 2026</p>
+        <p class="annadhanam-sponsor">
+          Sponsored by Nagaraj &amp; Vani Nagaraj, SPAN Technology Services Pvt. Ltd., Coimbatore
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schedule -->
+  <section class="schedule-section" id="schedule">
+    <div class="utsav-container">
+      <div class="section-header">
+        <span class="section-label">Nine Sacred Days</span>
+        <h2>Festival Schedule</h2>
+        <p class="section-intro">October 26 &#8211; November 2, 2026</p>
+      </div>
+      <div class="schedule-list">
+        {schedule.map((day) => (
+          <details class="schedule-item">
+            <summary>
+              <span class="schedule-date">{day.date}</span>
+              <span class="schedule-label">{day.label}</span>
+            </summary>
+            <ul>
+              {day.items.map((item) => <li>{item}</li>)}
+            </ul>
+          </details>
+        ))}
+      </div>
+      <p class="schedule-note">
+        Nadathurappu resumes November 9th (Thulam 23); regular Nithyapooja resumes November 10th (Thulam 24).
+        The Trust has full authority to make changes to the programme.
+      </p>
+    </div>
+  </section>
+
+  <!-- Cultural Programmes -->
+  <section class="culture-section">
+    <div class="utsav-container">
+      <div class="section-header">
+        <span class="section-label">Shankarodath Nagasandhya</span>
+        <h2>Cultural Programmes</h2>
+      </div>
+      <div class="culture-grid">
+        {culturalProgrammes.map((day) => (
+          <div class="culture-card">
+            <h4>{day.date}</h4>
+            <ul>
+              {day.items.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Special Poojas & Offerings -->
+  <section class="offerings-section" id="offerings">
+    <div class="utsav-container">
+      <div class="section-header">
+        <span class="section-label">Vazhipaadukal</span>
+        <h2>Special Poojas &amp; Offerings</h2>
+        <p class="section-intro">Sponsor a special pooja during the Mahotsavam</p>
+      </div>
+      <div class="price-table">
+        <div class="price-table-header">
+          <span>Pooja</span>
+          <span>Amount (&#8377;)</span>
+        </div>
+        {specialPoojas.map(([name, amount]) => (
+          <div class="price-row">
+            <span>{name}</span>
+            <span class="price-amount">&#8377;{amount}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Payment -->
+  <section class="payment-section">
+    <div class="utsav-container">
+      <div class="payment-box">
+        <h2>Make an Offering</h2>
+        <p>
+          Choose a pooja from the list above and contribute online via Razorpay&#8212;enter the
+          matching amount and mention the pooja name. Bank transfer is also available.
+        </p>
+        <a href="https://razorpay.me/@nagayakshi6417" class="btn-donate" target="_blank" rel="noopener">
+          Pay via Razorpay
+        </a>
+        <div class="bank-details">
+          <h4>Bank Transfer</h4>
+          <p>Account No: 120024145263</p>
+          <p>IFSC Code: CNRB0014460</p>
+          <p>Bank: Canara Bank, Branch: Puthur</p>
+        </div>
+        <p class="payment-note">
+          For enquiries and to arrange offerings: +91 99463 73522 &#183; +91 89213 32023 &#183; 0491 2552910
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visit -->
+  <section class="utsav-cta-section">
+    <div class="utsav-cta-container">
+      <h2>Join Us for the Mahotsavam</h2>
+      <p>Shankarodath Kovilakam, Thekkumpuram, Kavilpad, Olavakkode, Palakkad &#8211; 678012, Kerala</p>
+      <div class="utsav-cta-buttons">
+        <a href="/visit" class="btn-primary-gold">Plan Your Visit</a>
+        <a href="tel:+919946373522" class="btn-secondary-outline">Call: +91 99463 73522</a>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+.utsav-hero {
+  position: relative;
+  min-height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(rgba(82, 14, 9, 0.8), rgba(82, 14, 9, 0.92)),
+    url('/images/Kala sarppabali pooja.jpeg') center/cover;
+  padding: 8rem 2rem 4rem;
+  text-align: center;
+}
+
+.utsav-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(212, 165, 116, 0.15) 0%, transparent 70%);
+}
+
+.utsav-hero-content {
+  max-width: 900px;
+  position: relative;
+  z-index: 10;
+}
+
+.utsav-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--text-dark);
+  padding: 0.5rem 1.5rem;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+}
+
+.utsav-hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.4rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1.15;
+  margin-bottom: 1.2rem;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+}
+
+.utsav-tagline {
+  font-size: 1.3rem;
+  color: var(--gold-light);
+  margin-bottom: 2.5rem;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.utsav-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-label {
+  display: inline-block;
+  font-size: 0.9rem;
+  color: var(--gold-dark, var(--gold));
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.section-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--laterite-red);
+  margin-bottom: 0.8rem;
+}
+
+.section-intro {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+/* Announcement */
+.announce-section {
+  padding: 5rem 2rem;
+  background: var(--bg-base);
+}
+
+.announce-box {
+  background: var(--bg-alt);
+  padding: 3rem;
+  border-radius: 15px;
+  border-left: 5px solid var(--laterite-red);
+}
+
+.announce-box p {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: var(--text-muted);
+  margin-bottom: 1.2rem;
+}
+
+.announce-box strong {
+  color: var(--laterite-red);
+}
+
+.announce-sign {
+  text-align: right;
+  font-style: italic;
+  margin-bottom: 0 !important;
+}
+
+/* Annadhanam */
+.annadhanam-section {
+  padding: 0 2rem 5rem;
+  background: var(--bg-base);
+}
+
+.annadhanam-box {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: var(--laterite-dark);
+  border-radius: 15px;
+  padding: 2.5rem;
+  text-align: center;
+}
+
+.annadhanam-box h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  color: var(--gold-light);
+  margin-bottom: 0.8rem;
+}
+
+.annadhanam-box p {
+  color: var(--bg-alt);
+  font-size: 1.15rem;
+  margin: 0.3rem 0;
+}
+
+.annadhanam-sponsor {
+  font-size: 0.95rem !important;
+  opacity: 0.8;
+}
+
+/* Schedule */
+.schedule-section {
+  padding: 5rem 2rem;
+  background: var(--bg-alt);
+}
+
+.schedule-list {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.schedule-item {
+  background: var(--bg-base);
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  border-left: 4px solid var(--gold);
+}
+
+.schedule-item summary {
+  padding: 1.3rem 1.8rem;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.8rem;
+  position: relative;
+}
+
+.schedule-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.schedule-item summary::after {
+  content: '+';
+  position: absolute;
+  right: 1.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: var(--gold-dark, var(--gold));
+}
+
+.schedule-item[open] summary::after {
+  content: '\2212';
+}
+
+.schedule-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--laterite-red);
+}
+
+.schedule-label {
+  font-size: 0.95rem;
+  color: var(--saffron);
+  font-style: italic;
+}
+
+.schedule-item ul {
+  list-style: none;
+  padding: 0 1.8rem 1.5rem;
+  margin: 0;
+}
+
+.schedule-item li {
+  padding: 0.5rem 0 0.5rem 1.3rem;
+  position: relative;
+  line-height: 1.7;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-light);
+}
+
+.schedule-item li:first-child {
+  border-top: none;
+}
+
+.schedule-item li::before {
+  content: '\2726';
+  position: absolute;
+  left: 0;
+  color: var(--laterite-red);
+  font-size: 0.9rem;
+}
+
+.schedule-note {
+  max-width: 900px;
+  margin: 2rem auto 0;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Cultural Programmes */
+.culture-section {
+  padding: 5rem 2rem;
+  background: var(--bg-base);
+}
+
+.culture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.8rem;
+}
+
+.culture-card {
+  background: var(--bg-alt);
+  padding: 1.8rem;
+  border-radius: 12px;
+  border-top: 3px solid var(--laterite-red);
+}
+
+.culture-card h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  color: var(--laterite-red);
+  margin-bottom: 0.8rem;
+}
+
+.culture-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.culture-card li {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+
+/* Offerings / Price table */
+.offerings-section {
+  padding: 5rem 2rem;
+  background: var(--bg-alt);
+}
+
+.price-table {
+  max-width: 800px;
+  margin: 0 auto;
+  background: var(--bg-base);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+.price-table-header,
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.8rem;
+}
+
+.price-table-header {
+  background: var(--laterite-dark);
+  color: var(--gold-light);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+}
+
+.price-row {
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-muted);
+}
+
+.price-row:last-child {
+  border-bottom: none;
+}
+
+.price-row:nth-child(even) {
+  background: var(--bg-alt);
+}
+
+.price-amount {
+  font-weight: 700;
+  color: var(--laterite-red);
+  white-space: nowrap;
+}
+
+/* Payment */
+.payment-section {
+  padding: 5rem 2rem;
+  background: var(--bg-base);
+}
+
+.payment-box {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  background: var(--laterite-dark);
+  border-radius: 20px;
+  padding: 3.5rem 3rem;
+}
+
+.payment-box h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin-bottom: 1.2rem;
+}
+
+.payment-box > p {
+  font-size: 1.05rem;
+  color: var(--bg-alt);
+  line-height: 1.8;
+  max-width: 520px;
+  margin: 0 auto 2rem;
+}
+
+.btn-donate {
+  display: inline-block;
+  padding: 1.1rem 3rem;
+  background: var(--gold);
+  color: var(--text-dark);
+  text-decoration: none;
+  border-radius: 2px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: all 0.3s ease;
+}
+
+.btn-donate:hover {
+  background: var(--gold-light);
+  transform: translateY(-3px);
+}
+
+.bank-details {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.bank-details h4 {
+  color: var(--gold-light);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.bank-details p {
+  color: var(--bg-alt);
+  font-size: 0.95rem;
+  margin: 0.3rem 0;
+}
+
+.payment-note {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--bg-alt);
+  opacity: 0.8;
+}
+
+/* Visit CTA */
+.utsav-cta-section {
+  padding: 5rem 2rem;
+  background: linear-gradient(135deg, var(--laterite-red) 0%, #6b1f2b 100%);
+  text-align: center;
+}
+
+.utsav-cta-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.utsav-cta-container h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.utsav-cta-container p {
+  font-size: 1.1rem;
+  color: var(--bg-alt);
+  margin-bottom: 2rem;
+}
+
+.utsav-cta-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .utsav-hero h1 {
+    font-size: 2.3rem;
+  }
+
+  .price-table-header,
+  .price-row {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+</style>

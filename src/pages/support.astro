@@ -24,47 +24,43 @@ import Layout from '../layouts/Layout.astro';
       <div class="mission-content">
         <div class="mission-text">
           <p class="mission-lead">
-            The seven sacred Sarpa Kavus are not merely temple property—they are the living homes 
-            of the naga deities, the very foundation of this ancient shrine's spiritual power. 
+            The seven sacred Sarpa Kavus are not merely temple property—they are the living homes
+            of the naga deities, the very foundation of this ancient shrine's spiritual power.
             Without these Kavus, the temple loses its essence.
           </p>
           <p>
-            For generations, these sacred groves have provided shelter to the Divine Nagas, acting 
-            as portals where devotees' prayers directly reach the serpent deities. But decades of 
-            neglect, natural degradation, and the pressures of modern development have threatened 
+            For generations, these sacred groves have provided shelter to the Divine Nagas, acting
+            as portals where devotees' prayers directly reach the serpent deities. But decades of
+            neglect, natural degradation, and the pressures of modern development have threatened
             their integrity.
           </p>
           <p>
-            <strong>Our mission is urgent and clear:</strong> Restore all seven Kavus to their 
-            pristine sacred condition before it's too late. This requires replanting native trees, 
-            creating protective boundaries, conducting purification rituals, and establishing 
+            <strong>Our mission is urgent and clear:</strong> Restore all seven Kavus to their
+            pristine sacred condition before it's too late. This requires replanting native trees,
+            creating protective boundaries, conducting purification rituals, and establishing
             permanent maintenance systems.
           </p>
-        </div>
-        
-        <div class="mission-stats">
-          <div class="stat-card">
-            <div class="stat-number">7</div>
-            <div class="stat-label">Sacred Kavus</div>
-            <div class="stat-detail">To be fully restored</div>
-          </div>
-          
-          <div class="stat-card">
-            <div class="stat-number">3</div>
-            <div class="stat-label">Kavus Restored</div>
-            <div class="stat-detail">Through devotee support</div>
-          </div>
-          
-          <div class="stat-card">
-            <div class="stat-number">4</div>
-            <div class="stat-label">Remaining</div>
-            <div class="stat-detail">Need your help now</div>
-          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Donate -->
+  <section class="donate-section">
+    <div class="support-container">
+      <div class="donate-box">
+        <h2>Make a Donation</h2>
+        <p>
+          Your contribution goes directly toward Kavu restoration, daily poojas, and temple
+          upkeep. Donate securely online via Razorpay&#8212;any amount helps.
+        </p>
+        <a href="https://razorpay.me/@nagayakshi6417" class="btn-donate" target="_blank" rel="noopener">
+          Donate Now
+        </a>
+        <p class="donate-note">You'll be taken to our secure Razorpay payment page.</p>
+      </div>
+    </div>
+  </section>
 
 </Layout>
 
@@ -150,10 +146,8 @@ import Layout from '../layouts/Layout.astro';
 }
 
 .mission-content {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 4rem;
-  align-items: start;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .mission-lead {
@@ -175,62 +169,68 @@ import Layout from '../layouts/Layout.astro';
   color: var(--laterite-red);
 }
 
-.mission-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  position: sticky;
-  top: 6rem;
+/* Donate Section */
+.donate-section {
+  padding: 2rem 2rem 6rem;
+  background: var(--bg-base);
 }
 
-.stat-card {
-  background: var(--bg-alt);
-  padding: 2rem;
-  border-radius: 15px;
+.donate-box {
+  max-width: 700px;
+  margin: 0 auto;
   text-align: center;
-  border-left: 5px solid var(--laterite-red);
+  background: var(--laterite-dark);
+  border-radius: 20px;
+  padding: 4rem 3rem;
 }
 
-.stat-number {
+.donate-box h2 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 4rem;
+  font-size: 2.8rem;
   font-weight: 700;
-  color: var(--laterite-red);
-  line-height: 1;
+  color: var(--gold-light);
+  margin-bottom: 1.2rem;
 }
 
-.stat-label {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--laterite-dark);
-  margin-top: 0.5rem;
+.donate-box p {
+  font-size: 1.1rem;
+  color: var(--bg-alt);
+  line-height: 1.8;
+  max-width: 540px;
+  margin: 0 auto 2rem;
 }
 
-.stat-detail {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  margin-top: 0.5rem;
+.btn-donate {
+  display: inline-block;
+  padding: 1.2rem 3.5rem;
+  background: var(--gold);
+  color: var(--text-dark);
+  text-decoration: none;
+  border-radius: 2px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: all 0.3s ease;
+}
+
+.btn-donate:hover {
+  background: var(--gold-light);
+  transform: translateY(-3px);
+}
+
+.donate-note {
+  font-size: 0.9rem;
+  color: var(--bg-alt);
+  opacity: 0.75;
+  margin: 1.2rem 0 0 !important;
 }
 
 /* Responsive */
-@media (max-width: 968px) {
-  .mission-content {
-    grid-template-columns: 1fr;
-  }
-
-  .mission-stats {
-    position: static;
-    flex-direction: row;
-  }
-}
-
 @media (max-width: 768px) {
   .support-hero h1 {
     font-size: 3rem;
-  }
-
-  .mission-stats {
-    flex-direction: column;
   }
 }
 </style>

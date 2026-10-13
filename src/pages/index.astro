@@ -48,6 +48,25 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
+  <!-- Festival Announcement -->
+  <section class="utsav-card-section">
+    <div class="utsav-card">
+      <div class="utsav-card-image">
+        <img src="/images/Kala sarppabali pooja1.jpeg" alt="Shankarodath Ayilyam Valiya Arattu Mahotsavam ritual fire">
+      </div>
+      <div class="utsav-card-text">
+        <span class="utsav-card-label">Annual Grand Festival</span>
+        <h2>Utsav 2026</h2>
+        <p>
+          Shankarodath Ayilyam Valiya Arattu Mahotsavam &#8212; nine sacred days of Kodiyettam,
+          Kavu poojas, cultural programmes, and the grand Valiya Aarattu.
+        </p>
+        <p class="utsav-card-dates">October 26 &#8211; November 2, 2026</p>
+        <a href="/utsav" class="btn-utsav">View Schedule &amp; Offerings</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Sacred Offerings -->
   <section class="offerings-section">
     <div class="section-header">
@@ -326,6 +345,87 @@ import Layout from '../layouts/Layout.astro';
     margin-top: 0.5rem;
     text-transform: none;
     font-style: italic;
+  }
+
+  /* Festival Card */
+  .utsav-card-section {
+    padding: 5rem 2rem;
+    background: var(--laterite-dark);
+    border-top: 4px solid var(--saffron);
+    border-bottom: 4px solid var(--saffron);
+  }
+
+  .utsav-card {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .utsav-card-image img {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+    border: 4px solid var(--gold);
+  }
+
+  .utsav-card-label {
+    display: inline-block;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.85rem;
+    color: var(--saffron);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .utsav-card-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 1.2rem;
+    line-height: 1.1;
+  }
+
+  .utsav-card-text p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .utsav-card-dates {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem !important;
+    color: var(--gold) !important;
+    font-weight: 700;
+  }
+
+  .btn-utsav {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 1rem 2.5rem;
+    background: var(--gold);
+    color: var(--text-dark);
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border: 2px solid var(--gold);
+    box-shadow: 0 4px 0 rgba(45, 24, 16, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .btn-utsav:hover {
+    background: var(--gold-light);
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(45, 24, 16, 0.4);
   }
 
   /* Offerings */
@@ -705,6 +805,11 @@ import Layout from '../layouts/Layout.astro';
 
     .kashyapa-card-emblem {
       display: none;
+    }
+
+    .utsav-card {
+      grid-template-columns: 1fr;
+      text-align: center;
     }
   }
 
