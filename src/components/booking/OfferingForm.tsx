@@ -40,7 +40,7 @@ export default function OfferingForm({ mode, poojaOptions = [] }: Props) {
   const [selectedPooja, setSelectedPooja] = useState<PoojaOption | null>(poojaOptions[0] ?? null);
   const [customAmount, setCustomAmount] = useState<number | ''>(mode === 'donation' ? 500 : '');
   const [submitting, setSubmitting] = useState(false);
-  const [receipt, setReceipt] = useState<{ ref: string; purpose: string; amount: number; name: string; emailSent: boolean } | null>(null);
+  const [receipt, setReceipt] = useState<{ id: string; ref: string; purpose: string; amount: number; name: string; emailSent: boolean } | null>(null);
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -112,6 +112,7 @@ export default function OfferingForm({ mode, poojaOptions = [] }: Props) {
       const data = await res.json();
       if (!data.success) throw new Error(data.error);
       setReceipt({
+        id:        data.data.offering_id,
         ref:       data.data.offering_ref,
         purpose:   data.data.purpose,
         amount:    data.data.amount,
@@ -137,10 +138,18 @@ export default function OfferingForm({ mode, poojaOptions = [] }: Props) {
           <div className="offering-receipt-row"><span>Purpose</span><span>{receipt.purpose}</span></div>
           <div className="offering-receipt-row"><span>Amount</span><span>₹{(receipt.amount / 100).toLocaleString('en-IN')}</span></div>
         </div>
+        <a
+          href={`/api/offerings/${receipt.id}/receipt.pdf`}
+          target="_blank"
+          rel="noopener"
+          className="btn-offering-receipt"
+        >
+          Download Receipt (PDF)
+        </a>
         <p className="offering-receipt-note">
           {receipt.emailSent
-            ? 'A confirmation email with your receipt has been sent to you.'
-            : "We couldn't send a confirmation email right now — please save this reference number."}
+            ? 'A confirmation email with your receipt attached has also been sent to you.'
+            : "We couldn't send a confirmation email right now — please save this reference number or download the receipt above."}
         </p>
       </div>
     );

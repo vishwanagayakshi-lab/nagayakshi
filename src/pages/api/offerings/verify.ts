@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { createAdminClient } from '@/lib/supabase/server';
 import { verifyRazorpaySignature } from '@/lib/razorpay';
 import { sendOfferingConfirmationEmail } from '@/lib/resend';
+import { generateReceiptPDF } from '@/lib/receipt';
 import { z } from 'zod';
 
 export const prerender = false;
@@ -54,6 +55,21 @@ export const POST: APIRoute = async (context) => {
       return Response.json({ success: false, error: 'Could not confirm payment' }, { status: 500 });
     }
 
+    let receiptPdf: Buffer | undefined;
+    try {
+      receiptPdf = await generateReceiptPDF({
+        offeringRef:  offering.offering_ref,
+        devoteeName:  offering.devotee_name,
+        nakshatraKey: offering.nakshatra,
+        purpose:      offering.purpose,
+        amountPaise:  offering.amount,
+        createdAt:    new Date().toISOString(),
+        paymentId:    parsed.razorpay_payment_id,
+      });
+    } catch (pdfErr) {
+      console.error('receipt PDF generation failed', pdfErr);
+    }
+
     const emailResult = await sendOfferingConfirmationEmail({
       to:          offering.email,
       name:        offering.devotee_name,
@@ -61,6 +77,7 @@ export const POST: APIRoute = async (context) => {
       purpose:     offering.purpose,
       amountPaise: offering.amount,
       paymentId:   parsed.razorpay_payment_id,
+      receiptPdf,
     });
 
     if (emailResult.sent) {
@@ -73,6 +90,7 @@ export const POST: APIRoute = async (context) => {
     return Response.json({
       success: true,
       data: {
+        offering_id:  offering.id,
         offering_ref: offering.offering_ref,
         purpose:      offering.purpose,
         amount:       offering.amount,

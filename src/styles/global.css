@@ -400,6 +400,23 @@ h1, h2, h3, h4, h5, h6 {
   text-align: right;
 }
 
+.btn-offering-receipt {
+  display: inline-block;
+  margin-bottom: 1.2rem;
+  padding: 0.85rem 2.2rem;
+  background: transparent;
+  color: var(--laterite-red);
+  border: 2px solid var(--laterite-red);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.btn-offering-receipt:hover {
+  background: var(--laterite-red);
+  color: var(--bg-base);
+}
+
 .offering-receipt-note {
   font-size: 0.85rem;
   color: var(--text-muted);

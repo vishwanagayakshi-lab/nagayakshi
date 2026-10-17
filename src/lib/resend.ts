@@ -7,6 +7,7 @@ export async function sendOfferingConfirmationEmail(params: {
   purpose: string;
   amountPaise: number;
   paymentId: string;
+  receiptPdf?: Buffer;
 }): Promise<{ sent: boolean; error?: string }> {
   const apiKey = import.meta.env.RESEND_API_KEY;
   const from = import.meta.env.RESEND_FROM_EMAIL;
@@ -29,8 +30,8 @@ export async function sendOfferingConfirmationEmail(params: {
         <tr style="border-top: 1px solid #dcbfa6;"><td style="padding: 8px 0; color: #5e4334;">Payment ID</td><td style="padding: 8px 0; text-align: right; font-size: 12px;">${escapeHtml(params.paymentId)}</td></tr>
       </table>
       <p style="color: #5e4334; font-size: 14px;">
-        This email serves as your receipt. For any questions, contact the temple at
-        +91 99463 73522 or ${SUPPORT_EMAIL}.
+        ${params.receiptPdf ? 'Your official receipt is attached as a PDF. ' : ''}For any questions, contact
+        the temple at +91 99463 73522 or ${SUPPORT_EMAIL}.
       </p>
       <p style="color: #5e4334; font-size: 14px;">Om Nagayakshinnyai Namaha.</p>
     </div>
@@ -50,6 +51,12 @@ export async function sendOfferingConfirmationEmail(params: {
         reply_to: SUPPORT_EMAIL,
         subject: `Payment Confirmation — ${params.offeringRef}`,
         html,
+        attachments: params.receiptPdf
+          ? [{
+              filename: `receipt-${params.offeringRef}.pdf`,
+              content:  params.receiptPdf.toString('base64'),
+            }]
+          : undefined,
       }),
     });
     if (!res.ok) {
