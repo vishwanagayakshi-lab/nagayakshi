@@ -127,17 +127,17 @@ export default function OfferingForm({ mode, poojaOptions = [] }: Props) {
 
   if (step === 'done' && receipt) {
     return (
-      <div className="bg-white rounded-2xl p-8 shadow-sm border border-stone-200 text-center">
+      <div className="offering-card offering-receipt">
         <Toaster richColors position="top-center" />
-        <div className="text-4xl mb-3">🙏</div>
-        <h3 className="font-cormorant text-2xl font-bold text-red-800 mb-2">Thank you, {receipt.name}</h3>
-        <p className="text-stone-600 mb-6">Your offering has been received.</p>
-        <div className="bg-stone-50 rounded-xl p-5 text-left text-sm space-y-2 mb-6">
-          <div className="flex justify-between"><span className="text-stone-500">Reference</span><span className="font-semibold">{receipt.ref}</span></div>
-          <div className="flex justify-between"><span className="text-stone-500">Purpose</span><span className="font-semibold">{receipt.purpose}</span></div>
-          <div className="flex justify-between"><span className="text-stone-500">Amount</span><span className="font-semibold">₹{(receipt.amount / 100).toLocaleString('en-IN')}</span></div>
+        <div className="offering-receipt-icon">🙏</div>
+        <h3 className="offering-receipt-title">Thank you, {receipt.name}</h3>
+        <p className="offering-receipt-lead">Your offering has been received.</p>
+        <div className="offering-receipt-table">
+          <div className="offering-receipt-row"><span>Reference</span><span>{receipt.ref}</span></div>
+          <div className="offering-receipt-row"><span>Purpose</span><span>{receipt.purpose}</span></div>
+          <div className="offering-receipt-row"><span>Amount</span><span>₹{(receipt.amount / 100).toLocaleString('en-IN')}</span></div>
         </div>
-        <p className="text-xs text-stone-500">
+        <p className="offering-receipt-note">
           {receipt.emailSent
             ? 'A confirmation email with your receipt has been sent to you.'
             : "We couldn't send a confirmation email right now — please save this reference number."}
@@ -147,16 +147,16 @@ export default function OfferingForm({ mode, poojaOptions = [] }: Props) {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-stone-200">
+    <div className="offering-card">
       <Toaster richColors position="top-center" />
 
       {mode === 'utsav' && (
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-stone-700 mb-2">Select Pooja <span className="text-red-500">*</span></label>
+        <div className="offering-field">
+          <label className="offering-label">Select Pooja <span className="offering-required">*</span></label>
           <select
             value={selectedPooja?.name ?? ''}
             onChange={(e) => setSelectedPooja(poojaOptions.find(p => p.name === e.target.value) ?? null)}
-            className="w-full border border-stone-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-800 bg-white"
+            className="offering-control offering-select"
           >
             {poojaOptions.map(p => (
               <option key={p.name} value={p.name}>{p.name} — ₹{p.amount.toLocaleString('en-IN')}</option>
@@ -166,17 +166,15 @@ export default function OfferingForm({ mode, poojaOptions = [] }: Props) {
       )}
 
       {mode === 'donation' && (
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-stone-700 mb-2">Amount (₹) <span className="text-red-500">*</span></label>
-          <div className="grid grid-cols-4 gap-2 mb-3">
+        <div className="offering-field">
+          <label className="offering-label">Amount (₹) <span className="offering-required">*</span></label>
+          <div className="offering-presets">
             {DONATION_PRESETS.map(p => (
               <button
                 key={p}
                 type="button"
                 onClick={() => setCustomAmount(p)}
-                className={`py-2.5 rounded-lg border-2 text-sm font-semibold transition-all ${
-                  customAmount === p ? 'border-red-800 bg-red-50 text-red-800' : 'border-stone-200 text-stone-600 hover:border-red-300'
-                }`}
+                className={`offering-preset${customAmount === p ? ' offering-preset-active' : ''}`}
               >
                 ₹{p.toLocaleString('en-IN')}
               </button>
@@ -188,83 +186,84 @@ export default function OfferingForm({ mode, poojaOptions = [] }: Props) {
             value={customAmount}
             onChange={(e) => setCustomAmount(e.target.value ? Number(e.target.value) : '')}
             placeholder="Or enter a custom amount"
-            className="w-full border border-stone-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-800"
+            className="offering-control"
           />
         </div>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">Full Name <span className="text-red-500">*</span></label>
+      <form onSubmit={handleSubmit(onSubmit)} className="offering-form-grid">
+        <div className="offering-field">
+          <label className="offering-label">Full Name <span className="offering-required">*</span></label>
           <input
             {...register('devotee_name')}
             placeholder="Full name for sankalpa"
-            className="w-full border border-stone-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-800"
+            className="offering-control"
           />
-          {errors.devotee_name && <p className="text-red-500 text-xs mt-1">{errors.devotee_name.message}</p>}
+          {errors.devotee_name && <p className="offering-error">{errors.devotee_name.message}</p>}
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">Nakshatra (Birth Star) <span className="text-red-500">*</span></label>
+        <div className="offering-field">
+          <label className="offering-label">Nakshatra (Birth Star) <span className="offering-required">*</span></label>
           <select
             {...register('nakshatra')}
-            className="w-full border border-stone-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-800 bg-white"
+            className="offering-control offering-select"
+            defaultValue=""
           >
             <option value="">— Select Nakshatra —</option>
             {NAKSHATRAS.map(n => (
               <option key={n.key} value={n.key}>{nakshatraLabel(n)}</option>
             ))}
           </select>
-          {errors.nakshatra && <p className="text-red-500 text-xs mt-1">{errors.nakshatra.message}</p>}
+          {errors.nakshatra && <p className="offering-error">{errors.nakshatra.message}</p>}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1">Phone <span className="text-red-500">*</span></label>
+        <div className="offering-row">
+          <div className="offering-field">
+            <label className="offering-label">Phone <span className="offering-required">*</span></label>
             <input
               {...register('phone')}
               placeholder="+91 98765 43210"
-              className="w-full border border-stone-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-800"
+              className="offering-control"
             />
-            {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
+            {errors.phone && <p className="offering-error">{errors.phone.message}</p>}
           </div>
-          <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1">Email <span className="text-red-500">*</span></label>
+          <div className="offering-field">
+            <label className="offering-label">Email <span className="offering-required">*</span></label>
             <input
               {...register('email')}
               type="email"
               placeholder="you@example.com"
-              className="w-full border border-stone-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-800"
+              className="offering-control"
             />
-            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+            {errors.email && <p className="offering-error">{errors.email.message}</p>}
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">City / Location <span className="text-red-500">*</span></label>
+        <div className="offering-field">
+          <label className="offering-label">City / Location <span className="offering-required">*</span></label>
           <input
             {...register('city')}
             placeholder="City"
-            className="w-full border border-stone-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-800"
+            className="offering-control"
           />
-          {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city.message}</p>}
+          {errors.city && <p className="offering-error">{errors.city.message}</p>}
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">Full Address <span className="text-red-500">*</span></label>
+        <div className="offering-field">
+          <label className="offering-label">Full Address <span className="offering-required">*</span></label>
           <textarea
             {...register('address')}
             rows={2}
             placeholder="For your payment receipt"
-            className="w-full border border-stone-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-800 resize-none"
+            className="offering-control offering-textarea"
           />
-          {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address.message}</p>}
+          {errors.address && <p className="offering-error">{errors.address.message}</p>}
         </div>
 
         <button
           type="submit"
           disabled={submitting || step === 'paying' || amountRupees < 1}
-          className="w-full bg-red-800 hover:bg-red-700 disabled:opacity-60 text-white py-4 rounded-xl font-semibold text-lg transition-colors"
+          className="btn-offering-submit"
         >
           {submitting || step === 'paying' ? 'Opening Payment…' : `Pay ₹${amountRupees.toLocaleString('en-IN')}`}
         </button>

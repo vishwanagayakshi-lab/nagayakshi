@@ -206,3 +206,227 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 2.2rem;
   }
 }
+
+/* Offering / Donation Form */
+.offering-card {
+  background: var(--bg-base);
+  border: 2px solid var(--border-light);
+  border-radius: 18px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.07);
+}
+
+.offering-field {
+  margin-bottom: 1.4rem;
+}
+
+.offering-field:last-child {
+  margin-bottom: 0;
+}
+
+.offering-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--laterite-red);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.6rem;
+}
+
+.offering-required {
+  color: var(--saffron);
+}
+
+.offering-control {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  border: 2px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--bg-base);
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  font-family: 'Source Serif 4', serif;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.offering-control::placeholder {
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.offering-control:focus {
+  outline: none;
+  border-color: var(--laterite-red);
+  box-shadow: 0 0 0 3px rgba(122, 25, 18, 0.1);
+}
+
+.offering-select {
+  cursor: pointer;
+}
+
+.offering-textarea {
+  resize: none;
+}
+
+.offering-error {
+  margin-top: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--laterite-red);
+}
+
+.offering-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-bottom: 1.4rem;
+}
+
+.offering-row .offering-field {
+  margin-bottom: 0;
+}
+
+.offering-form-grid {
+  margin-top: 1.4rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.offering-presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.7rem;
+  margin-bottom: 0.9rem;
+}
+
+.offering-preset {
+  padding: 0.75rem 0.5rem;
+  border: 2px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--bg-base);
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.offering-preset:hover {
+  border-color: var(--laterite-red);
+  color: var(--laterite-red);
+}
+
+.offering-preset-active {
+  border-color: var(--laterite-red);
+  background: var(--bg-alt);
+  color: var(--laterite-red);
+}
+
+.btn-offering-submit {
+  width: 100%;
+  margin-top: 0.8rem;
+  padding: 1.1rem;
+  background: var(--laterite-red);
+  color: var(--bg-base);
+  border: 2px solid var(--gold-light);
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(45, 24, 16, 0.4);
+  transition: all 0.2s ease;
+}
+
+.btn-offering-submit:hover:not(:disabled) {
+  background: var(--saffron);
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(45, 24, 16, 0.4);
+}
+
+.btn-offering-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Offering Receipt */
+.offering-receipt {
+  text-align: center;
+}
+
+.offering-receipt-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.offering-receipt-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--laterite-red);
+  margin-bottom: 0.5rem;
+}
+
+.offering-receipt-lead {
+  color: var(--text-muted);
+  margin-bottom: 1.6rem;
+}
+
+.offering-receipt-table {
+  background: var(--bg-alt);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  text-align: left;
+  margin-bottom: 1.6rem;
+}
+
+.offering-receipt-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  font-size: 0.92rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.offering-receipt-row:last-child {
+  border-bottom: none;
+}
+
+.offering-receipt-row span:first-child {
+  color: var(--text-muted);
+}
+
+.offering-receipt-row span:last-child {
+  font-weight: 700;
+  color: var(--text-dark);
+  text-align: right;
+}
+
+.offering-receipt-note {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .offering-card {
+    padding: 1.6rem 1.3rem;
+    border-radius: 14px;
+  }
+
+  .offering-row {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+
+  .offering-presets {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .offering-control {
+    font-size: 1rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .btn-offering-submit {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+}
