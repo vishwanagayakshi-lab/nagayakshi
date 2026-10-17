@@ -48,7 +48,7 @@ export const POST: APIRoute = async (context) => {
 
     if (insertErr || !offering) {
       console.error('offerings insert failed', insertErr);
-      return Response.json({ success: false, error: 'Could not start your offering. Please try again.' }, { status: 500 });
+      return Response.json({ success: false, error: `Database error: ${insertErr?.message ?? 'offering not created'}` }, { status: 500 });
     }
 
     const order = await createRazorpayOrder({
@@ -84,6 +84,7 @@ export const POST: APIRoute = async (context) => {
       return Response.json({ success: false, error: err.issues[0].message }, { status: 422 });
     }
     console.error('offerings/create error', err);
-    return Response.json({ success: false, error: 'Payment gateway error' }, { status: 500 });
+    const message = err instanceof Error ? err.message : 'Unknown error';
+    return Response.json({ success: false, error: `Payment gateway error: ${message}` }, { status: 500 });
   }
 };
