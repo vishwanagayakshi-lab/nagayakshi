@@ -16,7 +16,34 @@ const GOLD  = '#d4a574';
 const DARK  = '#2d1810';
 const MUTED = '#5e4334';
 
-export function generateReceiptPDF(data: ReceiptData): Promise<Buffer> {
+async function fetchImageBuffer(path: string): Promise<Buffer | null> {
+  try {
+    const base = import.meta.env.PUBLIC_APP_URL ?? 'https://nagayakshi.org';
+    const res = await fetch(new URL(path, base));
+    if (!res.ok) return null;
+    return Buffer.from(await res.arrayBuffer());
+  } catch (err) {
+    console.error(`receipt emblem fetch failed: ${path}`, err);
+    return null;
+  }
+}
+
+function drawEmblem(doc: PDFKit.PDFDocument, buf: Buffer | null, cx: number, cy: number, r: number) {
+  if (buf) {
+    doc.save();
+    doc.circle(cx, cy, r).clip();
+    doc.image(buf, cx - r, cy - r, { width: r * 2, height: r * 2 });
+    doc.restore();
+  }
+  doc.circle(cx, cy, r).lineWidth(1.5).stroke(GOLD);
+}
+
+export async function generateReceiptPDF(data: ReceiptData): Promise<Buffer> {
+  const [leftEmblem, rightEmblem] = await Promise.all([
+    fetchImageBuffer('/images/receipt/emblem-left.png'),
+    fetchImageBuffer('/images/receipt/emblem-right.png'),
+  ]);
+
   return new Promise((resolve, reject) => {
     const doc = new PDFDocument({ size: [595, 420], margin: 0 });
     const chunks: Buffer[] = [];
@@ -30,13 +57,17 @@ export function generateReceiptPDF(data: ReceiptData): Promise<Buffer> {
     doc.rect(M, M, W - 2 * M, H - 2 * M).lineWidth(2).stroke(RED);
     doc.rect(M + 5, M + 5, W - 2 * M - 10, H - 2 * M - 10).lineWidth(0.75).stroke(GOLD);
 
+    // Deity emblems
+    drawEmblem(doc, leftEmblem, M + 32, M + 32, 20);
+    drawEmblem(doc, rightEmblem, W - M - 32, M + 32, 20);
+
     let y = M + 20;
 
     doc.fillColor(MUTED).font('Helvetica').fontSize(9)
       .text('On behalf of Ambotti Thampuran, Shankarodath Kovilakam', M, y, { width: W - 2 * M, align: 'center' });
     y += 16;
 
-    doc.fillColor(RED).font('Helvetica-Bold').fontSize(20)
+    doc.fillColor(RED).font('Helvetica-Bold').fontSize(17)
       .text('Sree Pulikkal Vishwanagayakshi Temple', M, y, { width: W - 2 * M, align: 'center' });
     y += 26;
 
