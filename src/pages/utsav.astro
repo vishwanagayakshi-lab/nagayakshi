@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import OfferingForm from '@/components/booking/OfferingForm';
 
 const schedule = [
   {
@@ -128,6 +129,11 @@ const specialPoojas = [
   ['Niramala, Chuttuvilakku', '7,000'],
   ['Alankara Pooja', '5,000'],
 ];
+
+const poojaOptions = specialPoojas.map(([name, amount]) => ({
+  name,
+  amount: Number(amount.replace(/,/g, '')),
+}));
 ---
 
 <Layout title="Shankarodath Ayilyam Valiya Arattu Mahotsavam 2026 | Nagayakshi Temple">
@@ -141,7 +147,7 @@ const specialPoojas = [
       <p class="utsav-tagline">October 26 &#8211; November 2, 2026 &#8212; Sree Pulikkal Vishwanagayakshi Temple</p>
       <div class="hero-ctas">
         <a href="#schedule" class="btn-primary-gold">View Full Schedule</a>
-        <a href="#offerings" class="btn-secondary-outline">Special Poojas &amp; Offerings</a>
+        <a href="#offering-form" class="btn-secondary-outline">Make an Offering</a>
       </div>
     </div>
   </section>
@@ -256,29 +262,29 @@ const specialPoojas = [
   </section>
 
   <!-- Payment -->
-  <section class="payment-section">
-    <div class="utsav-container">
-      <div class="payment-box">
+  <section class="payment-section" id="offering-form">
+    <div class="utsav-container payment-container">
+      <div class="payment-intro">
         <h2>Make an Offering</h2>
         <p>
-          Choose a pooja from the list above and contribute online via Razorpay&#8212;enter the
-          matching amount and mention the pooja name. Bank transfer is also available.
+          Select a pooja and fill in your details below&#8212;this information is used for your
+          sankalpa and payment receipt.
         </p>
-        <a href="https://razorpay.me/@nagayakshi6417" class="btn-donate" target="_blank" rel="noopener">
-          Pay via Razorpay
-        </a>
-        <div class="bank-details">
-          <h4>Bank Transfer</h4>
-          <p>Account No: 120024145263</p>
-          <p>IFSC Code: CNRB0014460</p>
-          <p>Bank: Canara Bank, Branch: Puthur</p>
-        </div>
+      </div>
+
+      <OfferingForm mode="utsav" poojaOptions={poojaOptions} client:load />
+
+      <div class="bank-details-box">
+        <h4>Prefer Bank Transfer?</h4>
+        <p>Account No: 120024145263 &#183; IFSC Code: CNRB0014460 &#183; Bank: Canara Bank, Branch: Puthur</p>
         <p class="payment-note">
           For enquiries and to arrange offerings: +91 99463 73522 &#183; +91 89213 32023 &#183; 0491 2552910
         </p>
       </div>
     </div>
   </section>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js" is:inline></script>
 
   <!-- Visit -->
   <section class="utsav-cta-section">
@@ -643,76 +649,56 @@ const specialPoojas = [
 /* Payment */
 .payment-section {
   padding: 5rem 2rem;
-  background: var(--bg-base);
+  background: var(--bg-alt);
 }
 
-.payment-box {
-  max-width: 700px;
-  margin: 0 auto;
+.payment-container {
+  max-width: 600px;
+}
+
+.payment-intro {
   text-align: center;
-  background: var(--laterite-dark);
-  border-radius: 20px;
-  padding: 3.5rem 3rem;
+  margin-bottom: 2rem;
 }
 
-.payment-box h2 {
+.payment-intro h2 {
   font-family: 'Cormorant Garamond', serif;
   font-size: 2.4rem;
   font-weight: 700;
-  color: var(--gold-light);
-  margin-bottom: 1.2rem;
-}
-
-.payment-box > p {
-  font-size: 1.05rem;
-  color: var(--bg-alt);
-  line-height: 1.8;
-  max-width: 520px;
-  margin: 0 auto 2rem;
-}
-
-.btn-donate {
-  display: inline-block;
-  padding: 1.1rem 3rem;
-  background: var(--gold);
-  color: var(--text-dark);
-  text-decoration: none;
-  border-radius: 2px;
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 1.05rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  transition: all 0.3s ease;
-}
-
-.btn-donate:hover {
-  background: var(--gold-light);
-  transform: translateY(-3px);
-}
-
-.bank-details {
-  margin-top: 2.5rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255,255,255,0.15);
-}
-
-.bank-details h4 {
-  color: var(--gold-light);
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem;
+  color: var(--laterite-red);
   margin-bottom: 0.8rem;
 }
 
-.bank-details p {
+.payment-intro p {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+.bank-details-box {
+  margin-top: 2.5rem;
+  padding: 1.8rem;
+  background: var(--laterite-dark);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.bank-details-box h4 {
+  color: var(--gold-light);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  margin-bottom: 0.6rem;
+}
+
+.bank-details-box p {
   color: var(--bg-alt);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   margin: 0.3rem 0;
 }
 
 .payment-note {
-  margin-top: 1.5rem;
-  font-size: 0.9rem;
+  margin-top: 0.8rem;
+  font-size: 0.85rem;
   color: var(--bg-alt);
   opacity: 0.8;
 }

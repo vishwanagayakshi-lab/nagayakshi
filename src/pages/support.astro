@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import OfferingForm from '@/components/booking/OfferingForm';
 ---
 
 <Layout title="Support Kavu Preservation | Nagayakshi Temple">
@@ -47,20 +48,19 @@ import Layout from '../layouts/Layout.astro';
 
   <!-- Donate -->
   <section class="donate-section">
-    <div class="support-container">
-      <div class="donate-box">
+    <div class="support-container donate-container">
+      <div class="donate-intro">
         <h2>Make a Donation</h2>
         <p>
           Your contribution goes directly toward Kavu restoration, daily poojas, and temple
-          upkeep. Donate securely online via Razorpay&#8212;any amount helps.
+          upkeep&#8212;any amount helps.
         </p>
-        <a href="https://razorpay.me/@nagayakshi6417" class="btn-donate" target="_blank" rel="noopener">
-          Donate Now
-        </a>
-        <p class="donate-note">You'll be taken to our secure Razorpay payment page.</p>
       </div>
+      <OfferingForm mode="donation" client:load />
     </div>
   </section>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js" is:inline></script>
 
 </Layout>
 
@@ -175,56 +175,27 @@ import Layout from '../layouts/Layout.astro';
   background: var(--bg-base);
 }
 
-.donate-box {
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: center;
-  background: var(--laterite-dark);
-  border-radius: 20px;
-  padding: 4rem 3rem;
+.donate-container {
+  max-width: 600px;
 }
 
-.donate-box h2 {
+.donate-intro {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.donate-intro h2 {
   font-family: 'Cormorant Garamond', serif;
   font-size: 2.8rem;
   font-weight: 700;
-  color: var(--gold-light);
-  margin-bottom: 1.2rem;
+  color: var(--laterite-red);
+  margin-bottom: 1rem;
 }
 
-.donate-box p {
+.donate-intro p {
   font-size: 1.1rem;
-  color: var(--bg-alt);
+  color: var(--text-muted);
   line-height: 1.8;
-  max-width: 540px;
-  margin: 0 auto 2rem;
-}
-
-.btn-donate {
-  display: inline-block;
-  padding: 1.2rem 3.5rem;
-  background: var(--gold);
-  color: var(--text-dark);
-  text-decoration: none;
-  border-radius: 2px;
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 1.1rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  transition: all 0.3s ease;
-}
-
-.btn-donate:hover {
-  background: var(--gold-light);
-  transform: translateY(-3px);
-}
-
-.donate-note {
-  font-size: 0.9rem;
-  color: var(--bg-alt);
-  opacity: 0.75;
-  margin: 1.2rem 0 0 !important;
 }
 
 /* Responsive */
