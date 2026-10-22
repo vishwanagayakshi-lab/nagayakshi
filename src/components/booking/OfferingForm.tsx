@@ -37,7 +37,8 @@ const DONATION_PRESETS = [500, 1000, 2500, 5000];
 
 export default function OfferingForm({ mode, poojaOptions = [] }: Props) {
   const [step, setStep] = useState<'form' | 'paying' | 'done'>('form');
-  const [selectedPooja, setSelectedPooja] = useState<PoojaOption | null>(poojaOptions[0] ?? null);
+  const defaultPooja = poojaOptions.find(p => /kaala sarppabali|maha sarppabali/i.test(p.name)) ?? poojaOptions[0] ?? null;
+  const [selectedPooja, setSelectedPooja] = useState<PoojaOption | null>(defaultPooja);
   const [customAmount, setCustomAmount] = useState<number | ''>(mode === 'donation' ? 500 : '');
   const [submitting, setSubmitting] = useState(false);
   const [receipt, setReceipt] = useState<{ id: string; ref: string; purpose: string; amount: number; name: string; emailSent: boolean } | null>(null);
