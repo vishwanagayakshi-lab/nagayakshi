@@ -20,9 +20,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
   try {
     const supabase = createClient(context);
     const { data: { user } } = await supabase.auth.getUser();
+    const loginPath = needsAdmin ? '/admin/login' : '/muttu-booking/login';
 
     if (!user) {
-      return context.redirect(`/muttu-booking/login?redirect=${encodeURIComponent(pathname)}`);
+      return context.redirect(`${loginPath}?redirect=${encodeURIComponent(pathname)}`);
     }
 
     if (needsAdmin) {
@@ -37,7 +38,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
       }
     }
   } catch {
-    return context.redirect(`/muttu-booking/login?redirect=${encodeURIComponent(pathname)}`);
+    const loginPath = needsAdmin ? '/admin/login' : '/muttu-booking/login';
+    return context.redirect(`${loginPath}?redirect=${encodeURIComponent(pathname)}`);
   }
 
   return next();

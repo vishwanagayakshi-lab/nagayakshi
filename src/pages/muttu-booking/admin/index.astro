@@ -5,7 +5,7 @@ import { paise } from '@/lib/utils';
 
 const supabase = createClient(Astro);
 const { data: { user } } = await supabase.auth.getUser();
-if (!user) return Astro.redirect('/muttu-booking/login?redirect=/muttu-booking/admin');
+if (!user) return Astro.redirect('/admin/login?redirect=/muttu-booking/admin');
 
 const admin = createAdminClient();
 

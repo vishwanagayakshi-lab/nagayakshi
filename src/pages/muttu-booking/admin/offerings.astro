@@ -5,7 +5,7 @@ import AdminOfferingsPanel from '@/components/booking/AdminOfferingsPanel';
 
 const supabase = createClient(Astro);
 const { data: { user } } = await supabase.auth.getUser();
-if (!user) return Astro.redirect('/muttu-booking/login?redirect=/muttu-booking/admin/offerings');
+if (!user) return Astro.redirect('/admin/login?redirect=/muttu-booking/admin/offerings');
 
 const admin = createAdminClient();
 const { data: profile } = await admin.from('profiles').select('is_admin').eq('id', user.id).single();
