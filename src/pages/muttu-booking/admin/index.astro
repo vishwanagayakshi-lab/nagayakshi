@@ -19,12 +19,16 @@ const [
   { count: totalBookings },
   { count: confirmedBookings },
   { count: pendingPhone },
+  { count: totalOfferings },
+  { count: paidOfferings },
 ] = await Promise.all([
   admin.from('muttu_events').select('*', { count: 'exact', head: true }),
   admin.from('muttu_events').select('*', { count: 'exact', head: true }).eq('status', 'open'),
   admin.from('bookings').select('*', { count: 'exact', head: true }),
   admin.from('bookings').select('*', { count: 'exact', head: true }).eq('status', 'confirmed'),
   admin.from('bookings').select('*', { count: 'exact', head: true }).eq('booking_type', 'phone').in('status', ['pending', 'payment_init']),
+  admin.from('offerings').select('*', { count: 'exact', head: true }),
+  admin.from('offerings').select('*', { count: 'exact', head: true }).eq('status', 'paid'),
 ]);
 
 const { data: recentBookings } = await admin
@@ -76,6 +80,7 @@ const { data: recentBookings } = await admin
     <span class="brand">🐍 Admin</span>
     <a href="/muttu-booking/admin/events">Events</a>
     <a href="/muttu-booking/admin/bookings">Bookings</a>
+    <a href="/muttu-booking/admin/offerings">Offerings</a>
     <a href="/muttu-booking/events">Public Site</a>
   </nav>
 
@@ -103,6 +108,14 @@ const { data: recentBookings } = await admin
         <div class="stat-num">{pendingPhone ?? 0}</div>
         <div class="stat-label">Phone Bookings Awaiting</div>
       </div>
+      <div class="stat-card">
+        <div class="stat-num">{totalOfferings ?? 0}</div>
+        <div class="stat-label">Offerings & Donations</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">{paidOfferings ?? 0}</div>
+        <div class="stat-label">Paid Offerings</div>
+      </div>
     </div>
 
     <div class="nav-links">
@@ -118,6 +131,13 @@ const { data: recentBookings } = await admin
         <div>
           <div class="nav-card-title">Manage Bookings</div>
           <div class="nav-card-sub">Confirm phone bookings, cancel</div>
+        </div>
+      </a>
+      <a href="/muttu-booking/admin/offerings" class="nav-card">
+        <span class="nav-icon">🪔</span>
+        <div>
+          <div class="nav-card-title">Offerings & Donations</div>
+          <div class="nav-card-sub">Utsav pooja & donation registrations</div>
         </div>
       </a>
     </div>
