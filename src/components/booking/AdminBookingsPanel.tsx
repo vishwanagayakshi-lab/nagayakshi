@@ -1,44 +1,23 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { toast, Toaster } from 'sonner';
-import { fmtDateTime, paise, BOOKING_STATUS_COLOR, BOOKING_STATUS_LABEL } from '@/lib/utils';
+import { paise } from '@/lib/utils';
+import { NAKSHATRAS, nakshatraLabel } from '@/lib/nakshatra';
 import type { Booking, BookingStatus } from '@/lib/types';
-
-const STATUS_OPTS = [
-  { value: '', label: 'All Status' },
-  { value: 'pending', label: 'Pending' }, { value: 'payment_init', label: 'Payment Init' },
-  { value: 'confirmed', label: 'Confirmed' }, { value: 'failed', label: 'Failed' },
-  { value: 'expired', label: 'Expired' }, { value: 'cancelled', label: 'Cancelled' },
-  { value: 'refunded', label: 'Refunded' },
-];
+import AdminTable, { type ColConfig } from '@/components/admin/AdminTable';
 
 export default function AdminBookingsPanel() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading,  setLoading]  = useState(true);
-  const [total,    setTotal]    = useState(0);
-  const [page,     setPage]     = useState(1);
-  const [status,   setStatus]   = useState('');
-  const [type,     setType]     = useState('');
-  const [search,   setSearch]   = useState('');
-  const [dSearch,  setDSearch]  = useState('');
   const [viewing,  setViewing]  = useState<Booking | null>(null);
-
-  useEffect(() => {
-    const t = setTimeout(() => setDSearch(search), 400);
-    return () => clearTimeout(t);
-  }, [search]);
 
   const load = useCallback(async () => {
     setLoading(true);
-    const p = new URLSearchParams({ page: String(page), limit: '25' });
-    if (status)  p.set('status', status);
-    if (type)    p.set('type', type);
-    if (dSearch) p.set('search', dSearch);
-    const res  = await fetch(`/api/admin/bookings?${p}`);
+    const res  = await fetch('/api/admin/bookings?limit=1000');
     const data = await res.json();
-    if (data.success) { setBookings(data.data); setTotal(data.meta.total); }
+    if (data.success) setBookings(data.data);
     setLoading(false);
-  }, [page, status, type, dSearch]);
+  }, []);
 
   useEffect(() => { load(); }, [load]);
 
@@ -63,155 +42,240 @@ export default function AdminBookingsPanel() {
     else toast.error(data.error);
   }
 
-  const totalPages = Math.ceil(total / 25);
+  const rows = bookings.map(b => ({
+    ...b,
+    event_name: (b.event as unknown as { name: string } | null)?.name ?? '',
+  }));
+
+  const columns: ColConfig[] = [
+    { key: 'booking_ref',  label: 'Ref',    type: 'mono', filterable: true },
+    { key: 'phone',        label: 'Phone',  filterable: true },
+    { key: 'event_name',   label: 'Event',  filterable: true },
+    { key: 'booking_type', label: 'Type',   filterable: true },
+    { key: 'quantity',     label: 'Qty',    align: 'right' },
+    { key: 'total_amount', label: 'Amount', type: 'currency', align: 'right' },
+    { key: 'status',       label: 'Status', type: 'badge', filterable: true },
+    { key: 'created_at',   label: 'Created', type: 'date' },
+    {
+      key: 'actions', label: '',
+      render: row => {
+        const b = row as unknown as Booking;
+        return (
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            <ActionBtn onClick={() => setViewing(b)}>View</ActionBtn>
+            {b.booking_type === 'phone' && ['pending', 'payment_init'].includes(b.status) && (
+              <ActionBtn tone="positive" onClick={() => confirmPhone(b.id)}>Confirm</ActionBtn>
+            )}
+            {['pending', 'payment_init', 'confirmed'].includes(b.status) && (
+              <ActionBtn tone="negative" onClick={() => cancelBooking(b.id)}>Cancel</ActionBtn>
+            )}
+          </div>
+        );
+      },
+    },
+  ];
+
+  if (loading) {
+    return <p style={{ textAlign: 'center', padding: '64px 24px', fontSize: 13, color: '#94a3b8' }}>Loading…</p>;
+  }
 
   return (
     <div>
       <Toaster richColors position="top-right" />
 
-      <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-        <div>
-          <h1 className="text-2xl font-bold text-stone-800">All Bookings</h1>
-          <p className="text-sm text-stone-500">{total} total</p>
-        </div>
-      </div>
+      <p style={{ fontSize: 13, color: '#64748b', marginBottom: 16 }}>{bookings.length} total booking{bookings.length !== 1 ? 's' : ''}</p>
 
-      {/* Filters */}
-      <div className="bg-white rounded-2xl p-4 shadow-sm border border-stone-200 mb-5 flex flex-wrap gap-3 items-center">
-        <input
-          type="text" placeholder="Search phone or ref…"
-          value={search}
-          onChange={e => { setSearch(e.target.value); setPage(1); }}
-          className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-800 w-56"
-        />
-        <select value={status} onChange={e => { setStatus(e.target.value); setPage(1); }} className="border border-stone-300 rounded-lg px-3 py-2 text-sm bg-white">
-          {STATUS_OPTS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-        </select>
-        <select value={type} onChange={e => { setType(e.target.value); setPage(1); }} className="border border-stone-300 rounded-lg px-3 py-2 text-sm bg-white">
-          <option value="">All Types</option>
-          <option value="online">Online</option>
-          <option value="phone">Phone</option>
-        </select>
-      </div>
+      <AdminTable data={rows} columns={columns} filename="bookings" idKey="id" />
 
-      {/* Table */}
-      <div className="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead className="bg-stone-50 border-b border-stone-200">
-            <tr>
-              {['Ref', 'Phone', 'Event', 'Type', 'Qty', 'Amount', 'Status', 'Created', 'Actions'].map(h => (
-                <th key={h} className="text-left px-4 py-3 text-stone-500 font-medium text-xs uppercase tracking-wider whitespace-nowrap">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr><td colSpan={9} className="text-center py-12 text-stone-400">Loading…</td></tr>
-            ) : !bookings.length ? (
-              <tr><td colSpan={9} className="text-center py-12 text-stone-400">No bookings found</td></tr>
-            ) : bookings.map((b: Booking) => {
-              const event = b.event as unknown as { name: string } | null;
-              return (
-                <tr key={b.id} className="border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                  <td className="px-4 py-3 font-mono text-xs text-stone-600">{b.booking_ref}</td>
-                  <td className="px-4 py-3 text-stone-700">{b.phone}</td>
-                  <td className="px-4 py-3 text-stone-600 text-xs max-w-[140px] truncate">{event?.name}</td>
-                  <td className="px-4 py-3">
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${b.booking_type === 'online' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'}`}>
-                      {b.booking_type}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-center font-semibold">{b.quantity}</td>
-                  <td className="px-4 py-3 font-semibold text-red-800">{paise(b.total_amount)}</td>
-                  <td className="px-4 py-3">
-                    <span className={`text-xs px-2 py-1 rounded-full font-medium ${BOOKING_STATUS_COLOR[b.status]}`}>
-                      {BOOKING_STATUS_LABEL[b.status]}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-xs text-stone-400 whitespace-nowrap">{fmtDateTime(b.created_at)}</td>
-                  <td className="px-4 py-3">
-                    <div className="flex gap-1 flex-wrap">
-                      <button onClick={() => setViewing(b)} className="text-xs px-2 py-1 rounded-lg border border-stone-200 hover:border-red-400 text-stone-600">View</button>
-                      {b.booking_type === 'phone' && ['pending','payment_init'].includes(b.status) && (
-                        <button onClick={() => confirmPhone(b.id)} className="text-xs px-2 py-1 rounded-lg bg-green-100 hover:bg-green-200 text-green-700">Confirm</button>
-                      )}
-                      {['pending','payment_init','confirmed'].includes(b.status) && (
-                        <button onClick={() => cancelBooking(b.id)} className="text-xs px-2 py-1 rounded-lg bg-red-50 hover:bg-red-100 text-red-600">Cancel</button>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex justify-center gap-2 mt-5">
-          <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} className="px-4 py-2 border rounded-lg text-sm disabled:opacity-40">← Prev</button>
-          <span className="px-4 py-2 text-sm text-stone-600">Page {page} of {totalPages}</span>
-          <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="px-4 py-2 border rounded-lg text-sm disabled:opacity-40">Next →</button>
-        </div>
-      )}
-
-      {/* Booking detail drawer */}
-      {viewing && (
-        <BookingDetailModal booking={viewing} onClose={() => { setViewing(null); load(); }} />
-      )}
+      {viewing && <BookingDetailModal booking={viewing} onClose={() => { setViewing(null); load(); }} />}
     </div>
   );
 }
 
+function ActionBtn({ children, onClick, tone = 'neutral', disabled }: { children: React.ReactNode; onClick: () => void; tone?: 'neutral' | 'positive' | 'negative'; disabled?: boolean }) {
+  const palette = {
+    neutral:  { bg: '#fff',                    border: '#e2e8f0', color: '#64748b' },
+    positive: { bg: 'rgba(16,185,129,0.1)',    border: 'rgba(52,211,153,0.3)', color: '#059669' },
+    negative: { bg: 'rgba(239,68,68,0.08)',    border: 'rgba(248,113,113,0.3)', color: '#dc2626' },
+  }[tone];
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      style={{ fontSize: 12, padding: '4px 10px', borderRadius: 7, border: `1.5px solid ${palette.border}`, background: palette.bg, color: palette.color, cursor: disabled ? 'not-allowed' : 'pointer', fontWeight: 500, opacity: disabled ? 0.6 : 1 }}
+    >
+      {children}
+    </button>
+  );
+}
+
+const inputStyle: React.CSSProperties = {
+  width: '100%', boxSizing: 'border-box', padding: '7px 10px', borderRadius: 7,
+  fontSize: 13, border: '1.5px solid #e2e8f0', outline: 'none', color: '#0f172a', fontFamily: 'inherit',
+};
+
+type Item = { id: string; name: string; nakshatra: string; obstacles: string; token_number?: number };
+
 function BookingDetailModal({ booking, onClose }: { booking: Booking; onClose: () => void }) {
   const [full,    setFull]    = useState<Booking | null>(null);
   const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState(false);
+  const [saving,  setSaving]  = useState(false);
+  const [busy,    setBusy]    = useState(false);
+  const [phone,   setPhone]   = useState('');
+  const [items,   setItems]   = useState<Item[]>([]);
 
-  useEffect(() => {
-    fetch(`/api/admin/bookings/${booking.id}`)
-      .then(r => r.json())
-      .then(d => { if (d.success) setFull(d.data); })
-      .finally(() => setLoading(false));
+  const fetchFull = useCallback(async () => {
+    const res = await fetch(`/api/admin/bookings/${booking.id}`);
+    const d   = await res.json();
+    if (d.success) {
+      setFull(d.data);
+      setPhone(d.data.phone);
+      setItems((d.data.muttu_items ?? []) as Item[]);
+    }
+    setLoading(false);
   }, [booking.id]);
 
-  const items    = (full?.muttu_items ?? []) as { id: string; name: string; nakshatra: string; obstacles: string; token_number?: number }[];
-  const event    = full?.event as unknown as { name: string; event_date: string } | null;
+  useEffect(() => { fetchFull(); }, [fetchFull]);
+
+  const event = full?.event as unknown as { name: string; event_date: string } | null;
+  const STATUS_TEXT: Record<string, string> = { pending: '#9ca3af', payment_init: '#f59e0b', confirmed: '#34d399', failed: '#f87171', expired: '#f87171', cancelled: '#f87171', refunded: '#9ca3af' };
+
+  const field = (label: string, value: React.ReactNode) => (
+    <div>
+      <span style={{ fontSize: 12, color: '#64748b' }}>{label}</span>
+      <p style={{ fontSize: 14, fontWeight: 500, color: '#0f172a', margin: '2px 0 0' }}>{value}</p>
+    </div>
+  );
+
+  function updItem(id: string, k: keyof Item, v: string) {
+    setItems(prev => prev.map(it => it.id === id ? { ...it, [k]: v } : it));
+  }
+
+  async function saveDetails() {
+    setSaving(true);
+    try {
+      const res  = await fetch(`/api/admin/bookings/${booking.id}`, {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'edit_details', phone,
+          items: items.map(it => ({ id: it.id, name: it.name, nakshatra: it.nakshatra, obstacles: it.obstacles })),
+        }),
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error);
+      toast.success('Booking details updated');
+      setFull(data.data);
+      setEditing(false);
+    } catch (e: unknown) {
+      toast.error(e instanceof Error ? e.message : 'Failed to update');
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function refund() {
+    const note = prompt('Refund note (required):');
+    if (!note) return;
+    setBusy(true);
+    try {
+      const res  = await fetch(`/api/admin/bookings/${booking.id}`, {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'refund', refund_note: note }),
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error);
+      toast.success('Booking marked refunded');
+      fetchFull();
+    } catch (e: unknown) {
+      toast.error(e instanceof Error ? e.message : 'Failed to refund');
+    } finally {
+      setBusy(false);
+    }
+  }
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4" onClick={e => e.target === e.currentTarget && onClose()}>
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b border-stone-200 px-6 py-4 flex justify-between items-center">
-          <h2 className="font-semibold text-stone-800">{booking.booking_ref}</h2>
-          <button onClick={onClose} className="text-stone-400 hover:text-stone-600 text-xl">✕</button>
+    <div
+      onClick={e => e.target === e.currentTarget && onClose()}
+      style={{ position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.6)', zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}
+    >
+      <div style={{ background: '#fff', borderRadius: 14, boxShadow: '0 20px 60px rgba(0,0,0,0.3)', width: '100%', maxWidth: 560, maxHeight: '90vh', overflowY: 'auto', fontFamily: "'Inter',system-ui,sans-serif" }}>
+        <div style={{ position: 'sticky', top: 0, background: '#fff', borderBottom: '1px solid #e2e8f0', padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h2 style={{ fontSize: 15, fontWeight: 600, color: '#0f172a', margin: 0 }}>{booking.booking_ref}</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            {!loading && !editing && (
+              <button onClick={() => setEditing(true)} style={{ fontSize: 12, padding: '5px 12px', borderRadius: 7, border: '1.5px solid #2563eb', color: '#2563eb', background: '#fff', cursor: 'pointer', fontWeight: 500 }}>
+                Edit
+              </button>
+            )}
+            <button onClick={onClose} style={{ color: '#94a3b8', fontSize: 18, background: 'none', border: 'none', cursor: 'pointer', lineHeight: 1 }}>✕</button>
+          </div>
         </div>
 
         {loading ? (
-          <div className="text-center py-12 text-stone-400">Loading…</div>
-        ) : (
-          <div className="p-6 space-y-4">
-            <div className="grid grid-cols-2 gap-3 text-sm">
-              <div><span className="text-stone-500">Event</span><p className="font-medium">{event?.name}</p></div>
-              <div><span className="text-stone-500">Type</span><p className="font-medium capitalize">{full?.booking_type}</p></div>
-              <div><span className="text-stone-500">Quantity</span><p className="font-medium">{full?.quantity} Muttu</p></div>
-              <div><span className="text-stone-500">Amount</span><p className="font-semibold text-red-800">{paise(full?.total_amount ?? 0)}</p></div>
-              <div><span className="text-stone-500">Phone</span><p className="font-medium">{full?.phone}</p></div>
-              <div><span className="text-stone-500">Status</span>
-                <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${BOOKING_STATUS_COLOR[full?.status as BookingStatus ?? 'pending']}`}>
-                  {BOOKING_STATUS_LABEL[full?.status as BookingStatus ?? 'pending']}
-                </span>
-              </div>
+          <div style={{ textAlign: 'center', padding: '48px 24px', color: '#94a3b8', fontSize: 13 }}>Loading…</div>
+        ) : editing ? (
+          <div style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <div>
+              <label style={{ display: 'block', fontSize: 11, color: '#64748b', marginBottom: 4 }}>Phone</label>
+              <input style={inputStyle} value={phone} onChange={e => setPhone(e.target.value)} />
             </div>
 
             {items.map((item, idx) => (
-              <div key={item.id} className="bg-stone-50 rounded-xl p-4 text-sm">
-                <div className="font-semibold mb-1">Muttu {idx + 1} — {item.name}
-                  {item.token_number && <span className="ml-2 font-mono text-xs bg-red-50 text-red-700 border border-red-200 rounded px-1.5 py-0.5">#{item.token_number}</span>}
+              <div key={item.id} style={{ background: '#f8fafc', borderRadius: 10, padding: 14 }}>
+                <div style={{ fontSize: 12, fontWeight: 600, color: '#64748b', marginBottom: 8 }}>Muttu {idx + 1}</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  <input style={inputStyle} placeholder="Name" value={item.name} onChange={e => updItem(item.id, 'name', e.target.value)} />
+                  <select style={{ ...inputStyle, background: '#fff' }} value={item.nakshatra} onChange={e => updItem(item.id, 'nakshatra', e.target.value)}>
+                    {NAKSHATRAS.map(n => <option key={n.key} value={n.key}>{nakshatraLabel(n)}</option>)}
+                  </select>
+                  <textarea style={{ ...inputStyle, resize: 'none' }} rows={2} placeholder="Obstacles" value={item.obstacles} onChange={e => updItem(item.id, 'obstacles', e.target.value)} />
                 </div>
-                <div className="text-stone-500">{item.nakshatra}</div>
-                <div className="text-stone-600 mt-1">{item.obstacles}</div>
               </div>
             ))}
+
+            <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
+              <button onClick={() => { setEditing(false); fetchFull(); }} style={{ padding: '8px 16px', border: '1.5px solid #e2e8f0', borderRadius: 8, color: '#64748b', fontSize: 13, background: '#fff', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={saveDetails} disabled={saving} style={{ padding: '8px 16px', background: '#2563eb', color: '#fff', borderRadius: 8, fontSize: 13, fontWeight: 600, border: 'none', cursor: saving ? 'not-allowed' : 'pointer', opacity: saving ? 0.7 : 1 }}>
+                {saving ? 'Saving…' : 'Save Changes'}
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div style={{ padding: 24 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 16 }}>
+              {field('Event', event?.name)}
+              {field('Type', <span style={{ textTransform: 'capitalize' }}>{full?.booking_type}</span>)}
+              {field('Quantity', `${full?.quantity} Muttu`)}
+              {field('Amount', <span style={{ color: '#059669', fontWeight: 600 }}>{paise(full?.total_amount ?? 0)}</span>)}
+              {field('Phone', full?.phone)}
+              {field('Status', (
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '2px 10px', borderRadius: 99, fontSize: 11, fontWeight: 500, background: 'rgba(107,114,128,0.12)', color: STATUS_TEXT[full?.status as BookingStatus ?? 'pending'] }}>
+                  {full?.status}
+                </span>
+              ))}
+            </div>
+
+            {items.map((item, idx) => (
+              <div key={item.id} style={{ background: '#f8fafc', borderRadius: 10, padding: 14, fontSize: 13, marginBottom: 8 }}>
+                <div style={{ fontWeight: 600, color: '#0f172a', marginBottom: 2 }}>
+                  Muttu {idx + 1} — {item.name}
+                  {item.token_number && (
+                    <span style={{ marginLeft: 8, fontFamily: 'monospace', fontSize: 11, background: '#fef2f2', color: '#b91c1c', border: '1px solid #fecaca', borderRadius: 4, padding: '1px 6px' }}>
+                      #{item.token_number}
+                    </span>
+                  )}
+                </div>
+                <div style={{ color: '#64748b' }}>{nakshatraLabel(NAKSHATRAS.find(n => n.key === item.nakshatra) ?? NAKSHATRAS[0])}</div>
+                <div style={{ color: '#475569', marginTop: 2 }}>{item.obstacles}</div>
+              </div>
+            ))}
+
+            {full?.status === 'confirmed' && (
+              <div style={{ marginTop: 16 }}>
+                <ActionBtn tone="negative" onClick={refund} disabled={busy}>{busy ? 'Processing…' : 'Mark Refunded'}</ActionBtn>
+              </div>
+            )}
           </div>
         )}
       </div>

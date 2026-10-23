@@ -9,6 +9,16 @@ const actionSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('cancel'),        cancel_reason: z.string().optional() }),
   z.object({ action: z.literal('refund'),        refund_note: z.string() }),
   z.object({ action: z.literal('update_notes'),  admin_notes: z.string() }),
+  z.object({
+    action: z.literal('edit_details'),
+    phone:  z.string().trim().min(8).max(20),
+    items:  z.array(z.object({
+      id:        z.string().uuid(),
+      name:      z.string().trim().min(1).max(120),
+      nakshatra: z.string().trim().min(1),
+      obstacles: z.string().trim().max(500),
+    })),
+  }),
 ]);
 
 async function requireAdmin(context: Parameters<APIRoute>[0]) {
@@ -28,7 +38,7 @@ export const GET: APIRoute = async (context) => {
 
   const { data, error } = await admin
     .from('bookings')
-    .select('*, muttu_items(*), event:muttu_events(*), profile:profiles(*)')
+    .select('*, muttu_items(*), event:muttu_events(*)')
     .eq('id', id!).single();
 
   if (error) return Response.json({ success: false, error: 'Not found' }, { status: 404 });
@@ -92,6 +102,19 @@ export const PATCH: APIRoute = async (context) => {
       case 'update_notes': {
         await admin.from('bookings').update({ admin_notes: parsed.admin_notes }).eq('id', id!);
         result = { updated: true };
+        break;
+      }
+      case 'edit_details': {
+        await admin.from('bookings').update({ phone: parsed.phone }).eq('id', id!);
+        for (const item of parsed.items) {
+          await admin.from('muttu_items').update({
+            name: item.name, nakshatra: item.nakshatra, obstacles: item.obstacles,
+          }).eq('id', item.id).eq('booking_id', id!);
+        }
+        const { data } = await admin.from('bookings')
+          .select('*, muttu_items(*), event:muttu_events(*)')
+          .eq('id', id!).single();
+        result = data;
         break;
       }
     }

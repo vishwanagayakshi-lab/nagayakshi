@@ -26,7 +26,7 @@ export const GET: APIRoute = async (context) => {
   const admin = createAdminClient();
   let query = admin
     .from('bookings')
-    .select(`*, muttu_items(*), event:muttu_events(id,name,event_date,price_per_muttu), profile:profiles(id,phone,full_name,is_banned)`, { count: 'exact' })
+    .select(`*, muttu_items(*), event:muttu_events(id,name,event_date,price_per_muttu)`, { count: 'exact' })
     .order('created_at', { ascending: false })
     .range((page - 1) * perPage, page * perPage - 1);
 

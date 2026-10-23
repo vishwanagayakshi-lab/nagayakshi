@@ -1,0 +1,18 @@
+---
+export const prerender = false;
+import { createClient, createAdminClient } from '@/lib/supabase/server';
+import AdminLayout from '@/layouts/AdminLayout.astro';
+import AdminDevoteesPanel from '@/components/booking/AdminDevoteesPanel';
+
+const supabase = createClient(Astro);
+const { data: { user } } = await supabase.auth.getUser();
+if (!user) return Astro.redirect('/admin/login?redirect=/muttu-booking/admin/devotees');
+
+const admin = createAdminClient();
+const { data: profile } = await admin.from('profiles').select('is_admin').eq('id', user.id).single();
+if (!profile?.is_admin) return Astro.redirect('/');
+---
+
+<AdminLayout title="Devotee CRM">
+  <AdminDevoteesPanel client:load />
+</AdminLayout>
