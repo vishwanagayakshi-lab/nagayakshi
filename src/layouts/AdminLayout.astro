@@ -1,0 +1,334 @@
+---
+export interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const nav = [
+  { href: '/muttu-booking/admin',           label: 'Dashboard',           icon: '⊞' },
+  { href: '/muttu-booking/admin/bookings',  label: 'Bookings',            icon: '✉' },
+  { href: '/muttu-booking/admin/events',    label: 'Events',              icon: '◈' },
+  { href: '/muttu-booking/admin/offerings', label: 'Offerings & Donations', icon: '🪔' },
+];
+
+function isActive(href: string) {
+  if (href === '/muttu-booking/admin') return currentPath === '/muttu-booking/admin' || currentPath === '/muttu-booking/admin/';
+  return currentPath.startsWith(href);
+}
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>{title} — Admin | Nagayakshi Temple</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+
+  <div class="admin-shell">
+
+    <div class="admin-backdrop" id="adminBackdrop"></div>
+
+    <!-- ── Sidebar ── -->
+    <aside class="admin-sidebar" id="adminSidebar">
+
+      <!-- Brand -->
+      <div class="admin-brand">
+        <div class="admin-brand-icon">🐍</div>
+        <div class="admin-brand-text">
+          <p class="admin-brand-eyebrow">Admin Panel</p>
+          <p class="admin-brand-name">Nagayakshi Temple</p>
+        </div>
+        <button type="button" class="admin-sidebar-close" id="adminSidebarClose" aria-label="Close menu">✕</button>
+      </div>
+
+      <!-- Nav -->
+      <nav class="admin-nav">
+        {nav.map(({ href, label, icon }) => {
+          const active = isActive(href);
+          return (
+            <a href={href} class={`admin-nav-link${active ? ' is-active' : ''}`}>
+              <span class="admin-nav-icon">{icon}</span>
+              {label}
+            </a>
+          );
+        })}
+      </nav>
+
+      <!-- Sign out -->
+      <div class="admin-signout">
+        <form action="/api/admin/logout" method="post">
+          <button type="submit" class="admin-signout-btn">
+            <span class="admin-nav-icon" style="opacity:0.75">⏻</span>
+            Sign out
+          </button>
+        </form>
+      </div>
+    </aside>
+
+    <!-- ── Main area ── -->
+    <div class="admin-main">
+
+      <!-- Top bar -->
+      <header class="admin-header">
+        <div class="admin-header-row">
+          <div class="admin-header-left">
+            <button type="button" class="admin-hamburger" id="adminMenuToggle" aria-label="Open menu">
+              <span></span><span></span><span></span>
+            </button>
+            <div class="admin-header-titles">
+              <p class="admin-eyebrow">Admin</p>
+              <h1 class="admin-title">{title}</h1>
+            </div>
+          </div>
+          <div class="admin-live-badge">
+            <span class="admin-live-dot"></span>
+            <span class="admin-live-label">Live data</span>
+          </div>
+        </div>
+        <div class="admin-header-rule"></div>
+      </header>
+
+      <!-- Page content -->
+      <main class="admin-content">
+        <slot />
+      </main>
+    </div>
+
+  </div>
+
+  <script>
+    const toggle   = document.getElementById('adminMenuToggle');
+    const closeBtn = document.getElementById('adminSidebarClose');
+    const sidebar  = document.getElementById('adminSidebar');
+    const backdrop = document.getElementById('adminBackdrop');
+
+    function openMenu() {
+      sidebar?.classList.add('is-open');
+      backdrop?.classList.add('is-open');
+      document.body.classList.add('admin-menu-open');
+    }
+    function closeMenu() {
+      sidebar?.classList.remove('is-open');
+      backdrop?.classList.remove('is-open');
+      document.body.classList.remove('admin-menu-open');
+    }
+
+    toggle?.addEventListener('click', openMenu);
+    closeBtn?.addEventListener('click', closeMenu);
+    backdrop?.addEventListener('click', closeMenu);
+    sidebar?.querySelectorAll('a, button[type="submit"]').forEach(el => {
+      el.addEventListener('click', closeMenu);
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+    const desktopQuery = window.matchMedia('(min-width: 900px)');
+    desktopQuery.addEventListener('change', (e) => { if (e.matches) closeMenu(); });
+  </script>
+
+  <style is:global>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f1f5f9;
+      color: #0f172a;
+      min-height: 100vh;
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body.admin-menu-open { overflow: hidden; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    .admin-shell {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Backdrop (mobile drawer scrim) ── */
+    .admin-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      z-index: 45;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    /* ── Sidebar ── */
+    .admin-sidebar {
+      width: 240px;
+      min-width: 240px;
+      background: #1e40af;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .admin-brand {
+      padding: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .admin-brand-icon {
+      width: 34px; height: 34px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      background: rgba(255,255,255,0.2); font-size: 16px; color: #ffffff;
+    }
+    .admin-brand-text { min-width: 0; }
+    .admin-brand-eyebrow {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5); line-height: 1; margin: 0 0 4px;
+    }
+    .admin-brand-name {
+      font-size: 13px; font-weight: 600; color: #ffffff; line-height: 1.2;
+      margin: 0; letter-spacing: -0.01em;
+    }
+    .admin-sidebar-close {
+      display: none;
+      margin-left: auto;
+      width: 30px; height: 30px; flex-shrink: 0;
+      align-items: center; justify-content: center;
+      border-radius: 7px; border: none; cursor: pointer;
+      background: rgba(255,255,255,0.12); color: #fff; font-size: 15px;
+    }
+
+    .admin-nav {
+      flex: 1; padding: 10px 8px;
+      display: flex; flex-direction: column; gap: 2px;
+      overflow-y: auto;
+    }
+    .admin-nav-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 500; text-decoration: none;
+      color: rgba(255,255,255,0.6);
+      border-left: 2px solid transparent;
+      transition: background 0.12s, color 0.12s;
+    }
+    .admin-nav-link:hover {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.95);
+    }
+    .admin-nav-link.is-active {
+      background: rgba(255,255,255,0.2);
+      color: #ffffff;
+      border-left-color: rgba(255,255,255,0.8);
+      padding-left: 10px;
+    }
+    .admin-nav-icon { font-size: 14px; line-height: 1; opacity: 0.85; }
+
+    .admin-signout { padding: 8px; border-top: 1px solid rgba(255,255,255,0.12); }
+    .admin-signout-btn {
+      width: 100%; display: flex; align-items: center; gap: 10px;
+      padding: 9px 12px; border-radius: 8px;
+      font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55);
+      background: none; border: none; cursor: pointer; text-align: left;
+      font-family: inherit; transition: background 0.12s, color 0.12s;
+    }
+    .admin-signout-btn:hover { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9); }
+
+    /* ── Main area ── */
+    .admin-main {
+      flex: 1; min-width: 0;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+
+    .admin-header { flex-shrink: 0; background: #ffffff; border-bottom: 1px solid #e2e8f0; }
+    .admin-header-row {
+      padding: 14px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px;
+    }
+    .admin-header-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .admin-header-titles { min-width: 0; }
+    .admin-eyebrow {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+      color: #94a3b8; margin: 0 0 4px;
+    }
+    .admin-title {
+      font-size: 22px; font-weight: 700; color: #0f172a; letter-spacing: -0.02em;
+      line-height: 1.2; margin: 0;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .admin-live-badge {
+      display: flex; align-items: center; gap: 7px; flex-shrink: 0;
+      padding: 5px 12px; border-radius: 99px; border: 1px solid #e2e8f0;
+      background: #f8fafc; font-size: 11px; font-weight: 500; color: #64748b;
+    }
+    .admin-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; flex-shrink: 0; }
+    .admin-header-rule {
+      height: 1px;
+      background: linear-gradient(90deg, #2563eb 0%, rgba(37,99,235,0.15) 50%, transparent 100%);
+    }
+
+    .admin-hamburger {
+      display: none;
+      flex-shrink: 0;
+      width: 34px; height: 34px;
+      align-items: center; justify-content: center;
+      flex-direction: column; gap: 4px;
+      border-radius: 8px; border: 1.5px solid #e2e8f0; background: #f8fafc;
+      cursor: pointer; padding: 0;
+    }
+    .admin-hamburger span {
+      display: block; width: 16px; height: 1.5px; background: #334155; border-radius: 1px;
+    }
+
+    .admin-content { flex: 1; overflow: auto; padding: 28px 32px; }
+
+    /* ══ Mobile / tablet: off-canvas drawer ══ */
+    @media (max-width: 899px) {
+      .admin-backdrop { display: block; }
+      .admin-backdrop.is-open { opacity: 1; pointer-events: auto; }
+      .admin-backdrop:not(.is-open) { pointer-events: none; }
+
+      .admin-sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 50;
+        width: min(280px, 84vw);
+        min-width: 0;
+        transform: translateX(-100%);
+        transition: transform 0.22s ease;
+        box-shadow: 4px 0 24px rgba(0,0,0,0.2);
+      }
+      .admin-sidebar.is-open { transform: translateX(0); }
+      .admin-sidebar-close { display: flex; }
+
+      .admin-hamburger { display: flex; }
+
+      .admin-header-row { padding: 12px 16px; }
+      .admin-title { font-size: 18px; }
+      .admin-live-label { display: none; }
+      .admin-live-badge { padding: 6px; border-radius: 50%; }
+
+      .admin-content { padding: 16px; }
+    }
+  </style>
+
+</body>
+</html>

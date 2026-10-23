@@ -68,12 +68,7 @@ export default function AdminOfferingsPanel() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-        <div>
-          <h1 className="text-2xl font-bold text-stone-800">Offerings & Donations</h1>
-          <p className="text-sm text-stone-500">{total} total registrations{offerings.length ? ` · ${paise(paidTotal)} paid on this page` : ''}</p>
-        </div>
-      </div>
+      <p className="text-sm text-stone-500 mb-5">{total} total registrations{offerings.length ? ` · ${paise(paidTotal)} paid on this page` : ''}</p>
 
       {/* Filters */}
       <div className="bg-white rounded-2xl p-4 shadow-sm border border-stone-200 mb-5 flex flex-wrap gap-3 items-center">

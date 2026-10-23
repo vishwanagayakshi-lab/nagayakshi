@@ -1,6 +1,7 @@
 ---
 export const prerender = false;
 import { createClient, createAdminClient } from '@/lib/supabase/server';
+import AdminLayout from '@/layouts/AdminLayout.astro';
 import { paise } from '@/lib/utils';
 
 const supabase = createClient(Astro);
@@ -12,7 +13,6 @@ const admin = createAdminClient();
 const { data: profile } = await admin.from('profiles').select('is_admin').eq('id', user.id).single();
 if (!profile?.is_admin) return Astro.redirect('/');
 
-// Dashboard stats
 const [
   { count: totalEvents },
   { count: openEvents },
@@ -36,143 +36,126 @@ const { data: recentBookings } = await admin
   .select('*, event:muttu_events(name)')
   .order('created_at', { ascending: false })
   .limit(5);
+
+const { data: recentOfferings } = await admin
+  .from('offerings')
+  .select('*')
+  .order('created_at', { ascending: false })
+  .limit(5);
+
+function fmt(iso: string) {
+  return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+const topStats = [
+  { label: 'Open Events',        value: openEvents ?? 0,        href: '/muttu-booking/admin/events' },
+  { label: 'Total Bookings',     value: totalBookings ?? 0,     href: '/muttu-booking/admin/bookings' },
+  { label: 'Confirmed Bookings', value: confirmedBookings ?? 0, href: '/muttu-booking/admin/bookings' },
+  { label: 'Offerings & Donations', value: totalOfferings ?? 0, href: '/muttu-booking/admin/offerings' },
+];
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard | Nagayakshi Temple</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: system-ui, sans-serif; background: #f5f4f0; min-height: 100vh; }
-    nav { background: #450a0a; color: white; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 1.5rem; }
-    nav a { color: #fcd34d; text-decoration: none; font-size: 0.875rem; }
-    nav a:hover { text-decoration: underline; }
-    .brand { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: #fcd34d; }
-    main { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
-    h1 { font-size: 1.75rem; font-weight: 700; color: #1c1917; margin-bottom: 1.5rem; }
-    .stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-    .stat-card { background: white; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border: 1px solid #e7e5e4; }
-    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 700; color: #991b1b; }
-    .stat-label { font-size: 0.875rem; color: #78716c; margin-top: 0.25rem; }
-    .stat-card.alert .stat-num { color: #b45309; }
-    .section-title { font-size: 1.25rem; font-weight: 600; color: #1c1917; margin-bottom: 1rem; }
-    .nav-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-    .nav-card { background: white; border-radius: 1rem; padding: 1.5rem; border: 1px solid #e7e5e4; text-decoration: none; display: flex; align-items: center; gap: 1rem; transition: border-color 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-    .nav-card:hover { border-color: #991b1b; }
-    .nav-icon { font-size: 2rem; }
-    .nav-card-title { font-weight: 600; color: #1c1917; }
-    .nav-card-sub { font-size: 0.875rem; color: #78716c; }
-    .recent-table { background: white; border-radius: 1rem; padding: 0; overflow: hidden; border: 1px solid #e7e5e4; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-    table { width: 100%; font-size: 0.875rem; }
-    thead { background: #fafaf9; border-bottom: 1px solid #e7e5e4; }
-    th { text-align: left; padding: 0.75rem 1rem; color: #78716c; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
-    td { padding: 0.75rem 1rem; color: #1c1917; border-bottom: 1px solid #f5f4f0; }
-    .badge { font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 9999px; font-weight: 500; }
-  </style>
-</head>
-<body>
-  <nav>
-    <span class="brand">🐍 Admin</span>
-    <a href="/muttu-booking/admin/events">Events</a>
-    <a href="/muttu-booking/admin/bookings">Bookings</a>
-    <a href="/muttu-booking/admin/offerings">Offerings</a>
-    <a href="/muttu-booking/events">Public Site</a>
-  </nav>
+<AdminLayout title="Dashboard">
 
-  <main>
-    <h1>Dashboard</h1>
+  <!-- Top stat cards -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:28px">
+    {topStats.map(s => (
+      <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(37,99,235,0.06);position:relative;overflow:hidden">
+        <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,0.08) 0%,transparent 70%);pointer-events:none"></div>
+        <p style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#64748b;margin-bottom:10px">{s.label}</p>
+        <p style="font-size:40px;font-weight:700;letter-spacing:-0.04em;line-height:1;color:#0f172a;margin-bottom:14px">{s.value}</p>
+        <a href={s.href} style="font-size:12px;color:#2563eb;text-decoration:none;font-weight:500;display:inline-flex;align-items:center;gap:4px;opacity:0.85;transition:opacity 0.15s"
+           onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+          View all <span style="font-size:14px">→</span>
+        </a>
+      </div>
+    ))}
 
-    <div class="stats">
-      <div class="stat-card">
-        <div class="stat-num">{totalEvents ?? 0}</div>
-        <div class="stat-label">Total Events</div>
+    <!-- Notifications card -->
+    <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(37,99,235,0.06)">
+      <p style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#64748b;margin-bottom:10px">Notifications</p>
+      {(pendingPhone ?? 0) > 0 ? (
+        <>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <span style="width:7px;height:7px;border-radius:50%;background:#f59e0b;flex-shrink:0"></span>
+            <span style="font-size:13px;font-weight:500;color:#b45309">{pendingPhone} phone booking{pendingPhone === 1 ? '' : 's'} awaiting</span>
+          </div>
+          <p style="font-size:12px;color:#64748b;line-height:1.6">Confirm or cancel them from the Bookings page.</p>
+        </>
+      ) : (
+        <>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <span style="width:7px;height:7px;border-radius:50%;background:#34d399;flex-shrink:0"></span>
+            <span style="font-size:13px;font-weight:500;color:#059669">All caught up</span>
+          </div>
+          <p style="font-size:12px;color:#64748b;line-height:1.6">No phone bookings awaiting confirmation.</p>
+        </>
+      )}
+    </div>
+  </div>
+
+  <p style="font-size:12px;color:#94a3b8;margin:-16px 0 20px">{totalEvents ?? 0} total events · {paidOfferings ?? 0} offerings paid</p>
+
+  <!-- Recent activity grid -->
+  <div class="recent-grid" style="display:grid;gap:16px">
+
+    <!-- Recent Bookings -->
+    <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(37,99,235,0.06)">
+      <div style="padding:16px 20px;border-bottom:1px solid rgba(37,99,235,0.12);display:flex;align-items:center;justify-content:space-between">
+        <h2 style="font-size:13px;font-weight:600;color:#0f172a;letter-spacing:-0.01em">Recent Bookings</h2>
+        <a href="/muttu-booking/admin/bookings" style="font-size:11px;color:#2563eb;text-decoration:none;font-weight:500;opacity:0.8" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">View all</a>
       </div>
-      <div class="stat-card">
-        <div class="stat-num">{openEvents ?? 0}</div>
-        <div class="stat-label">Open Events</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">{totalBookings ?? 0}</div>
-        <div class="stat-label">Total Bookings</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">{confirmedBookings ?? 0}</div>
-        <div class="stat-label">Confirmed</div>
-      </div>
-      <div class={`stat-card ${(pendingPhone ?? 0) > 0 ? 'alert' : ''}`}>
-        <div class="stat-num">{pendingPhone ?? 0}</div>
-        <div class="stat-label">Phone Bookings Awaiting</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">{totalOfferings ?? 0}</div>
-        <div class="stat-label">Offerings & Donations</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">{paidOfferings ?? 0}</div>
-        <div class="stat-label">Paid Offerings</div>
-      </div>
+      {recentBookings && recentBookings.length > 0 ? (
+        <ul style="list-style:none;margin:0;padding:0">
+          {recentBookings.map((b: any, i: number) => (
+            <li style={`padding:12px 20px;${i < recentBookings.length - 1 ? 'border-bottom:1px solid #f1f5f9' : ''}`}>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:3px">
+                <span style="font-size:13px;font-weight:500;color:#0f172a">{b.phone}</span>
+                <span style="font-size:11px;color:#94a3b8;flex-shrink:0;font-variant-numeric:tabular-nums">{fmt(b.created_at)}</span>
+              </div>
+              <span style="font-size:11px;color:#64748b">{(b.event as any)?.name}</span>
+              <p style="font-size:11px;color:rgba(37,99,235,0.7);margin-top:2px">{b.booking_ref} · {b.quantity} muttu · {b.status}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p style="padding:48px 20px;text-align:center;font-size:13px;color:#94a3b8">No bookings yet.</p>
+      )}
     </div>
 
-    <div class="nav-links">
-      <a href="/muttu-booking/admin/events" class="nav-card">
-        <span class="nav-icon">📅</span>
-        <div>
-          <div class="nav-card-title">Manage Events</div>
-          <div class="nav-card-sub">Create, edit, open/close events</div>
-        </div>
-      </a>
-      <a href="/muttu-booking/admin/bookings" class="nav-card">
-        <span class="nav-icon">📋</span>
-        <div>
-          <div class="nav-card-title">Manage Bookings</div>
-          <div class="nav-card-sub">Confirm phone bookings, cancel</div>
-        </div>
-      </a>
-      <a href="/muttu-booking/admin/offerings" class="nav-card">
-        <span class="nav-icon">🪔</span>
-        <div>
-          <div class="nav-card-title">Offerings & Donations</div>
-          <div class="nav-card-sub">Utsav pooja & donation registrations</div>
-        </div>
-      </a>
+    <!-- Recent Offerings -->
+    <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(37,99,235,0.06)">
+      <div style="padding:16px 20px;border-bottom:1px solid rgba(37,99,235,0.12);display:flex;align-items:center;justify-content:space-between">
+        <h2 style="font-size:13px;font-weight:600;color:#0f172a;letter-spacing:-0.01em">Recent Offerings & Donations</h2>
+        <a href="/muttu-booking/admin/offerings" style="font-size:11px;color:#2563eb;text-decoration:none;font-weight:500;opacity:0.8" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">View all</a>
+      </div>
+      {recentOfferings && recentOfferings.length > 0 ? (
+        <ul style="list-style:none;margin:0;padding:0">
+          {recentOfferings.map((o: any, i: number) => (
+            <li style={`padding:12px 20px;${i < recentOfferings.length - 1 ? 'border-bottom:1px solid #f1f5f9' : ''}`}>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:3px">
+                <span style="font-size:13px;font-weight:500;color:#0f172a">{o.devotee_name}</span>
+                <span style="font-size:11px;color:#94a3b8;flex-shrink:0;font-variant-numeric:tabular-nums">{fmt(o.created_at)}</span>
+              </div>
+              <span style="font-size:11px;color:#64748b">{o.purpose}</span>
+              <p style={`font-size:11px;margin-top:2px;font-weight:500;color:${o.status === 'paid' ? '#059669' : '#94a3b8'}`}>
+                {paise(o.amount)} · {o.status}
+              </p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p style="padding:48px 20px;text-align:center;font-size:13px;color:#94a3b8">No offerings yet.</p>
+      )}
     </div>
 
-    {recentBookings?.length ? (
-      <>
-        <div class="section-title">Recent Bookings</div>
-        <div class="recent-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Ref</th>
-                <th>Phone</th>
-                <th>Event</th>
-                <th>Type</th>
-                <th>Qty</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentBookings.map((b: any) => (
-                <tr>
-                  <td style="font-family:monospace;font-size:0.75rem">{b.booking_ref}</td>
-                  <td>{b.phone}</td>
-                  <td style="font-size:0.75rem;max-width:150px;overflow:hidden;text-overflow:ellipsis">{(b.event as any)?.name}</td>
-                  <td><span class={`badge ${b.booking_type === 'online' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'}`}>{b.booking_type}</span></td>
-                  <td style="text-align:center">{b.quantity}</td>
-                  <td><span class="badge" style="background:#f0fdf4;color:#15803d">{b.status}</span></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </>
-    ) : null}
-  </main>
-</body>
-</html>
+  </div>
+
+</AdminLayout>
+
+<style>
+  .recent-grid { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 720px) {
+    .recent-grid { grid-template-columns: 1fr; }
+  }
+</style>
