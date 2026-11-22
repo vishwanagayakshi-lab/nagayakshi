@@ -1,0 +1,18 @@
+export const HOMAM_TYPES = [
+  'Ayilyam Pooja',
+  'Noorum Paalum',
+  'Kala Sarpa Bali',
+  'Maha Guruthi Pooja',
+  'Navagraha Homam',
+  'Maha Pratyangira Homam',
+  'Ganapathi Homam',
+  'Kala Sarpa Shanti Homam',
+  'Sarpa Bali Pooja',
+  'Ashta Naga Pooja',
+  'Shaiva Vaishnava Shaktheya Homam',
+  'Sarvaishwarya Karyasiddhi Puja',
+  'Panjastra Homam',
+  'Griha Pravesham & Naga Avahanam',
+  'On-Site Sarpa Pooja',
+  'Other / Not Sure',
+] as const;

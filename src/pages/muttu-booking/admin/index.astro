@@ -21,6 +21,7 @@ const [
   { count: pendingPhone },
   { count: totalOfferings },
   { count: paidOfferings },
+  { count: newHomamRequests },
 ] = await Promise.all([
   admin.from('muttu_events').select('*', { count: 'exact', head: true }),
   admin.from('muttu_events').select('*', { count: 'exact', head: true }).eq('status', 'open'),
@@ -29,6 +30,7 @@ const [
   admin.from('bookings').select('*', { count: 'exact', head: true }).eq('booking_type', 'phone').in('status', ['pending', 'payment_init']),
   admin.from('offerings').select('*', { count: 'exact', head: true }),
   admin.from('offerings').select('*', { count: 'exact', head: true }).eq('status', 'paid'),
+  admin.from('homam_requests').select('*', { count: 'exact', head: true }).eq('status', 'new'),
 ]);
 
 const { data: recentBookings } = await admin
@@ -43,6 +45,12 @@ const { data: recentOfferings } = await admin
   .order('created_at', { ascending: false })
   .limit(5);
 
+const { data: recentHomamRequests } = await admin
+  .from('homam_requests')
+  .select('*')
+  .order('created_at', { ascending: false })
+  .limit(5);
+
 function fmt(iso: string) {
   return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 }
@@ -52,6 +60,7 @@ const topStats = [
   { label: 'Total Bookings',     value: totalBookings ?? 0,     href: '/muttu-booking/admin/bookings' },
   { label: 'Confirmed Bookings', value: confirmedBookings ?? 0, href: '/muttu-booking/admin/bookings' },
   { label: 'Offerings & Donations', value: totalOfferings ?? 0, href: '/muttu-booking/admin/offerings' },
+  { label: 'New Homam Requests', value: newHomamRequests ?? 0, href: '/muttu-booking/admin/homam-requests' },
 ];
 ---
 
@@ -149,12 +158,38 @@ const topStats = [
       )}
     </div>
 
+    <!-- Recent Homam Requests -->
+    <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(37,99,235,0.06)">
+      <div style="padding:16px 20px;border-bottom:1px solid rgba(37,99,235,0.12);display:flex;align-items:center;justify-content:space-between">
+        <h2 style="font-size:13px;font-weight:600;color:#0f172a;letter-spacing:-0.01em">Recent Homam Requests</h2>
+        <a href="/muttu-booking/admin/homam-requests" style="font-size:11px;color:#2563eb;text-decoration:none;font-weight:500;opacity:0.8" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">View all</a>
+      </div>
+      {recentHomamRequests && recentHomamRequests.length > 0 ? (
+        <ul style="list-style:none;margin:0;padding:0">
+          {recentHomamRequests.map((r: any, i: number) => (
+            <li style={`padding:12px 20px;${i < recentHomamRequests.length - 1 ? 'border-bottom:1px solid #f1f5f9' : ''}`}>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:3px">
+                <span style="font-size:13px;font-weight:500;color:#0f172a">{r.devotee_name}</span>
+                <span style="font-size:11px;color:#94a3b8;flex-shrink:0;font-variant-numeric:tabular-nums">{fmt(r.created_at)}</span>
+              </div>
+              <span style="font-size:11px;color:#64748b">{r.homam_type}</span>
+              <p style={`font-size:11px;margin-top:2px;font-weight:500;color:${r.status === 'new' ? '#2563eb' : '#94a3b8'}`}>
+                {r.status}
+              </p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p style="padding:48px 20px;text-align:center;font-size:13px;color:#94a3b8">No requests yet.</p>
+      )}
+    </div>
+
   </div>
 
 </AdminLayout>
 
 <style>
-  .recent-grid { grid-template-columns: 1fr 1fr; }
+  .recent-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
   @media (max-width: 720px) {
     .recent-grid { grid-template-columns: 1fr; }
   }

@@ -1,5 +1,10 @@
 ---
+export const prerender = false;
+
 import Layout from '../../layouts/Layout.astro';
+import HomamRequestForm from '../../components/booking/HomamRequestForm';
+
+const defaultHomam = Astro.url.searchParams.get('homam') ?? '';
 ---
 
 <Layout title="Pooja Request | Nagayakshi Temple">
@@ -40,20 +45,7 @@ import Layout from '../../layouts/Layout.astro';
         </p>
       </div>
 
-      <div class="form-card">
-        <div class="form-card-icon">🙏</div>
-        <h3>Ritual Enquiry Form</h3>
-        <p>Click below to open the pooja request form. The temple will review your request and get back to you with all the details.</p>
-        <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLSeHyjiAF_zq17jLDcIuZtvjOmZSG1rFUNfaLFfisVpUJ23pug/viewform"
-          target="_blank"
-          rel="noopener"
-          class="btn-open-form"
-        >
-          Open Request Form
-        </a>
-        <p class="form-note">Opens in a new tab</p>
-      </div>
+      <HomamRequestForm defaultHomam={defaultHomam} client:load />
 
     </div>
   </section>

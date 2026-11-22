@@ -71,6 +71,64 @@ export async function sendOfferingConfirmationEmail(params: {
   }
 }
 
+export async function sendHomamRequestAcknowledgement(params: {
+  to: string;
+  name: string;
+  requestRef: string;
+  homamType: string;
+}): Promise<{ sent: boolean; error?: string }> {
+  const apiKey = import.meta.env.RESEND_API_KEY;
+  const from = import.meta.env.RESEND_FROM_EMAIL;
+
+  if (!apiKey || !from) {
+    console.error('RESEND_API_KEY / RESEND_FROM_EMAIL not configured; skipping email send');
+    return { sent: false, error: 'Email not configured' };
+  }
+
+  const html = `
+    <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; color: #2d1810;">
+      <h1 style="color: #7a1912; font-size: 22px;">Thank you, ${escapeHtml(params.name)}</h1>
+      <p>We've received your request for <strong>${escapeHtml(params.homamType)}</strong> at Sree Pulikkal Vishwanagayakshi Temple.</p>
+      <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+        <tr><td style="padding: 8px 0; color: #5e4334;">Reference</td><td style="padding: 8px 0; text-align: right; font-weight: bold;">${escapeHtml(params.requestRef)}</td></tr>
+        <tr style="border-top: 1px solid #dcbfa6;"><td style="padding: 8px 0; color: #5e4334;">Homam / Pooja</td><td style="padding: 8px 0; text-align: right;">${escapeHtml(params.homamType)}</td></tr>
+      </table>
+      <p style="color: #5e4334; font-size: 14px;">
+        Our team will contact you shortly to confirm the date and further details. For any questions, contact
+        the temple at +91 99463 73522 or ${SUPPORT_EMAIL}.
+      </p>
+      <p style="color: #5e4334; font-size: 14px;">Om Nagayakshinnyai Namaha.</p>
+    </div>
+  `;
+
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to: params.to,
+        bcc: SUPPORT_EMAIL,
+        reply_to: SUPPORT_EMAIL,
+        subject: `Request Received — ${params.requestRef}`,
+        html,
+      }),
+    });
+    if (!res.ok) {
+      const body = await res.text();
+      console.error('Resend send failed', res.status, body);
+      return { sent: false, error: body };
+    }
+    return { sent: true };
+  } catch (err) {
+    console.error('Resend send threw', err);
+    return { sent: false, error: err instanceof Error ? err.message : 'Unknown error' };
+  }
+}
+
 function escapeHtml(s: string): string {
   return s
     .replace(/&/g, '&amp;')

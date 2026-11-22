@@ -21,8 +21,31 @@ import Layout from '../../layouts/Layout.astro';
         </div>
       </div>
       <div class="hero-ctas">
-        <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-primary-gold" target="_blank" rel="noopener">Enquire</a>
+        <a href="tel:+919946373522" class="btn-primary-gold">Call Temple Office</a>
         <a href="#details" class="btn-secondary-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="special-event-section">
+    <div class="pooja-container">
+      <div class="special-event-card">
+        <span class="special-event-tag">Rahu Peyarchi &#8211; Special Homam</span>
+        <h2>Navagraha Homam &#8212; December 5, 2026</h2>
+        <p class="special-event-copy">
+          On <strong>December 5, 2026</strong>, Rahu transits from <strong>Kumbha Rasi (Aquarius)</strong> into <strong>Makara Rasi (Capricorn)</strong>, beginning a new planetary cycle (Rahu Peyarchi) that lasts about 18 months. In Vedic tradition, the exact day a graha changes rasi is considered an especially potent window to perform Navagraha Homam&#8212;settling the outgoing influence of Rahu in Kumbha and invoking auspicious grace as it enters Makara.
+        </p>
+        <div class="special-event-details">
+          <div class="special-event-detail">
+            <span class="info-label">Amount</span>
+            <span class="info-value">&#8377;10,000 &#8211; inclusive of all pooja items</span>
+          </div>
+          <div class="special-event-detail">
+            <span class="info-label">How to Book</span>
+            <span class="info-value">Call the temple office directly&#8212;no online payment for this homam</span>
+          </div>
+        </div>
+        <a href="tel:+919946373522" class="btn-primary-gold">Call: +91 9946373522</a>
       </div>
     </div>
   </section>
@@ -243,8 +266,11 @@ import Layout from '../../layouts/Layout.astro';
         </details>
         <details class="faq-item">
           <summary>When is the next scheduled Navagraha Homam?</summary>
-          <p>Dates are set based on astrological auspiciousness. Contact us at
-          +91 9946373522 to confirm the next available date.</p>
+          <p>The next scheduled Navagraha Homam is on <strong>December 5, 2026</strong>, the day
+          Rahu transits from Kumbha Rasi to Makara Rasi&#8212;a especially significant occasion for
+          this homam. The amount is &#8377;10,000, inclusive of all pooja items. Please call the
+          temple office at +91 9946373522 directly to register; there is no online payment for
+          this homam.</p>
         </details>
       </div>
     </div>
@@ -252,12 +278,12 @@ import Layout from '../../layouts/Layout.astro';
 
   <section class="booking-cta-section" id="booking">
     <div class="booking-cta-container">
-      <h2>Enquire About Navagraha Homam</h2>
-      <p>Performed during auspicious planetary periods.<br>
-      <strong>Contact us to confirm the next date and reserve your slot.</strong></p>
+      <h2>Book the December 5, 2026 Navagraha Homam</h2>
+      <p>Marking Rahu's transit from Kumbha Rasi to Makara Rasi.<br>
+      <strong>&#8377;10,000, inclusive of all pooja items. Call the office to reserve your slot&#8212;no online payment required.</strong></p>
       <div class="booking-cta-buttons">
-        <a href="https://forms.gle/C3eQViaTHURBS48v7" class="btn-primary-gold btn-large" target="_blank" rel="noopener">Enquire Now</a>
-        <a href="tel:+919946373522" class="btn-secondary-outline">Call: +91 9946373522</a>
+        <a href="tel:+919946373522" class="btn-primary-gold btn-large">Call: +91 9946373522</a>
+        <a href="/support/pooja-request?homam=Navagraha%20Homam" class="btn-secondary-outline">Send an Enquiry</a>
       </div>
     </div>
   </section>
@@ -287,6 +313,33 @@ import Layout from '../../layouts/Layout.astro';
 .info-label { font-size: 0.8rem; color: #ffd285; text-transform: uppercase; letter-spacing: 1px; }
 .info-value { font-size: 1.15rem; color: white; font-weight: 600; }
 .hero-ctas { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+.special-event-section { padding: 4.5rem 2rem; background: var(--bg-alt); }
+.special-event-card {
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+  background: var(--bg-base);
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  padding: 3rem 3rem 2.5rem;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  position: relative;
+}
+.special-event-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 14px; right: 14px;
+  height: 5px;
+  border-radius: 0 0 6px 6px;
+  background: linear-gradient(90deg, var(--saffron), var(--gold));
+}
+.special-event-tag { display: inline-block; background: var(--bg-alt); color: var(--laterite-red); border: 1px solid #e8c9a0; padding: 0.45rem 1.4rem; border-radius: 30px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 1.2rem; }
+.special-event-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 700; color: var(--laterite-red); margin-bottom: 1.2rem; line-height: 1.25; }
+.special-event-copy { font-size: 1.05rem; color: var(--text-muted); line-height: 1.85; margin-bottom: 2rem; }
+.special-event-details { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; padding: 1.4rem 2rem; background: var(--bg-alt); border-radius: 12px; border: 1px solid #e8c9a0; }
+.special-event-detail { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; max-width: 280px; }
+.special-event-detail .info-label { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+.special-event-detail .info-value { font-size: 1rem; color: var(--laterite-dark); font-weight: 600; text-align: center; }
 .pooja-section { padding: 5rem 2rem; background: var(--bg-base); }
 .pooja-section.audience-section { background: var(--bg-alt); }
 .pooja-container { max-width: 1200px; margin: 0 auto; }
