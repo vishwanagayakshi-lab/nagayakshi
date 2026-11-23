@@ -32,17 +32,20 @@ import Layout from '../../layouts/Layout.astro';
           </div>
           <div class="special-event-detail">
             <span class="info-label">Reporting Time</span>
-            <span class="info-value">9:00 AM</span>
+            <span class="info-value">9:30 AM</span>
           </div>
           <div class="special-event-detail">
             <span class="info-label">How to Book</span>
-            <span class="info-value">Online payment isn't available for this homam currently&#8212;call the temple office directly</span>
+            <span class="info-value">Pay by UPI/Netbanking and confirm on WhatsApp&#8212;see the booking guide below</span>
           </div>
         </div>
         <p class="special-event-note">
-          <strong>Travel advisory:</strong> This is an elaborate, full-day ritual. Please do not plan onward travel or book flight/train tickets before 7:00 PM that evening&#8212;arranging travel earlier causes stress during the proceedings and may prevent you from participating fully.
+          <strong>Travel advisory:</strong> This is an elaborate, full-day ritual performed one graha (planet) at a time. Please do not plan onward travel or book flight/train tickets before 7:00 PM that evening&#8212;arranging travel earlier causes stress during the proceedings and may prevent you from participating fully.
         </p>
-        <a href="tel:+919946373522" class="btn-primary-gold">Call: +91 9946373522</a>
+        <div class="special-event-ctas">
+          <a href="/poojas/navagraha-homam-booking" class="btn-primary-gold">How to Book &amp; Payment Details</a>
+          <a href="tel:+919946373522" class="btn-secondary-outline-dark">Call: +91 9946373522</a>
+        </div>
       </div>
     </div>
   </section>
@@ -265,9 +268,9 @@ import Layout from '../../layouts/Layout.astro';
           <summary>When is the next scheduled Navagraha Homam?</summary>
           <p>The next scheduled Navagraha Homam is on <strong>December 5, 2026</strong>, the day
           Rahu transits from Kumbha Rasi to Makara Rasi&#8212;a especially significant occasion for
-          this homam. The amount is &#8377;10,000, inclusive of all pooja items. Online payment
-          isn't available for this homam currently&#8212;please call the temple office at
-          +91 9946373522 directly to register.</p>
+          this homam. The amount is &#8377;10,000, inclusive of all pooja items. See our
+          <a href="/poojas/navagraha-homam-booking">step-by-step booking guide</a> for UPI/Netbanking
+          payment details, or call the temple office at +91 9946373522 to register.</p>
         </details>
       </div>
     </div>
@@ -277,10 +280,10 @@ import Layout from '../../layouts/Layout.astro';
     <div class="booking-cta-container">
       <h2>Book the December 5, 2026 Navagraha Homam</h2>
       <p>Marking Rahu's transit from Kumbha Rasi to Makara Rasi.<br>
-      <strong>&#8377;10,000, inclusive of all pooja items. Online payment isn't available for this homam currently&#8212;call the office to reserve your slot.</strong></p>
+      <strong>&#8377;10,000, inclusive of all pooja items.</strong></p>
       <div class="booking-cta-buttons">
-        <a href="tel:+919946373522" class="btn-primary-gold btn-large">Call: +91 9946373522</a>
-        <a href="/support/pooja-request?homam=Navagraha%20Homam" class="btn-secondary-outline">Send an Enquiry</a>
+        <a href="/poojas/navagraha-homam-booking" class="btn-primary-gold btn-large">How to Book &amp; Payment Details</a>
+        <a href="tel:+919946373522" class="btn-secondary-outline">Call: +91 9946373522</a>
       </div>
     </div>
   </section>
@@ -337,6 +340,9 @@ import Layout from '../../layouts/Layout.astro';
 .special-event-detail .info-value { font-size: 1rem; color: var(--laterite-dark); font-weight: 600; text-align: center; }
 .special-event-note { text-align: left; background: var(--bg-alt); border-left: 4px solid var(--laterite-red); padding: 1rem 1.3rem; border-radius: 6px; font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.8rem; }
 .special-event-note strong { color: var(--laterite-red); }
+.special-event-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn-secondary-outline-dark { display: inline-block; padding: 1.2rem 3rem; background: transparent; color: var(--laterite-red); border: 2px solid var(--laterite-red); border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; }
+.btn-secondary-outline-dark:hover { background: var(--laterite-red); color: white; transform: translateY(-2px); }
 .pooja-section { padding: 5rem 2rem; background: var(--bg-base); }
 .pooja-section.audience-section { background: var(--bg-alt); }
 .pooja-container { max-width: 1200px; margin: 0 auto; }
@@ -411,6 +417,7 @@ import Layout from '../../layouts/Layout.astro';
 .faq-item summary::after { content: '+'; position: absolute; right: 1.5rem; top: 50%; transform: translateY(-50%); font-size: 1.8rem; color: var(--gold-dark); }
 .faq-item[open] summary::after { content: '−'; }
 .faq-item p { padding: 0 2rem 1.5rem; color: var(--text-muted); line-height: 1.8; font-size: 1.02rem; }
+.faq-item p a { color: var(--laterite-red); font-weight: 600; }
 .booking-cta-section { padding: 5rem 2rem; background: linear-gradient(135deg, var(--laterite-red) 0%, #6b1f2b 100%); text-align: center; }
 .booking-cta-container { max-width: 800px; margin: 0 auto; }
 .booking-cta-container h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 700; color: white; margin-bottom: 1.2rem; }
