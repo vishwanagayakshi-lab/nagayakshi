@@ -1,40 +1,42 @@
 ---
 // Footer component
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { tFooter } from '../i18n/componentMessages';
+
 const currentYear = new Date().getFullYear();
+const locale = Astro.currentLocale ?? 'en';
+const t = tFooter(locale);
+const href = (path: string) => getRelativeLocaleUrl(locale, path);
 ---
 
 <footer>
   <div class="footer-container">
     <div class="footer-about">
       <h3>Nagayakshi Temple</h3>
-      <p>
-        Sacred naga worship temple dedicated to Vishwanagayakshi, 
-        Nagaraja, and Sarpayakshi. Offering authentic Vedic remedies 
-        for Naga Dosha under the guidance of Ambotti Thampuran.
-      </p>
+      <p>{t.aboutText}</p>
       <p><strong>Trust Reg: 222/IV/2023</strong></p>
     </div>
     <div class="footer-section">
-      <h4>Quick Links</h4>
+      <h4>{t.quickLinksHeading}</h4>
       <ul class="footer-links">
-        <li><a href="/about">About the Temple</a></li>
-        <li><a href="/poojas">Poojas &amp; Homams</a></li>
-        <li><a href="/ambotti-thampuran">Ambotti Thampuran</a></li>
-        <li><a href="/protocols">Temple Protocols</a></li>
-        <li><a href="/visit">Visit Us</a></li>
+        <li><a href={href('about')}>{t.quickLinks.about}</a></li>
+        <li><a href={href('poojas')}>{t.quickLinks.poojas}</a></li>
+        <li><a href={href('ambotti-thampuran')}>{t.quickLinks.thampuran}</a></li>
+        <li><a href={href('protocols')}>{t.quickLinks.protocols}</a></li>
+        <li><a href={href('visit')}>{t.quickLinks.visit}</a></li>
       </ul>
     </div>
     <div class="footer-section">
-      <h4>Services</h4>
+      <h4>{t.servicesHeading}</h4>
       <ul class="footer-links">
-        <li><a href="/poojas/ayilyam">Ayilyam Pooja</a></li>
-        <li><a href="/poojas/kala-sarpa-bali">Kala Sarpa Bali</a></li>
-        <li><a href="/poojas/navagraha-homam">Navagraha Homam</a></li>
-        <li><a href="/muttu">Muttu</a></li>
+        <li><a href={href('poojas/ayilyam')}>{t.services.ayilyam}</a></li>
+        <li><a href={href('poojas/kala-sarpa-bali')}>{t.services.kalaSarpaBali}</a></li>
+        <li><a href={href('poojas/navagraha-homam')}>{t.services.navagrahaHomam}</a></li>
+        <li><a href={href('muttu')}>{t.services.muttu}</a></li>
       </ul>
     </div>
     <div class="footer-contact">
-      <h4>Contact</h4>
+      <h4>{t.contactHeading}</h4>
       <p>
         Pulikkal Shankarodath Kovilakam<br>
         Thekkumpuram, Kavilpad<br>
@@ -45,14 +47,14 @@ const currentYear = new Date().getFullYear();
         ✉️ info@nagayakshi.org
       </p>
       <p>
-        <strong>Darshan Timings:</strong><br>
-        Morning: 5:30 AM - 10:30 AM<br>
-        Evening: 5:30 PM - 7:30 PM
+        <strong>{t.darshanTimingsLabel}</strong><br>
+        {t.morning}: 5:30 AM - 10:30 AM<br>
+        {t.evening}: 5:30 PM - 7:30 PM
       </p>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>&copy; {currentYear} Sree Pulikkal Vishwanagayakshi Temple. All rights reserved.</p>
+    <p>&copy; {currentYear} Sree Pulikkal Vishwanagayakshi Temple. {t.rightsReserved}</p>
   </div>
 </footer>
 

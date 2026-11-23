@@ -1,22 +1,42 @@
 ---
 // Navigation component
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { LOCALES, LABELS } from '../i18n/locales';
+import { tNav } from '../i18n/componentMessages';
+
+const locale = Astro.currentLocale ?? 'en';
+const t = tNav(locale);
+
+const strippedPath = Astro.url.pathname.replace(/^\/(ml|ta|te|kn)(\/|$)/, '/');
+const pagePath = strippedPath === '/' ? '' : strippedPath.replace(/^\//, '');
+
+const href = (path: string) => getRelativeLocaleUrl(locale, path);
+const homeHref = getRelativeLocaleUrl(locale, '');
 ---
 
 <nav id="main-nav">
   <div class="nav-container">
-    <a href="/" class="logo">NAGAYAKSHI</a>
+    <a href={homeHref} class="logo">NAGAYAKSHI</a>
 
     <ul class="nav-links">
-      <li><a href="/poojas">Poojas</a></li>
-      <li><a href="/muttu">Muttu</a></li>
-      <li><a href="/ambotti-thampuran">Thampuran</a></li>
+      <li><a href={href('poojas')}>{t.poojas}</a></li>
+      <li><a href={href('muttu')}>{t.muttu}</a></li>
+      <li><a href={href('ambotti-thampuran')}>{t.thampuran}</a></li>
       <li class="nav-dropdown">
-        <a href="/about" class="dropdown-toggle">More <span class="dropdown-arrow">▾</span></a>
+        <a href={href('about')} class="dropdown-toggle">{t.more} <span class="dropdown-arrow">▾</span></a>
         <ul class="dropdown-menu">
-          <li><a href="/about">About</a></li>
-          <li><a href="/visit">Visit</a></li>
-          <li><a href="/protocols">Protocols</a></li>
-          <li><a href="/support/pooja-request">Pooja Request</a></li>
+          <li><a href={href('about')}>{t.about}</a></li>
+          <li><a href={href('visit')}>{t.visit}</a></li>
+          <li><a href={href('protocols')}>{t.protocols}</a></li>
+          <li><a href={href('support/pooja-request')}>{t.poojaRequest}</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown lang-dropdown">
+        <a href={getRelativeLocaleUrl(locale, pagePath)} class="dropdown-toggle lang-toggle">{LABELS[locale]} <span class="dropdown-arrow">▾</span></a>
+        <ul class="dropdown-menu">
+          {LOCALES.map((loc) => (
+            <li><a href={getRelativeLocaleUrl(loc, pagePath)} aria-current={loc === locale ? 'true' : undefined}>{LABELS[loc]}</a></li>
+          ))}
         </ul>
       </li>
     </ul>
@@ -31,14 +51,24 @@
   <!-- Mobile drawer -->
   <div class="mobile-menu" id="mobile-menu">
     <ul>
-      <li><a href="/poojas">Poojas</a></li>
-      <li><a href="/muttu">Muttu</a></li>
-      <li><a href="/ambotti-thampuran">Thampuran</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/visit">Visit</a></li>
-      <li><a href="/protocols">Protocols</a></li>
-      <li><a href="/support/pooja-request">Pooja Request</a></li>
+      <li><a href={href('poojas')}>{t.poojas}</a></li>
+      <li><a href={href('muttu')}>{t.muttu}</a></li>
+      <li><a href={href('ambotti-thampuran')}>{t.thampuran}</a></li>
+      <li><a href={href('about')}>{t.about}</a></li>
+      <li><a href={href('visit')}>{t.visit}</a></li>
+      <li><a href={href('protocols')}>{t.protocols}</a></li>
+      <li><a href={href('support/pooja-request')}>{t.poojaRequest}</a></li>
     </ul>
+    <div class="mobile-lang-switch">
+      {LOCALES.map((loc) => (
+        <a
+          href={getRelativeLocaleUrl(loc, pagePath)}
+          class:list={['mobile-lang-link', { active: loc === locale }]}
+        >
+          {LABELS[loc]}
+        </a>
+      ))}
+    </div>
   </div>
 </nav>
 
@@ -195,6 +225,43 @@ nav {
 .dropdown-menu li a:hover {
   background: var(--bg-alt);
   color: var(--laterite-red);
+}
+
+/* Language switcher */
+.lang-toggle {
+  color: var(--laterite-red);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  padding: 0.4rem 0.9rem;
+}
+
+.dropdown-menu li a[aria-current='true'] {
+  color: var(--laterite-red);
+  background: var(--bg-alt);
+}
+
+.mobile-lang-switch {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.mobile-lang-link {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.mobile-lang-link.active {
+  color: var(--bg-base);
+  background: var(--laterite-red);
+  border-color: var(--laterite-red);
 }
 
 /* Hamburger */

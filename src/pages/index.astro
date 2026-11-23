@@ -1,5 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { tPage } from '../i18n/pageMessages';
+
+const locale = Astro.currentLocale ?? 'en';
+const t = tPage('home', locale);
+const href = (path: string) => getRelativeLocaleUrl(locale, path);
 ---
 
 <Layout title="Sree Pulikkal Vishwanagayakshi Temple | Authentic Naga Worship">
@@ -7,13 +13,13 @@ import Layout from '../layouts/Layout.astro';
   <!-- Hero -->
   <section class="hero">
     <div class="hero-content">
-      <div class="hero-eyebrow">Sree Pulikkal Vishwanagayakshi Temple</div>
-      <h1 class="hero-title">Sacred Abode of the Divine Nagas</h1>
+      <div class="hero-eyebrow">{t.hero.eyebrow}</div>
+      <h1 class="hero-title">{t.hero.title}</h1>
       <p class="hero-subtitle">
-        Experience the divine grace of Vishwanagayakshiamma, Nagaraja, and Sarpayakshiamma. An unbroken lineage of authentic Vedic rituals on the sacred land of Kashyapa Maharshi.
+        {t.hero.subtitle}
       </p>
       <div class="hero-ctas">
-        <a href="/poojas" class="btn btn-primary">Book Sacred Rituals</a>
+        <a href={href('poojas')} class="btn btn-primary">{t.hero.cta}</a>
       </div>
     </div>
   </section>
@@ -25,25 +31,25 @@ import Layout from '../layouts/Layout.astro';
         <svg class="authority-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
         </svg>
-        <div class="authority-text">Swayambhu<br><span>Self-manifested deity</span></div>
+        <div class="authority-text">{t.authority[0].title}<br><span>{t.authority[0].subtitle}</span></div>
       </div>
       <div class="authority-item">
         <svg class="authority-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/>
         </svg>
-        <div class="authority-text">Unbroken Lineage<br><span>Generations of sacred worship</span></div>
+        <div class="authority-text">{t.authority[1].title}<br><span>{t.authority[1].subtitle}</span></div>
       </div>
       <div class="authority-item">
         <svg class="authority-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M12 22v-6"/><path d="M12 8v8"/><path d="M7 13s1.5-2 5-2 5 2 5 2"/><path d="M7 18s1.5-2 5-2 5 2 5 2"/><path d="M12 8c-2.5 0-4-2.5-4-5 0-2 1.5-3 4-3s4 1 4 3c0 2.5-1.5 5-4 5z"/>
         </svg>
-        <div class="authority-text">Seven Kavus<br><span>Protected naga groves</span></div>
+        <div class="authority-text">{t.authority[2].title}<br><span>{t.authority[2].subtitle}</span></div>
       </div>
       <div class="authority-item">
         <svg class="authority-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M3 21h18"/><path d="M9 8h10"/><path d="M9 12h10"/><path d="M9 16h10"/><path d="M5 4v16"/><path d="M5 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16"/>
         </svg>
-        <div class="authority-text">Kashyapa Maharshi<br><span>Sacred ashram &amp; eternal presence</span></div>
+        <div class="authority-text">{t.authority[3].title}<br><span>{t.authority[3].subtitle}</span></div>
       </div>
     </div>
   </section>
@@ -55,14 +61,11 @@ import Layout from '../layouts/Layout.astro';
         <img src="/images/navagraha-idols-1.jpg" alt="Navagraha Homam — Rahu Peyarchi special homam">
       </div>
       <div class="utsav-card-text">
-        <span class="utsav-card-label">Rahu Peyarchi &#8211; Special Homam</span>
-        <h2>Navagraha Homam</h2>
-        <p>
-          Rahu transits from Kumbha Rasi to Makara Rasi&#8212;an especially potent day to perform
-          Navagraha Homam. &#8377;10,000, inclusive of all pooja items. Call the temple office to book.
-        </p>
-        <p class="utsav-card-dates">December 5, 2026</p>
-        <a href="/poojas/navagraha-homam" class="btn-utsav">View Details &amp; Book</a>
+        <span class="utsav-card-label">{t.utsav.label}</span>
+        <h2>{t.utsav.title}</h2>
+        <p>{t.utsav.body}</p>
+        <p class="utsav-card-dates">{t.utsav.date}</p>
+        <a href={href('poojas/navagraha-homam')} class="btn-utsav">{t.utsav.cta}</a>
       </div>
     </div>
   </section>
@@ -70,96 +73,96 @@ import Layout from '../layouts/Layout.astro';
   <!-- Sacred Offerings -->
   <section class="offerings-section">
     <div class="section-header">
-      <h2>Sacred Offerings</h2>
-      <p>Vedic rituals performed to restore spiritual harmony and bestow divine blessings.</p>
+      <h2>{t.offerings.heading}</h2>
+      <p>{t.offerings.subheading}</p>
     </div>
     <div class="offerings-grid">
       <div class="offering-card">
-        <a href="/poojas/ayilyam" class="card-overlay" aria-label="Ayilyam Pooja"></a>
+        <a href={href('poojas/ayilyam')} class="card-overlay" aria-label="Ayilyam Pooja"></a>
         <div class="offering-image">
           <img src="/images/Ayiliyam.png" alt="Ayilyam Pooja">
         </div>
         <div class="offering-content">
-          <span class="offering-badge">Monthly Ritual</span>
-          <h3>Ayilyam Pooja</h3>
-          <p>Performed monthly on the Ayilyam Nakshathra for economic prosperity, family harmony, and the protection of children.</p>
+          <span class="offering-badge">{t.offerings.cards[0].badge}</span>
+          <h3>{t.offerings.cards[0].title}</h3>
+          <p>{t.offerings.cards[0].desc}</p>
           <div class="offering-footer">
-            <a href="/support/pooja-request?homam=Ayilyam%20Pooja" class="offering-cta">Enquire</a>
+            <a href={href('support/pooja-request?homam=Ayilyam%20Pooja')} class="offering-cta">{t.offerings.cards[0].cta}</a>
           </div>
         </div>
       </div>
 
       <div class="offering-card">
-        <a href="/poojas/navagraha-homam" class="card-overlay" aria-label="Navagraha Homam"></a>
+        <a href={href('poojas/navagraha-homam')} class="card-overlay" aria-label="Navagraha Homam"></a>
         <div class="offering-image">
           <img src="/images/navagraha-idols-1.jpg" alt="Navagraha Homam">
         </div>
         <div class="offering-content">
-          <span class="offering-badge">Special Event</span>
-          <h3>Navagraha Homam</h3>
-          <p>A powerful ritual to pacify adverse planetary placements and remove unseen obstacles from your path.</p>
+          <span class="offering-badge">{t.offerings.cards[1].badge}</span>
+          <h3>{t.offerings.cards[1].title}</h3>
+          <p>{t.offerings.cards[1].desc}</p>
           <div class="offering-footer">
-            <a href="/support/pooja-request?homam=Navagraha%20Homam" class="offering-cta">Enquire</a>
+            <a href={href('support/pooja-request?homam=Navagraha%20Homam')} class="offering-cta">{t.offerings.cards[1].cta}</a>
           </div>
         </div>
       </div>
 
       <div class="offering-card">
-        <a href="/poojas/kala-sarpa-bali" class="card-overlay" aria-label="Kala Sarpa Bali"></a>
+        <a href={href('poojas/kala-sarpa-bali')} class="card-overlay" aria-label="Kala Sarpa Bali"></a>
         <div class="offering-image">
           <img src="/images/Kala%20sarppabali%20pooja.jpeg" alt="Kala Sarpa Bali">
         </div>
         <div class="offering-content">
-          <span class="offering-badge">Annual Event</span>
-          <h3>Kala Sarpa Bali</h3>
-          <p>Our intensive annual Maha-remedy, specifically performed to neutralize the severe effects of Kala Sarpa Dosha.</p>
+          <span class="offering-badge">{t.offerings.cards[2].badge}</span>
+          <h3>{t.offerings.cards[2].title}</h3>
+          <p>{t.offerings.cards[2].desc}</p>
           <div class="offering-footer">
-            <a href="/support/pooja-request?homam=Kala%20Sarpa%20Bali" class="offering-cta">Enquire</a>
+            <a href={href('support/pooja-request?homam=Kala%20Sarpa%20Bali')} class="offering-cta">{t.offerings.cards[2].cta}</a>
           </div>
         </div>
       </div>
 
       <div class="offering-card">
-        <a href="/muttu" class="card-overlay" aria-label="Muttu"></a>
+        <a href={href('muttu')} class="card-overlay" aria-label="Muttu"></a>
         <div class="offering-image">
           <img src="/images/Payasa%20Bali.jpg" alt="Muttu Offering">
         </div>
         <div class="offering-content">
-          <span class="offering-badge">Obstacle Removal</span>
-          <h3>Muttu</h3>
-          <p>Sacred coconut-breaking ritual where Ambotti Thampuran reveals and resolves your life&#8217;s obstacles through divine guidance.</p>
+          <span class="offering-badge">{t.offerings.cards[3].badge}</span>
+          <h3>{t.offerings.cards[3].title}</h3>
+          <p>{t.offerings.cards[3].desc}</p>
           <div class="offering-footer">
-            <a href="/muttu" class="offering-cta">Learn More</a>
+            <a href={href('muttu')} class="offering-cta">{t.offerings.cards[3].cta}</a>
           </div>
         </div>
       </div>
 
       <div class="offering-card">
-        <a href="/poojas/pratyangira-homam" class="card-overlay" aria-label="Maha Pratyangira Homam"></a>
+        <a href={href('poojas/pratyangira-homam')} class="card-overlay" aria-label="Maha Pratyangira Homam"></a>
         <div class="offering-image">
           <img src="/images/Mahaprathyangari%20homam1.jpeg" alt="Maha Pratyangira Homam">
         </div>
         <div class="offering-content">
-          <span class="offering-badge">Powerful Remedy</span>
-          <h3>Maha Pratyangira Homam</h3>
-          <p>An intense Shakti ritual invoking Goddess Maha Pratyangira to destroy negative energies, black magic, and evil eye afflictions.</p>
+          <span class="offering-badge">{t.offerings.cards[4].badge}</span>
+          <h3>{t.offerings.cards[4].title}</h3>
+          <p>{t.offerings.cards[4].desc}</p>
           <div class="offering-footer">
-            <a href="/support/pooja-request?homam=Maha%20Pratyangira%20Homam" class="offering-cta">Enquire</a>
+            <a href={href('support/pooja-request?homam=Maha%20Pratyangira%20Homam')} class="offering-cta">{t.offerings.cards[4].cta}</a>
           </div>
         </div>
       </div>
 
       <div class="offering-card">
-        <a href="/poojas/guruthi-pooja" class="card-overlay" aria-label="Maha Guruthi Pooja"></a>
+        <a href={href('poojas/guruthi-pooja')} class="card-overlay" aria-label="Maha Guruthi Pooja"></a>
         <div class="offering-image">
           <img src="/images/Maha%20Guruthi%20Pooja.jpeg" alt="Maha Guruthi Pooja">
         </div>
         <div class="offering-content">
-          <span class="offering-badge">Sacred Offering</span>
-          <h3>Maha Guruthi Pooja</h3>
-          <p>A traditional blood-substitute offering made with turmeric and lime, performed to fulfil vows and invoke the blessings of Naga devatas.</p>
+          <span class="offering-badge">{t.offerings.cards[5].badge}</span>
+          <h3>{t.offerings.cards[5].title}</h3>
+          <p>{t.offerings.cards[5].desc}</p>
           <div class="offering-footer">
-            <a href="/support/pooja-request?homam=Maha%20Guruthi%20Pooja" class="offering-cta">Enquire</a>
+            <a href={href('support/pooja-request?homam=Maha%20Guruthi%20Pooja')} class="offering-cta">{t.offerings.cards[5].cta}</a>
           </div>
         </div>
       </div>
@@ -169,10 +172,8 @@ import Layout from '../layouts/Layout.astro';
   <!-- Naga Dosha -->
   <section class="text-section">
     <div class="text-container">
-      <h2>Understanding Naga Dosha</h2>
-      <p>
-        Often, recurring obstacles in our lives&#8212;whether delays in marriage, difficulties in starting a family, persistent health issues, or sudden financial blocks&#8212;have deeper spiritual roots. For centuries, our tradition has recognized these patterns as imbalances requiring divine intervention rather than merely worldly solutions.
-      </p>
+      <h2>{t.nagaDosha.title}</h2>
+      <p>{t.nagaDosha.body}</p>
     </div>
   </section>
 
@@ -180,24 +181,17 @@ import Layout from '../layouts/Layout.astro';
   <section class="kashyapa-section">
     <div class="kashyapa-card">
       <div class="kashyapa-card-text">
-        <span class="kashyapa-label">The Sacred Root</span>
-        <h2>Kashyapa Maharishi</h2>
-        <p>
-          The land beneath this temple is the ancient ashram of Sage Kashyapa — one of the
-          seven great Saptarishis, and the father of the entire Naga race. His eternal
-          presence consecrates every ritual performed here, and his divine consciousness
-          resides within the sacred Nilavara at the heart of the temple.
-        </p>
-        <p>
-          To worship the Nagas on this land is to offer prayer in the very home of their father.
-        </p>
-        <a href="/kashyapa-maharishi" class="btn-kashyapa">Discover the Sacred Legacy</a>
+        <span class="kashyapa-label">{t.kashyapa.label}</span>
+        <h2>{t.kashyapa.title}</h2>
+        <p>{t.kashyapa.body1}</p>
+        <p>{t.kashyapa.body2}</p>
+        <a href={href('kashyapa-maharishi')} class="btn-kashyapa">{t.kashyapa.cta}</a>
       </div>
       <div class="kashyapa-card-emblem">
         <div class="emblem-ring">
           <div class="emblem-inner">
             <span class="emblem-symbol">ॐ</span>
-            <span class="emblem-text">Kashyapa<br>Maharishi</span>
+            <span class="emblem-text">{t.kashyapa.emblemText}</span>
           </div>
         </div>
       </div>
@@ -211,12 +205,10 @@ import Layout from '../layouts/Layout.astro';
         <img src="/images/Ambotti.jpg" alt="Ambotti Thampuran">
       </div>
       <div class="guardian-content">
-        <h2>Sacred Guardianship</h2>
-        <p>
-          Veeraporkkali Dasan Ambotti Thampuran leads the Shankarodath Kovilakam Trust with a singular vision to preserve and restore the sacred naga worship traditions of Kerala.
-        </p>
+        <h2>{t.guardian.title}</h2>
+        <p>{t.guardian.body}</p>
         <blockquote class="guardian-quote">
-          &#8220;The goal of this trust is to take over and preserve all the Kavus which are in a dilapidated condition, restore them to their original beauty, and bring out their glory to all people.&#8221;
+          &#8220;{t.guardian.quote}&#8221;
         </blockquote>
       </div>
     </div>
@@ -225,11 +217,9 @@ import Layout from '../layouts/Layout.astro';
   <!-- Temple Protocols -->
   <section class="protocols-section">
     <div class="protocols-container">
-      <h2>Temple Protocols</h2>
-      <p>
-        To maintain the deep spiritual potency of the rituals, we strictly adhere to traditional purity guidelines. Please review our protocols regarding dietary restrictions and mourning periods before scheduling your poojas.
-      </p>
-      <a href="/protocols" class="btn-outline-light">Read Guidelines</a>
+      <h2>{t.protocols.title}</h2>
+      <p>{t.protocols.body}</p>
+      <a href={href('protocols')} class="btn-outline-light">{t.protocols.cta}</a>
     </div>
   </section>
 

@@ -1,0 +1,50 @@
+---
+export const prerender = false; // SSR this route only
+
+import { LOCALES } from '../../i18n/locales';
+
+const lang = Astro.params.lang as string;
+const slugParam = Astro.params.slug as string[] | string | undefined;
+const slug = Array.isArray(slugParam) ? slugParam.join('/') : (slugParam ?? '');
+
+// Unknown locale prefix (e.g. /fr/...) — fall back to the original unprefixed route.
+if (!LOCALES.includes(lang as any)) {
+  const target = `/${slug}${Astro.url.search}`;
+  return Astro.redirect(target === '/' ? '/' : target);
+}
+
+// Reuse the existing pages under /<locale>/... — no duplicate page files needed.
+// Admin, API, and booking flows are excluded: they have their own session/auth
+// handling and were never meant to be served under a locale prefix.
+const pages = import.meta.glob([
+  '../**/*.astro',
+  '!../admin/**',
+  '!../api/**',
+  '!../muttu-booking/**',
+  '!../book/**',
+  '!../confirmation/**',
+  '!../print/**',
+]);
+
+const stem = slug === '' ? 'index' : slug;
+const candidates = [
+  `../${stem}.astro`,
+  `../${stem}/index.astro`,
+];
+
+let Component: any = null;
+for (const key of candidates) {
+  if (key in pages) {
+    const mod: any = await (pages as any)[key]();
+    Component = mod.default;
+    break;
+  }
+}
+
+// Nothing matched under this locale — send back to the unprefixed route rather
+// than 404ing (there's no dedicated 404 page in this project yet).
+if (!Component) {
+  return Astro.redirect(`/${slug}`);
+}
+---
+<Component />
